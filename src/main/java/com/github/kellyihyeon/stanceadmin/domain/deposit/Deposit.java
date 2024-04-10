@@ -1,0 +1,96 @@
+package com.github.kellyihyeon.stanceadmin.domain.deposit;
+
+import com.github.kellyihyeon.stanceadmin.application.dto.MemberIdAndName;
+import com.github.kellyihyeon.stanceadmin.application.dto.MembershipFeeByMember;
+import com.github.kellyihyeon.stanceadmin.domain.member.MemberType;
+import com.github.kellyihyeon.stanceadmin.domain.member.MembershipFeeType;
+import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.util.LinkedList;
+import java.util.List;
+
+
+@Entity
+@Getter
+@ToString
+@Table(name = "deposits")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class Deposit {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "member_id")
+    private Long memberId;
+
+    @Column(name = "category")
+    @Enumerated(EnumType.STRING)
+    private DepositCategory category;
+
+    @Column(name = "depositor")
+    private String depositor;
+
+    @Column(name = "amount")
+    private Long amount;
+
+    @Column(name = "member_type")
+    @Enumerated(EnumType.STRING)
+    private MemberType memberType;
+
+    @Column(name = "membership_fee_type")
+    @Enumerated(EnumType.STRING)
+    private MembershipFeeType membershipFeeType;
+
+    @Column(name = "due_month")
+    @Enumerated(EnumType.STRING)
+    private Month dueMonth;
+
+    @Column(name = "deposit_date")
+    private LocalDate depositDate;
+
+    @Column(name = "description")
+    private String description;
+
+    private Long creatorId;
+
+    private LocalDateTime createdDate;
+
+    private Long updaterId;
+
+    private LocalDateTime updatedDate;
+
+    // TODO. 로그인 기능을 만들면 creatorId = 현재 로그인한 유저의 아이디로 수정
+    private Deposit(MembershipFeeByMember membershipFeeByMember, MemberIdAndName memberIdAndName) {
+        this.memberId = memberIdAndName.getMemberId();
+        this.category = DepositCategory.MEMBERSHIP_FEE;
+        this.depositor = memberIdAndName.getMemberName();
+        this.amount = membershipFeeByMember.getAmount();
+        this.memberType = membershipFeeByMember.getMemberType();
+        this.membershipFeeType = membershipFeeByMember.getMembershipFeeType();
+        this.dueMonth = membershipFeeByMember.getDueMonth();
+        this.depositDate =LocalDate.parse(membershipFeeByMember.getDepositDate());
+        this.description = membershipFeeByMember.getDescription();
+        this.creatorId = 1L;
+        this.createdDate = LocalDateTime.now();
+    }
+
+
+    public static List<Deposit> toEntityList(MembershipFeeByMember membershipFeeByMember) {
+        List<Deposit> deposits = new LinkedList<>();
+        membershipFeeByMember.getMembers().forEach(
+                memberIdAndName -> {
+                    deposits.add(new Deposit(membershipFeeByMember, memberIdAndName));
+                }
+        );
+
+        return deposits;
+    }
+}
