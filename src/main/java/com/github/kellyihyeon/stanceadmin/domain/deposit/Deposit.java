@@ -1,5 +1,6 @@
 package com.github.kellyihyeon.stanceadmin.domain.deposit;
 
+import com.github.kellyihyeon.stanceadmin.application.deposit.dto.ExtraFee;
 import com.github.kellyihyeon.stanceadmin.application.member.dto.MemberIdAndName;
 import com.github.kellyihyeon.stanceadmin.application.accountbook.dto.MembershipFeeForm;
 import com.github.kellyihyeon.stanceadmin.domain.member.MemberType;
@@ -82,12 +83,34 @@ public class Deposit {
         this.createdDate = LocalDateTime.now();
     }
 
+    public Deposit(ExtraFee extraFee, MemberIdAndName memberIdAndName) {
+        this.memberId = memberIdAndName.memberId();
+        this.category = extraFee.depositCategory();
+        this.depositor = memberIdAndName.memberName();
+        this.amount = extraFee.amount();
+        this.depositDate = LocalDate.parse(extraFee.depositDate());
+        this.description = extraFee.description();
+        this.creatorId = 1L;
+        this.createdDate = LocalDateTime.now();
+    }
+
 
     public static List<Deposit> toEntityList(MembershipFeeForm membershipFeeForm) {
         List<Deposit> deposits = new LinkedList<>();
         membershipFeeForm.getMembers().forEach(
                 memberIdAndName -> {
                     deposits.add(new Deposit(membershipFeeForm, memberIdAndName));
+                }
+        );
+
+        return deposits;
+    }
+
+    public static List<Deposit> toEntityList(ExtraFee extraFee) {
+        List<Deposit> deposits = new LinkedList<>();
+        extraFee.members().forEach(
+                memberIdAndName -> {
+                    deposits.add(new Deposit(extraFee, memberIdAndName));
                 }
         );
 
