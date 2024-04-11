@@ -1,7 +1,7 @@
 package com.github.kellyihyeon.stanceadmin.domain.deposit;
 
-import com.github.kellyihyeon.stanceadmin.application.dto.MemberIdAndName;
-import com.github.kellyihyeon.stanceadmin.application.dto.MembershipFeeByMember;
+import com.github.kellyihyeon.stanceadmin.application.member.dto.MemberIdAndName;
+import com.github.kellyihyeon.stanceadmin.application.accountbook.dto.MembershipFeeForm;
 import com.github.kellyihyeon.stanceadmin.domain.member.MemberType;
 import com.github.kellyihyeon.stanceadmin.domain.member.MembershipFeeType;
 import jakarta.persistence.*;
@@ -68,26 +68,26 @@ public class Deposit {
     private LocalDateTime updatedDate;
 
     // TODO. 로그인 기능을 만들면 creatorId = 현재 로그인한 유저의 아이디로 수정
-    private Deposit(MembershipFeeByMember membershipFeeByMember, MemberIdAndName memberIdAndName) {
-        this.memberId = memberIdAndName.getMemberId();
+    private Deposit(MembershipFeeForm membershipFeeForm, MemberIdAndName memberIdAndName) {
+        this.memberId = memberIdAndName.memberId();
         this.category = DepositCategory.MEMBERSHIP_FEE;
-        this.depositor = memberIdAndName.getMemberName();
-        this.amount = membershipFeeByMember.getAmount();
-        this.memberType = membershipFeeByMember.getMemberType();
-        this.membershipFeeType = membershipFeeByMember.getMembershipFeeType();
-        this.dueMonth = membershipFeeByMember.getDueMonth();
-        this.depositDate =LocalDate.parse(membershipFeeByMember.getDepositDate());
-        this.description = membershipFeeByMember.getDescription();
+        this.depositor = memberIdAndName.memberName();
+        this.amount = membershipFeeForm.getAmount();
+        this.memberType = membershipFeeForm.getMemberType();
+        this.membershipFeeType = membershipFeeForm.getMembershipFeeType();
+        this.dueMonth = membershipFeeForm.getDueMonth();
+        this.depositDate =LocalDate.parse(membershipFeeForm.getDepositDate());
+        this.description = membershipFeeForm.getDescription();
         this.creatorId = 1L;
         this.createdDate = LocalDateTime.now();
     }
 
 
-    public static List<Deposit> toEntityList(MembershipFeeByMember membershipFeeByMember) {
+    public static List<Deposit> toEntityList(MembershipFeeForm membershipFeeForm) {
         List<Deposit> deposits = new LinkedList<>();
-        membershipFeeByMember.getMembers().forEach(
+        membershipFeeForm.getMembers().forEach(
                 memberIdAndName -> {
-                    deposits.add(new Deposit(membershipFeeByMember, memberIdAndName));
+                    deposits.add(new Deposit(membershipFeeForm, memberIdAndName));
                 }
         );
 

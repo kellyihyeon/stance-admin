@@ -1,7 +1,8 @@
 package com.github.kellyihyeon.stanceadmin.presentation.accountbook;
 
-import com.github.kellyihyeon.stanceadmin.application.AccountBookService;
-import com.github.kellyihyeon.stanceadmin.application.dto.MembershipFeeByMember;
+import com.github.kellyihyeon.stanceadmin.application.accountbook.AccountBookService;
+import com.github.kellyihyeon.stanceadmin.application.accountbook.dto.MembershipFeeByGuest;
+import com.github.kellyihyeon.stanceadmin.application.accountbook.dto.MembershipFeeForm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,9 +18,15 @@ public class AccountBookController {
 
     @PostMapping("/deposit/member/membership-fee")
     void depositMembershipFeeByMember(
-            @RequestBody MembershipFeeByMember membershipFeeByMember
+            @RequestBody MembershipFeeForm membershipFeeForm
     ) {
-        accountBookService.registerMembershipFeeByMember(membershipFeeByMember);
+        accountBookService.registerMembershipFeeByMember(membershipFeeForm);
     }
 
+    @PostMapping("/deposit/guest/membership-fee")
+    void depositMembershipFeeByGuest(
+            @RequestBody MembershipFeeByGuest membershipFeeByGuest
+    ) {
+        accountBookService.registerMembershipFeeByGuest(membershipFeeByGuest);
+    }
 }
