@@ -2,6 +2,7 @@ package com.github.kellyihyeon.stanceadmin.application.accountbook;
 
 import com.github.kellyihyeon.stanceadmin.application.accountbook.dto.MembershipFeeByGuest;
 import com.github.kellyihyeon.stanceadmin.application.accountbook.dto.MembershipFeeForm;
+import com.github.kellyihyeon.stanceadmin.application.deposit.dto.ExtraFee;
 import com.github.kellyihyeon.stanceadmin.application.member.dto.MemberIdAndName;
 import com.github.kellyihyeon.stanceadmin.domain.accountbook.AccountBook;
 import com.github.kellyihyeon.stanceadmin.domain.accountbook.TransactionType;
@@ -51,6 +52,11 @@ public class AccountBookService {
                 )
         );
 
+        saveDeposits(deposits);
+    }
+
+    public void registerExtraFeeByMember(ExtraFee extraFee) {
+        List<Deposit> deposits = Deposit.toEntityList(extraFee);
         saveDeposits(deposits);
     }
 

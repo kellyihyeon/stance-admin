@@ -3,6 +3,7 @@ package com.github.kellyihyeon.stanceadmin.presentation.accountbook;
 import com.github.kellyihyeon.stanceadmin.application.accountbook.AccountBookService;
 import com.github.kellyihyeon.stanceadmin.application.accountbook.dto.MembershipFeeByGuest;
 import com.github.kellyihyeon.stanceadmin.application.accountbook.dto.MembershipFeeForm;
+import com.github.kellyihyeon.stanceadmin.application.deposit.dto.ExtraFee;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,5 +29,12 @@ public class AccountBookController {
             @RequestBody MembershipFeeByGuest membershipFeeByGuest
     ) {
         accountBookService.registerMembershipFeeByGuest(membershipFeeByGuest);
+    }
+
+    @PostMapping("/deposit/member/extra-fee")
+    void depositExtraFeeByMember(
+            @RequestBody ExtraFee extraFee
+    ) {
+        accountBookService.registerExtraFeeByMember(extraFee);
     }
 }
