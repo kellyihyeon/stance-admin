@@ -6,10 +6,7 @@ import com.github.kellyihyeon.stanceadmin.application.accountbook.dto.Membership
 import com.github.kellyihyeon.stanceadmin.domain.member.MemberType;
 import com.github.kellyihyeon.stanceadmin.domain.member.MembershipFeeType;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -83,13 +80,30 @@ public class Deposit {
         this.createdDate = LocalDateTime.now();
     }
 
-    public Deposit(ExtraFee extraFee, MemberIdAndName memberIdAndName) {
+    private Deposit(ExtraFee extraFee, MemberIdAndName memberIdAndName) {
         this.memberId = memberIdAndName.memberId();
         this.category = extraFee.depositCategory();
         this.depositor = memberIdAndName.memberName();
         this.amount = extraFee.amount();
         this.depositDate = LocalDate.parse(extraFee.depositDate());
         this.description = extraFee.description();
+        this.creatorId = 1L;
+        this.createdDate = LocalDateTime.now();
+    }
+
+    @Builder
+    public Deposit(
+            DepositCategory depositCategory,
+            Long amount,
+            String depositDate,
+            String depositor,
+            String description
+    ) {
+        this.category = depositCategory;
+        this.amount = amount;
+        this.depositDate = LocalDate.parse(depositDate);
+        this.depositor = depositor;
+        this.description = description;
         this.creatorId = 1L;
         this.createdDate = LocalDateTime.now();
     }
