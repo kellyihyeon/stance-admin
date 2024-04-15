@@ -1,10 +1,12 @@
 package com.github.kellyihyeon.stanceadmin.domain.accountbook;
 
+import com.github.kellyihyeon.stanceadmin.application.accountbook.dto.TransactionRecord;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -32,10 +34,10 @@ public class AccountBook {
     private String summary;
 
     @Column(name = "amount")
-    private Long amount;
+    private BigDecimal amount;
 
     @Column(name = "balance")
-    private Long balance;
+    private BigDecimal balance;
 
     private Long creatorId;
 
@@ -52,8 +54,8 @@ public class AccountBook {
             TransactionType transactionType,
             LocalDate transactionDate,
             String summary,
-            Long amount,
-            Long balance
+            BigDecimal amount,
+            BigDecimal balance
     ) {
         this.transactionId = transactionId;
         this.transactionType = transactionType;
@@ -66,8 +68,12 @@ public class AccountBook {
     }
 
 
-    public Long deposit(Long amount) {
-        return this.balance + amount;
+    public BigDecimal deposit(BigDecimal amount) {
+        return this.balance.add(amount);
+    }
+
+    private BigDecimal withdraw(BigDecimal amount) {
+        return this.balance.subtract(amount);
     }
 
     public AccountBook updateBalance(
@@ -82,8 +88,19 @@ public class AccountBook {
                 transactionType,
                 transactionDate,
                 summary,
-                amount,
-                deposit(amount)
+                new BigDecimal(amount),
+                deposit(new BigDecimal(amount))
+        );
+    }
+
+    public AccountBook updateBalance(TransactionRecord transactionRecord) {
+        return new AccountBook(
+                transactionRecord.transactionId(),
+                transactionRecord.transactionType(),
+                transactionRecord.transactionDate(),
+                transactionRecord.transactionParty(),
+                transactionRecord.amount(),
+                withdraw(transactionRecord.amount())
         );
     }
 }

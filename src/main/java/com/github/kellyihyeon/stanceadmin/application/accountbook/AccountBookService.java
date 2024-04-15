@@ -2,21 +2,27 @@ package com.github.kellyihyeon.stanceadmin.application.accountbook;
 
 import com.github.kellyihyeon.stanceadmin.application.accountbook.dto.MembershipFeeByGuest;
 import com.github.kellyihyeon.stanceadmin.application.accountbook.dto.MembershipFeeForm;
+import com.github.kellyihyeon.stanceadmin.application.accountbook.dto.TransactionRecord;
 import com.github.kellyihyeon.stanceadmin.application.deposit.dto.CashFormByBank;
 import com.github.kellyihyeon.stanceadmin.application.deposit.dto.ExtraFee;
 import com.github.kellyihyeon.stanceadmin.application.member.dto.MemberIdAndName;
+import com.github.kellyihyeon.stanceadmin.application.withdraw.dto.TransferRequest;
+import com.github.kellyihyeon.stanceadmin.application.withdraw.dto.WithdrawRequest;
 import com.github.kellyihyeon.stanceadmin.domain.accountbook.AccountBook;
 import com.github.kellyihyeon.stanceadmin.domain.accountbook.TransactionType;
 import com.github.kellyihyeon.stanceadmin.domain.deposit.Deposit;
 import com.github.kellyihyeon.stanceadmin.domain.member.MemberType;
 import com.github.kellyihyeon.stanceadmin.domain.member.MembershipFeeType;
+import com.github.kellyihyeon.stanceadmin.domain.withdraw.Withdraw;
 import com.github.kellyihyeon.stanceadmin.infrastructure.repository.accountbook.AccountBookRepository;
 import com.github.kellyihyeon.stanceadmin.infrastructure.repository.deposit.DepositRepository;
+import com.github.kellyihyeon.stanceadmin.infrastructure.repository.withdraw.WithdrawRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -27,6 +33,7 @@ public class AccountBookService {
 
     private final AccountBookRepository accountBookRepository;
     private final DepositRepository depositRepository;
+    private final WithdrawRepository withdrawRepository;
 
 
     @Transactional
@@ -68,6 +75,7 @@ public class AccountBookService {
         }
     }
 
+    // TODO. Refactoring 대상
     private void updateBalance(Deposit deposit) {
         AccountBook latestAccountBook = accountBookRepository.findTopByOrderByIdDesc().orElseThrow(() -> new IllegalStateException("입출금 데이터가 없습니다."));
         log.debug("스탠스 가계부 최신 데이터 [{}]의 잔액 [{}]", latestAccountBook.getId(), latestAccountBook.getBalance());
@@ -87,5 +95,45 @@ public class AccountBookService {
         Deposit deposit = cashFormByBank.toEntity();
         depositRepository.save(deposit);
         updateBalance(deposit);
+    }
+
+    public void processTransferWithdrawal(TransferRequest transferRequest) {
+        Withdraw withdraw = createWithdraw(transferRequest);
+        withdrawRepository.save(withdraw);
+
+        AccountBook accountBook = updateAccountBookBalance(new TransactionRecord(
+                TransactionType.WITHDRAW,
+                withdraw.getId(),
+                transferRequest.transactionDate(),
+                transferRequest.recipientName(),
+                transferRequest.amount()));
+        accountBookRepository.save(accountBook);
+    }
+
+    private AccountBook updateAccountBookBalance(TransactionRecord transactionRecord) {
+        AccountBook latestAccountBook = accountBookRepository.findTopByOrderByIdDesc().orElseThrow(() -> new IllegalStateException("입출금 데이터가 없습니다."));
+        log.debug("스탠스 가계부 최신 데이터 [{}]의 잔액 [{}]", latestAccountBook.getId(), latestAccountBook.getBalance());
+
+        return latestAccountBook.updateBalance(transactionRecord);
+    }
+
+    private Withdraw createWithdraw(WithdrawRequest request) {
+        Withdraw withdraw = Withdraw.builder()
+                .memberId(1L)
+                .withdrawCategory(request.getWithdrawCategory())
+                .expenseCategory(request.getExpenseCategory())
+                .spender("관리자1")
+                .amount(request.getAmount())
+                .expenseDate(request.getExpenseDate())
+                .description(request.description())
+                .creatorId(1L)
+                .createdDate(LocalDateTime.now())
+                .build();
+
+        if (request instanceof TransferRequest transferRequest) {
+            return withdraw.createTransferWithdrawal(transferRequest);
+        }
+
+        return withdraw;
     }
 }
