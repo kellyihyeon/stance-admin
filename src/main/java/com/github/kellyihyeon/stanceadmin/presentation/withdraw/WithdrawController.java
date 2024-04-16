@@ -1,8 +1,10 @@
 package com.github.kellyihyeon.stanceadmin.presentation.withdraw;
 
 import com.github.kellyihyeon.stanceadmin.application.accountbook.AccountBookService;
+import com.github.kellyihyeon.stanceadmin.application.withdraw.dto.CardPaymentRequest;
 import com.github.kellyihyeon.stanceadmin.application.withdraw.dto.TransferRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,5 +22,12 @@ public class WithdrawController {
             @RequestBody TransferRequest transferRequest
     ) {
         accountBookService.processTransferWithdrawal(transferRequest);
+    }
+
+    @PostMapping("/card-payment")
+    void withdrawByCardPayment(
+            @RequestBody @Validated CardPaymentRequest cardPaymentRequest
+    ) {
+        accountBookService.processCardPaymentWithdrawal(cardPaymentRequest);
     }
 }
