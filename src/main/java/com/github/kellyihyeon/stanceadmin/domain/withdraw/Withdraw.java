@@ -1,5 +1,6 @@
 package com.github.kellyihyeon.stanceadmin.domain.withdraw;
 
+import com.github.kellyihyeon.stanceadmin.application.withdraw.dto.CardPaymentRequest;
 import com.github.kellyihyeon.stanceadmin.application.withdraw.dto.TransferRequest;
 import com.github.kellyihyeon.stanceadmin.domain.accountbook.Bank;
 import jakarta.persistence.*;
@@ -24,34 +25,48 @@ public class Withdraw {
     private Long memberId;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "withdraw_category", nullable = false)
     private WithdrawCategory withdrawCategory;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "expense_category", nullable = false)
     private ExpenseCategory expenseCategory;
 
-    private String spender;
-
+    @Column(name = "amount", nullable = false)
     private BigDecimal amount;
 
+    @Column(name = "recipient_name")
     private String recipientName;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "bank_name")
     private Bank bankName;
 
+    @Column(name = "recipient_account_number")
     private String recipientAccountNumber;
 
+    @Column(name = "expense_date", nullable = false)
     private LocalDate expenseDate;
 
+    @Column(name = "card_payer")
+    private String cardPayer;
+
+    @Column(name = "card_usage_location")
     private String cardUsageLocation;
 
+    @Column(name = "description")
     private String description;
 
+    @Column(name = "creator_id", nullable = false)
     private Long creatorId;
 
+    @Column(name = "created_date", nullable = false)
     private LocalDateTime createdDate;
 
+    @Column(name = "updater_id")
     private Long updaterId;
 
+    @Column(name = "updated_date")
     private LocalDateTime updatedDate;
 
     @Builder
@@ -59,7 +74,6 @@ public class Withdraw {
             Long memberId,
             WithdrawCategory withdrawCategory,
             ExpenseCategory expenseCategory,
-            String spender,
             BigDecimal amount,
             LocalDate expenseDate,
             String description,
@@ -69,7 +83,6 @@ public class Withdraw {
         this.memberId = memberId;
         this.withdrawCategory = withdrawCategory;
         this.expenseCategory = expenseCategory;
-        this.spender = spender;
         this.amount = amount;
         this.expenseDate = expenseDate;
         this.description = description;
@@ -83,6 +96,13 @@ public class Withdraw {
         this.recipientName = request.recipientName();
         this.bankName = request.bankName();
         this.recipientAccountNumber = request.recipientAccountNumber();
+
+        return this;
+    }
+
+    public Withdraw createCardPaymentWithdrawal(CardPaymentRequest cardPaymentRequest) {
+        this.cardUsageLocation = cardPaymentRequest.cardUsageLocation();
+        this.cardPayer = cardPaymentRequest.cardPayer();
 
         return this;
     }

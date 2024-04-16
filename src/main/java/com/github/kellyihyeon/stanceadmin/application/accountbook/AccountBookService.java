@@ -6,6 +6,7 @@ import com.github.kellyihyeon.stanceadmin.application.accountbook.dto.Transactio
 import com.github.kellyihyeon.stanceadmin.application.deposit.dto.CashFormByBank;
 import com.github.kellyihyeon.stanceadmin.application.deposit.dto.ExtraFee;
 import com.github.kellyihyeon.stanceadmin.application.member.dto.MemberIdAndName;
+import com.github.kellyihyeon.stanceadmin.application.withdraw.dto.CardPaymentRequest;
 import com.github.kellyihyeon.stanceadmin.application.withdraw.dto.TransferRequest;
 import com.github.kellyihyeon.stanceadmin.application.withdraw.dto.WithdrawRequest;
 import com.github.kellyihyeon.stanceadmin.domain.accountbook.AccountBook;
@@ -97,6 +98,7 @@ public class AccountBookService {
         updateBalance(deposit);
     }
 
+    @Transactional
     public void processTransferWithdrawal(TransferRequest transferRequest) {
         Withdraw withdraw = createWithdraw(transferRequest);
         withdrawRepository.save(withdraw);
@@ -122,10 +124,9 @@ public class AccountBookService {
                 .memberId(1L)
                 .withdrawCategory(request.getWithdrawCategory())
                 .expenseCategory(request.getExpenseCategory())
-                .spender("관리자1")
                 .amount(request.getAmount())
                 .expenseDate(request.getExpenseDate())
-                .description(request.description())
+                .description(request.getDescription())
                 .creatorId(1L)
                 .createdDate(LocalDateTime.now())
                 .build();
@@ -134,6 +135,25 @@ public class AccountBookService {
             return withdraw.createTransferWithdrawal(transferRequest);
         }
 
+        if (request instanceof CardPaymentRequest cardPaymentRequest) {
+            return withdraw.createCardPaymentWithdrawal(cardPaymentRequest);
+        }
+
         return withdraw;
+    }
+
+    @Transactional
+    public void processCardPaymentWithdrawal(CardPaymentRequest cardPaymentRequest) {
+        Withdraw withdraw = createWithdraw(cardPaymentRequest);
+        withdrawRepository.save(withdraw);
+
+        AccountBook accountBook = updateAccountBookBalance(new TransactionRecord(
+                TransactionType.WITHDRAW,
+                withdraw.getId(),
+                cardPaymentRequest.expenseDate(),
+                cardPaymentRequest.cardUsageLocation(),
+                cardPaymentRequest.amount()
+        ));
+        accountBookRepository.save(accountBook);
     }
 }

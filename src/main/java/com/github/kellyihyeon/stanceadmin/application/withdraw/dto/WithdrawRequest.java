@@ -16,6 +16,6 @@ public interface WithdrawRequest {
 
     LocalDate getExpenseDate();
 
-    String description();
+    String getDescription();
 
 }
