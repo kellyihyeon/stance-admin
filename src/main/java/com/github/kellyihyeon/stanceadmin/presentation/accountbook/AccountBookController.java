@@ -1,15 +1,17 @@
 package com.github.kellyihyeon.stanceadmin.presentation.accountbook;
 
 import com.github.kellyihyeon.stanceadmin.application.accountbook.AccountBookService;
+import com.github.kellyihyeon.stanceadmin.application.accountbook.dto.AccountBookResponse;
 import com.github.kellyihyeon.stanceadmin.application.accountbook.dto.MembershipFeeByGuest;
 import com.github.kellyihyeon.stanceadmin.application.accountbook.dto.MembershipFeeForm;
 import com.github.kellyihyeon.stanceadmin.application.deposit.dto.CashFormByBank;
 import com.github.kellyihyeon.stanceadmin.application.deposit.dto.ExtraFee;
+import com.github.kellyihyeon.stanceadmin.domain.SearchingPeriodType;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/account-book")
@@ -44,5 +46,13 @@ public class AccountBookController {
             @RequestBody CashFormByBank cashFormByBank
     ) {
         accountBookService.registerCashByBank(cashFormByBank);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<AccountBookResponse>> retrieveAccountBooksByPeriod(
+            @RequestParam(defaultValue = "ONE_MONTH") SearchingPeriodType period
+    ) {
+        List<AccountBookResponse> result = accountBookService.retrieveAccountBooksByPeriod(period);
+        return ResponseEntity.ok(result);
     }
 }

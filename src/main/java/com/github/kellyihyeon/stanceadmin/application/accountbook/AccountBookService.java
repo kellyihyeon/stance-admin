@@ -1,5 +1,6 @@
 package com.github.kellyihyeon.stanceadmin.application.accountbook;
 
+import com.github.kellyihyeon.stanceadmin.application.accountbook.dto.AccountBookResponse;
 import com.github.kellyihyeon.stanceadmin.application.accountbook.dto.MembershipFeeByGuest;
 import com.github.kellyihyeon.stanceadmin.application.accountbook.dto.MembershipFeeForm;
 import com.github.kellyihyeon.stanceadmin.application.accountbook.dto.TransactionRecord;
@@ -9,6 +10,7 @@ import com.github.kellyihyeon.stanceadmin.application.member.dto.MemberIdAndName
 import com.github.kellyihyeon.stanceadmin.application.withdraw.dto.CardPaymentRequest;
 import com.github.kellyihyeon.stanceadmin.application.withdraw.dto.TransferRequest;
 import com.github.kellyihyeon.stanceadmin.application.withdraw.dto.WithdrawRequest;
+import com.github.kellyihyeon.stanceadmin.domain.SearchingPeriodType;
 import com.github.kellyihyeon.stanceadmin.domain.accountbook.AccountBook;
 import com.github.kellyihyeon.stanceadmin.domain.accountbook.TransactionType;
 import com.github.kellyihyeon.stanceadmin.domain.deposit.Deposit;
@@ -23,6 +25,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
@@ -155,5 +158,16 @@ public class AccountBookService {
                 cardPaymentRequest.amount()
         ));
         accountBookRepository.save(accountBook);
+    }
+
+    public List<AccountBookResponse> retrieveAccountBooksByPeriod(SearchingPeriodType period) {
+        LocalDate today = LocalDate.now();
+
+        return accountBookRepository.
+                findAccountBookByTransactionDateBetweenOrderByTransactionDateDesc(
+                        today.minusMonths(period.getNumber()),
+                        today
+                );
+
     }
 }
