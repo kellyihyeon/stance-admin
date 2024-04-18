@@ -54,7 +54,7 @@ public class AccountBookRepositoryImpl implements AccountBookRepositoryCustom {
                                 .and(withdraw.id.eq(accountBook.transactionId))
                 )
                 .where(accountBook.transactionDate.between(startDate, endDate))
-                .orderBy(accountBook.transactionDate.desc())
+                .orderBy(accountBook.id.desc())
                 .fetch();
     }
 
