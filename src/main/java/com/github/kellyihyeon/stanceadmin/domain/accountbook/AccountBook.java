@@ -30,8 +30,8 @@ public class AccountBook {
     @Column(name = "transaction_date")
     private LocalDate transactionDate;
 
-    @Column(name = "summary")
-    private String summary;
+    @Column(name = "transaction_party")
+    private String transactionParty;
 
     @Column(name = "amount")
     private BigDecimal amount;
@@ -53,14 +53,14 @@ public class AccountBook {
             Long transactionId,
             TransactionType transactionType,
             LocalDate transactionDate,
-            String summary,
+            String transactionParty,
             BigDecimal amount,
             BigDecimal balance
     ) {
         this.transactionId = transactionId;
         this.transactionType = transactionType;
         this.transactionDate = transactionDate;
-        this.summary = summary;
+        this.transactionParty = transactionParty;
         this.amount = amount;
         this.balance = balance;
         this.creatorId = 1L;
