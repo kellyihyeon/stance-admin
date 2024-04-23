@@ -8,9 +8,7 @@ import com.github.kellyihyeon.stanceadmin.domain.member.MembershipFeeType;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.Month;
+import java.time.*;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -46,6 +44,9 @@ public class Deposit {
     @Column(name = "membership_fee_type")
     @Enumerated(EnumType.STRING)
     private MembershipFeeType membershipFeeType;
+
+    @Column(name = "due_date")
+    private LocalDate dueDate;
 
     @Column(name = "due_month")
     @Enumerated(EnumType.STRING)

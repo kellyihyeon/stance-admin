@@ -1,9 +1,7 @@
 package com.github.kellyihyeon.stanceadmin.presentation.accountbook;
 
 import com.github.kellyihyeon.stanceadmin.application.accountbook.AccountBookService;
-import com.github.kellyihyeon.stanceadmin.application.accountbook.dto.AccountBookResponse;
-import com.github.kellyihyeon.stanceadmin.application.accountbook.dto.MembershipFeeByGuest;
-import com.github.kellyihyeon.stanceadmin.application.accountbook.dto.MembershipFeeForm;
+import com.github.kellyihyeon.stanceadmin.application.accountbook.dto.*;
 import com.github.kellyihyeon.stanceadmin.application.deposit.dto.CashFormByBank;
 import com.github.kellyihyeon.stanceadmin.application.deposit.dto.ExtraFee;
 import com.github.kellyihyeon.stanceadmin.domain.SearchingPeriodType;
@@ -53,6 +51,12 @@ public class AccountBookController {
             @RequestParam(defaultValue = "ONE_MONTH") SearchingPeriodType period
     ) {
         List<AccountBookResponse> result = accountBookService.retrieveAccountBooksByPeriod(period);
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/{year}")
+    public ResponseEntity<List<FinancialTransactionResponse>> retrieveAccountBooksByYear(@PathVariable int year) {
+        List<FinancialTransactionResponse> result = accountBookService.retrieveAccountBooksByYear(year);
         return ResponseEntity.ok(result);
     }
 }

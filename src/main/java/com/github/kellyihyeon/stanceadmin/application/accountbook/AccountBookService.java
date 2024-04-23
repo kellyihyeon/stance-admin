@@ -1,9 +1,6 @@
 package com.github.kellyihyeon.stanceadmin.application.accountbook;
 
-import com.github.kellyihyeon.stanceadmin.application.accountbook.dto.AccountBookResponse;
-import com.github.kellyihyeon.stanceadmin.application.accountbook.dto.MembershipFeeByGuest;
-import com.github.kellyihyeon.stanceadmin.application.accountbook.dto.MembershipFeeForm;
-import com.github.kellyihyeon.stanceadmin.application.accountbook.dto.TransactionRecord;
+import com.github.kellyihyeon.stanceadmin.application.accountbook.dto.*;
 import com.github.kellyihyeon.stanceadmin.application.deposit.dto.CashFormByBank;
 import com.github.kellyihyeon.stanceadmin.application.deposit.dto.ExtraFee;
 import com.github.kellyihyeon.stanceadmin.application.member.dto.MemberIdAndName;
@@ -25,10 +22,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -169,5 +166,49 @@ public class AccountBookService {
                         today
                 );
 
+    }
+
+    public List<FinancialTransactionResponse> retrieveAccountBooksByYear(int year) {
+        LocalDate firstDate = LocalDate.of(year, 1, 1);
+        LocalDate december = LocalDate.of(year, 12, 1);
+        LocalDate lastDate = december.withDayOfMonth(december.lengthOfMonth());
+
+        List<AccountBook> accountBooks = accountBookRepository.findByTransactionDateBetween(firstDate, lastDate);
+
+        Map<Integer, MonthlyTransaction> monthlyTransactions = calculateMonthlyTransaction(accountBooks);
+        return summarizeMonthlyTransactions(monthlyTransactions);
+    }
+
+    private List<FinancialTransactionResponse> summarizeMonthlyTransactions(Map<Integer, MonthlyTransaction> monthlyTransactions) {
+        List<FinancialTransactionResponse> financialTransactions = new ArrayList<>();
+
+        for (Map.Entry<Integer, MonthlyTransaction> entry : monthlyTransactions.entrySet()) {
+            Integer month = entry.getKey();
+            MonthlyTransaction monthlyTransaction = entry.getValue();
+
+            financialTransactions.add(new FinancialTransactionResponse(month, monthlyTransaction));
+        }
+
+        return financialTransactions;
+    }
+
+    private Map<Integer, MonthlyTransaction> calculateMonthlyTransaction(List<AccountBook> accountBooks) {
+        Map<Integer, MonthlyTransaction> monthlyTransactions = new HashMap<>();
+        for (AccountBook accountBook : accountBooks) {
+            int month = accountBook.getTransactionDate().getMonthValue();
+            MonthlyTransaction monthlyTransaction = monthlyTransactions.getOrDefault(month, new MonthlyTransaction(BigDecimal.ZERO, BigDecimal.ZERO));
+
+            if (accountBook.isDeposit()) {
+                monthlyTransaction.plusDepositAmount(accountBook.getAmount());
+            }
+
+            if (accountBook.isWithdraw()) {
+                monthlyTransaction.plusWithdrawalAmount(accountBook.getAmount());
+            }
+
+            monthlyTransactions.put(month, monthlyTransaction);
+        }
+
+        return monthlyTransactions;
     }
 }
