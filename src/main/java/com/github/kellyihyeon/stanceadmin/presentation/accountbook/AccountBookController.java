@@ -59,4 +59,10 @@ public class AccountBookController {
         List<FinancialTransactionResponse> result = accountBookService.retrieveAccountBooksByYear(year);
         return ResponseEntity.ok(result);
     }
+
+    @GetMapping("/balance")
+    public ResponseEntity<BalanceResponse> retrieveLatestBalance() {
+        BalanceResponse balance = accountBookService.retrieveLatestBalance();
+        return ResponseEntity.ok(balance);
+    }
 }
