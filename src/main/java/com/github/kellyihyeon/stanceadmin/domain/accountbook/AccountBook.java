@@ -103,4 +103,12 @@ public class AccountBook {
                 withdraw(transactionRecord.amount())
         );
     }
+
+    public boolean isDeposit() {
+        return TransactionType.DEPOSIT.equals(this.transactionType);
+    }
+
+    public boolean isWithdraw() {
+        return TransactionType.WITHDRAW.equals(this.transactionType);
+    }
 }
