@@ -211,4 +211,9 @@ public class AccountBookService {
 
         return monthlyTransactions;
     }
+
+    public BalanceResponse retrieveLatestBalance() {
+        AccountBook latestAccountBook = accountBookRepository.findTopByOrderByIdDesc().orElseThrow(() -> new IllegalStateException("입출금 데이터가 없습니다."));
+        return new BalanceResponse(latestAccountBook.getBalance());
+    }
 }
