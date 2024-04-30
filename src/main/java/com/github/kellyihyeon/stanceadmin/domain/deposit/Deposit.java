@@ -45,8 +45,8 @@ public class Deposit {
     @Enumerated(EnumType.STRING)
     private MembershipFeeType membershipFeeType;
 
-    @Column(name = "due_date")
-    private LocalDate dueDate;
+    @Column(name = "due_year")
+    private Year dueYear;
 
     @Column(name = "due_month")
     @Enumerated(EnumType.STRING)
