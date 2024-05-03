@@ -2,6 +2,7 @@ package com.github.kellyihyeon.stanceadmin.presentation.deposit;
 
 import com.github.kellyihyeon.stanceadmin.application.deposit.DepositService;
 import com.github.kellyihyeon.stanceadmin.application.deposit.dto.MembershipFeePaidMemberResponse;
+import com.github.kellyihyeon.stanceadmin.application.deposit.dto.TopDepositCategoriesResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,4 +27,12 @@ public class DepositController {
         return ResponseEntity.ok(statistics);
     }
 
+    @GetMapping("/categories/{year}/{month}")
+    public ResponseEntity<TopDepositCategoriesResponse> getTopDepositsByCategoryTotalSum(
+            @PathVariable Year year,
+            @PathVariable Month month
+    ) {
+        TopDepositCategoriesResponse topCategories = depositService.getTopDepositsByCategoryTotalSum(year, month);
+        return ResponseEntity.ok(topCategories);
+    }
 }
