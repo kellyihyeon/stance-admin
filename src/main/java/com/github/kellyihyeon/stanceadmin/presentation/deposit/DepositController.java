@@ -28,11 +28,11 @@ public class DepositController {
     }
 
     @GetMapping("/categories/{year}/{month}")
-    public ResponseEntity<TopDepositCategoriesResponse> getDepositCategoriesHistory(
+    public ResponseEntity<TopDepositCategoriesResponse> getTopDepositsByCategoryTotalSum(
             @PathVariable Year year,
             @PathVariable Month month
     ) {
-        TopDepositCategoriesResponse topCategories = depositService.getDepositCategoriesHistory(year, month);
+        TopDepositCategoriesResponse topCategories = depositService.getTopDepositsByCategoryTotalSum(year, month);
         return ResponseEntity.ok(topCategories);
     }
 }

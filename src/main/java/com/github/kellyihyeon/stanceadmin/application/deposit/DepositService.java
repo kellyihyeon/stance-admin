@@ -36,13 +36,64 @@ public class DepositService {
         return Double.valueOf(percentage).longValue();
     }
 
-    public TopDepositCategoriesResponse getDepositCategoriesHistory(Year year, Month month) {
+    public TopDepositCategoriesResponse getTopDepositsByCategoryTotalSum(Year year, Month month) {
         LocalDate firstDate = LocalDate.of(year.getValue(), month.getValue(), 1);
         LocalDate lastDate = firstDate.withDayOfMonth(firstDate.lengthOfMonth());
 
-        // 1. 입금 내역 전체 로그
-        List<DepositCategoryHistoryProjection> depositCategoryHistoryLogs = depositRepository.findByDepositDateBetween(firstDate, lastDate);
+        List<DepositCategoryHistoryProjection> depositLogs = depositRepository.findByDepositDateBetween(firstDate, lastDate);
 
+        Map<DepositCategory, BigDecimal> totalSumByCategory = calculateTotalSumByCategory(depositLogs);
+        List<DepositCategory> categories = orderByCategoryTotalSumDescending(totalSumByCategory);
+        List<TopDeposit> topDeposits = extractTopDepositsByCategoryTotalSum(totalSumByCategory, categories);
+
+        return new TopDepositCategoriesResponse(
+                year,
+                month.getValue(),
+                calculateTotalSumOfAllCategories(totalSumByCategory),
+                topDeposits
+        );
+    }
+
+    private BigDecimal calculateTotalSumOfAllCategories(Map<DepositCategory, BigDecimal> totalSumByCategory) {
+        BigDecimal total = BigDecimal.ZERO;
+
+        for (BigDecimal totalSum : totalSumByCategory.values()) {
+            total = total.add(totalSum);
+        }
+
+        return total;
+    }
+
+    private List<TopDeposit> extractTopDepositsByCategoryTotalSum(Map<DepositCategory, BigDecimal> totalSumByCategory, List<DepositCategory> categories) {
+        List<TopDeposit> topDeposits = new ArrayList<>();
+        int TOP_RANK_COUNT = 3;
+
+        if (categories.size() < TOP_RANK_COUNT) {
+            TOP_RANK_COUNT = categories.size();
+        }
+
+        for (int i = 0; i < TOP_RANK_COUNT; i++) {
+            int rank = i + 1;
+            DepositCategory category = categories.get(i);
+            BigDecimal sum = totalSumByCategory.get(category);
+
+            topDeposits.add(new TopDeposit(rank, category.getDisplayName(), sum));
+        }
+
+        return topDeposits;
+    }
+
+    private List<DepositCategory> orderByCategoryTotalSumDescending(Map<DepositCategory, BigDecimal> totalSumByCategory) {
+        List<DepositCategory> categories = new ArrayList<>(totalSumByCategory.keySet());
+        categories.sort(
+                (category1, category2) ->
+                        totalSumByCategory.get(category2).compareTo(totalSumByCategory.get(category1))
+        );
+
+        return categories;
+    }
+
+    private Map<DepositCategory, BigDecimal> calculateTotalSumByCategory(List<DepositCategoryHistoryProjection> depositCategoryHistoryLogs) {
         Map<DepositCategory, BigDecimal> sumByCategory = new HashMap<>();
         BigDecimal total = BigDecimal.ZERO;
 
@@ -54,23 +105,6 @@ public class DepositService {
             sumByCategory.put(category, accumulatedAmount);
         }
 
-        // 2. 누적금액 별 내림차순
-        List<DepositCategory> categories = new ArrayList<>(sumByCategory.keySet());
-        categories.sort(
-                (category1, category2) ->
-                        sumByCategory.get(category2).compareTo(sumByCategory.get(category1))
-        );
-
-        // 3. 응답값 생성
-        List<TopDeposit> topDeposits = new ArrayList<>();
-        for (int i = 0; i < categories.size(); i++) {
-            int rank = i + 1;
-            DepositCategory category = categories.get(i);
-            BigDecimal sum = sumByCategory.get(category);
-
-            topDeposits.add(new TopDeposit(rank, category.getDisplayName(), sum));
-        }
-
-        return new TopDepositCategoriesResponse(year, month.getValue(), total, topDeposits);
+        return sumByCategory;
     }
 }
