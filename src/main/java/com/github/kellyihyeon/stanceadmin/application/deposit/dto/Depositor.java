@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.Year;
@@ -19,13 +20,13 @@ public class Depositor {
     private Long memberId;
     private String memberName;
     private DepositCategory category;
-    private Long amount;
+    private BigDecimal amount;
     private Year dueYear;
     private Month dueMonth;
     private LocalDate depositDate;
 
     @QueryProjection
-    public Depositor(Long id, Long memberId, String memberName, DepositCategory category, Long amount, Year dueYear, Month dueMonth, LocalDate depositDate) {
+    public Depositor(Long id, Long memberId, String memberName, DepositCategory category, BigDecimal amount, Year dueYear, Month dueMonth, LocalDate depositDate) {
         this.id = id;
         this.memberId = memberId;
         this.memberName = memberName;

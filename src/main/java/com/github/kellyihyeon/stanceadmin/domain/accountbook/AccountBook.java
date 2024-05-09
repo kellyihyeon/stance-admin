@@ -81,15 +81,15 @@ public class AccountBook {
             TransactionType transactionType,
             LocalDate transactionDate,
             String summary,
-            Long amount
+            BigDecimal amount
     ) {
         return new AccountBook(
                 transactionId,
                 transactionType,
                 transactionDate,
                 summary,
-                new BigDecimal(amount),
-                deposit(new BigDecimal(amount))
+                amount,
+                deposit(amount)
         );
     }
 
