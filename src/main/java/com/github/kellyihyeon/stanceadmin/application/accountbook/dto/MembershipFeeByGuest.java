@@ -4,12 +4,15 @@ import lombok.Getter;
 
 import java.math.BigDecimal;
 import java.time.Month;
+import java.time.Year;
 import java.util.List;
 
 @Getter
 public class MembershipFeeByGuest {
 
     private BigDecimal amount;
+
+    private Year dueYear;
 
     private Month dueMonth;
 

@@ -3,28 +3,25 @@ package com.github.kellyihyeon.stanceadmin.application.accountbook.dto;
 import com.github.kellyihyeon.stanceadmin.application.member.dto.MemberIdAndName;
 import com.github.kellyihyeon.stanceadmin.domain.member.MemberType;
 import com.github.kellyihyeon.stanceadmin.domain.member.MembershipFeeType;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Builder;
 
 import java.math.BigDecimal;
 import java.time.Month;
+import java.time.Year;
 import java.util.List;
 
-@Getter
-@AllArgsConstructor
-public class MembershipFeeForm {
+public record MembershipFeeForm(
+        MemberType memberType,
+        MembershipFeeType membershipFeeType,
+        BigDecimal amount,
+        Year dueYear,
+        Month dueMonth,
+        String depositDate,
+        List<MemberIdAndName> members,
+        String description) {
 
-    private final MemberType memberType;
+    @Builder
+    public MembershipFeeForm {
+    }
 
-    private final MembershipFeeType membershipFeeType;
-
-    private final BigDecimal amount;
-
-    private final Month dueMonth;
-
-    private final String depositDate;
-
-    private final List<MemberIdAndName> members;
-
-    private final String description;
 }

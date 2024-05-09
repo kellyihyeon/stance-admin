@@ -47,15 +47,16 @@ public class DepositService {
         members.add(new MemberIdAndName(998L, "coffee"));
 
         List<Deposit> deposits = Deposit.toEntityList(
-                new MembershipFeeForm(
-                        MemberType.GUEST,
-                        MembershipFeeType.ONE_DAY,
-                        membershipFeeByGuest.getAmount(),
-                        membershipFeeByGuest.getDueMonth(),
-                        membershipFeeByGuest.getDepositDate(),
-                        members,
-                        membershipFeeByGuest.getDescription()
-                )
+                MembershipFeeForm.builder()
+                        .memberType(MemberType.GUEST)
+                        .membershipFeeType(MembershipFeeType.ONE_DAY)
+                        .amount(membershipFeeByGuest.getAmount())
+                        .dueYear(membershipFeeByGuest.getDueYear())
+                        .dueMonth(membershipFeeByGuest.getDueMonth())
+                        .depositDate(membershipFeeByGuest.getDepositDate())
+                        .members(members)
+                        .description(membershipFeeByGuest.getDescription())
+                        .build()
         );
 
         saveDeposits(deposits);

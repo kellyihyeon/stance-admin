@@ -72,12 +72,13 @@ public class Deposit {
         this.memberId = memberIdAndName.memberId();
         this.category = DepositCategory.MEMBERSHIP_FEE;
         this.depositor = memberIdAndName.memberName();
-        this.amount = membershipFeeForm.getAmount();
-        this.memberType = membershipFeeForm.getMemberType();
-        this.membershipFeeType = membershipFeeForm.getMembershipFeeType();
-        this.dueMonth = membershipFeeForm.getDueMonth();
-        this.depositDate =LocalDate.parse(membershipFeeForm.getDepositDate());
-        this.description = membershipFeeForm.getDescription();
+        this.amount = membershipFeeForm.amount();
+        this.memberType = membershipFeeForm.memberType();
+        this.membershipFeeType = membershipFeeForm.membershipFeeType();
+        this.dueYear = membershipFeeForm.dueYear();
+        this.dueMonth = membershipFeeForm.dueMonth();
+        this.depositDate =LocalDate.parse(membershipFeeForm.depositDate());
+        this.description = membershipFeeForm.description();
         this.creatorId = 1L;
         this.createdDate = LocalDateTime.now();
     }
@@ -113,7 +114,7 @@ public class Deposit {
 
     public static List<Deposit> toEntityList(MembershipFeeForm membershipFeeForm) {
         List<Deposit> deposits = new LinkedList<>();
-        membershipFeeForm.getMembers().forEach(
+        membershipFeeForm.members().forEach(
                 memberIdAndName -> {
                     deposits.add(new Deposit(membershipFeeForm, memberIdAndName));
                 }
