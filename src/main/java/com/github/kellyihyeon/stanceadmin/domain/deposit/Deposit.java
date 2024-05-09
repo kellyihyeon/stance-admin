@@ -8,6 +8,7 @@ import com.github.kellyihyeon.stanceadmin.domain.member.MembershipFeeType;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.time.*;
 import java.util.LinkedList;
 import java.util.List;
@@ -35,7 +36,7 @@ public class Deposit {
     private String depositor;
 
     @Column(name = "amount")
-    private Long amount;
+    private BigDecimal amount;
 
     @Column(name = "member_type")
     @Enumerated(EnumType.STRING)
@@ -95,7 +96,7 @@ public class Deposit {
     @Builder
     public Deposit(
             DepositCategory depositCategory,
-            Long amount,
+            BigDecimal amount,
             String depositDate,
             String depositor,
             String description
