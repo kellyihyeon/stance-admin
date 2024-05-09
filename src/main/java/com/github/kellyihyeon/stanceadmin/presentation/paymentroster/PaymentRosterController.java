@@ -18,7 +18,7 @@ public class PaymentRosterController {
 
     private final PaymentRosterService paymentRosterService;
 
-    @PostMapping("/payment-roster")
+    @PostMapping("/payment-rosters")
     public ResponseEntity<Void> createPaymentRosters(
             @RequestBody PaymentRosterForm paymentRosterForm
     ) {
