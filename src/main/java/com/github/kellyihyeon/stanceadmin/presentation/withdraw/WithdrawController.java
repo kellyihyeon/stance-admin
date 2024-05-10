@@ -1,6 +1,5 @@
 package com.github.kellyihyeon.stanceadmin.presentation.withdraw;
 
-import com.github.kellyihyeon.stanceadmin.application.accountbook.AccountBookService;
 import com.github.kellyihyeon.stanceadmin.application.withdraw.WithdrawService;
 import com.github.kellyihyeon.stanceadmin.application.withdraw.dto.CardPaymentRequest;
 import com.github.kellyihyeon.stanceadmin.application.withdraw.dto.TopExpenseCategoriesResponse;
@@ -19,14 +18,13 @@ import java.time.Year;
 @RequestMapping("/withdraws")
 public class WithdrawController {
 
-    private final AccountBookService accountBookService;
     private final WithdrawService withdrawService;
 
     @PostMapping("/transfer")
     public ResponseEntity<Void> withdrawByTransfer(
             @RequestBody TransferRequest transferRequest
     ) {
-        accountBookService.processTransferWithdrawal(transferRequest);
+        withdrawService.processTransferWithdrawal(transferRequest);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -34,7 +32,7 @@ public class WithdrawController {
     public ResponseEntity<Void> withdrawByCardPayment(
             @RequestBody @Validated CardPaymentRequest cardPaymentRequest
     ) {
-        accountBookService.processCardPaymentWithdrawal(cardPaymentRequest);
+        withdrawService.processCardPaymentWithdrawal(cardPaymentRequest);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
