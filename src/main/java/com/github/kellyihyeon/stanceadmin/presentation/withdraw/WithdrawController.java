@@ -6,6 +6,7 @@ import com.github.kellyihyeon.stanceadmin.application.withdraw.dto.CardPaymentRe
 import com.github.kellyihyeon.stanceadmin.application.withdraw.dto.TopExpenseCategoriesResponse;
 import com.github.kellyihyeon.stanceadmin.application.withdraw.dto.TransferRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -22,17 +23,19 @@ public class WithdrawController {
     private final WithdrawService withdrawService;
 
     @PostMapping("/transfer")
-    void withdrawByTransfer(
+    public ResponseEntity<Void> withdrawByTransfer(
             @RequestBody TransferRequest transferRequest
     ) {
         accountBookService.processTransferWithdrawal(transferRequest);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/card-payment")
-    void withdrawByCardPayment(
+    public ResponseEntity<Void> withdrawByCardPayment(
             @RequestBody @Validated CardPaymentRequest cardPaymentRequest
     ) {
         accountBookService.processCardPaymentWithdrawal(cardPaymentRequest);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/categories/{year}/{month}")
