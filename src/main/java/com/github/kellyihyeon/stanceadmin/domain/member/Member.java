@@ -1,11 +1,15 @@
 package com.github.kellyihyeon.stanceadmin.domain.member;
 
+import com.github.kellyihyeon.stanceadmin.application.auth.dto.SignUpForm;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.apache.commons.lang3.RandomStringUtils;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDateTime;
+import java.util.Locale;
 
 @Entity
 @Getter
@@ -57,16 +61,22 @@ public class Member {
     @Column(name = "withdrawal_date")
     private LocalDateTime withdrawalDate;
 
-    @Column(name = "creator_id", nullable = false)
-    private Long creatorId;
-
-    @Column(name = "created_date", nullable = false)
-    private LocalDateTime createdDate;
-
     @Column(name = "updater_id")
     private Long updaterId;
 
     @Column(name = "updated_date")
     private LocalDateTime updatedDate;
 
+    public Member(SignUpForm signUpForm, PasswordEncoder passwordEncoder) {
+        final int MEMBER_CODE_LENGTH = 8;
+        this.code = RandomStringUtils.randomAlphanumeric(MEMBER_CODE_LENGTH).toUpperCase(Locale.ROOT);
+        this.email = signUpForm.email();
+        this.password = passwordEncoder.encode(signUpForm.password());
+        this.name = signUpForm.name();
+        this.memberRole = MemberRole.MEMBER;
+        this.permissionLevel = PermissionLevel.USER;
+        this.memberType = MemberType.ACTIVE;
+        this.registrationStatus = RegistrationStatus.REGISTERED;
+        this.signUpDate = LocalDateTime.now();
+    }
 }
