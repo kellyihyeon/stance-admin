@@ -13,6 +13,15 @@ import java.util.List;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    @ExceptionHandler(CustomException.class)
+    protected ResponseEntity<ErrorResponse> handleCustomException(CustomException e, HttpServletRequest request) {
+        ErrorCode errorCode = e.getErrorCode();
+
+        return ResponseEntity
+                .status(errorCode.getHttpStatus())
+                .body(ErrorResponse.withoutFields(errorCode, request.getRequestURI()));
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     protected ResponseEntity<ErrorResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException e, HttpServletRequest request) {
         List<FieldError> fieldErrors = e.getBindingResult().getFieldErrors();
@@ -35,7 +44,7 @@ public class GlobalExceptionHandler {
         if (!missingFields.isEmpty()) {
             return ResponseEntity
                     .status(ErrorCode.MISSING_REQUIRED_FIELD.getHttpStatus())
-                    .body(new ErrorResponse(ErrorCode.MISSING_REQUIRED_FIELD, missingFields, requestUri));
+                    .body(ErrorResponse.withFields(ErrorCode.MISSING_REQUIRED_FIELD, missingFields, requestUri));
         }
 
         return ResponseEntity

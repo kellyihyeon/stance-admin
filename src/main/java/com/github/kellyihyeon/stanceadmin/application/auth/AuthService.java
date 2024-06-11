@@ -4,6 +4,8 @@ import com.github.kellyihyeon.stanceadmin.application.auth.dto.SignUpForm;
 import com.github.kellyihyeon.stanceadmin.domain.member.Member;
 import com.github.kellyihyeon.stanceadmin.domain.member.RegistrationStatus;
 import com.github.kellyihyeon.stanceadmin.infrastructure.repository.member.MemberRepository;
+import com.github.kellyihyeon.stanceadmin.shared.exception.CustomException;
+import com.github.kellyihyeon.stanceadmin.shared.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -31,7 +33,7 @@ public class AuthService {
                 Arrays.asList(RegistrationStatus.REGISTERED, RegistrationStatus.LIMITED)
         ).ifPresent(
                 member -> {
-                    throw new IllegalArgumentException("이미 존재하는 회원 입니다.");
+                    throw new CustomException(ErrorCode.DUPLICATE_MEMBER);
                 }
         );
     }

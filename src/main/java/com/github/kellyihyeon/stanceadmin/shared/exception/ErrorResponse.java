@@ -20,4 +20,12 @@ public class ErrorResponse {
         this.requestUri = requestUri;
         this.timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     }
+
+    public static ErrorResponse withFields(ErrorCode errorCode, List<String> errorFields, String requestUri) {
+        return new ErrorResponse(errorCode, errorFields, requestUri);
+    }
+
+    public static ErrorResponse withoutFields(ErrorCode errorCode, String requestUri) {
+        return new ErrorResponse(errorCode, null, requestUri);
+    }
 }
