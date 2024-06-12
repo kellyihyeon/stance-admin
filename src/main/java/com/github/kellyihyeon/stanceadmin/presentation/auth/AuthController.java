@@ -1,6 +1,7 @@
 package com.github.kellyihyeon.stanceadmin.presentation.auth;
 
 import com.github.kellyihyeon.stanceadmin.application.auth.AuthService;
+import com.github.kellyihyeon.stanceadmin.application.auth.dto.LoginForm;
 import com.github.kellyihyeon.stanceadmin.application.auth.dto.SignUpForm;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     private final AuthService authService;
+
+    @PostMapping("/login")
+    public ResponseEntity<Void> login(
+            @RequestBody @Valid LoginForm loginForm
+    ) {
+        authService.login(loginForm);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
     @PostMapping("/sign-up")
     public ResponseEntity<Void> signUp(
