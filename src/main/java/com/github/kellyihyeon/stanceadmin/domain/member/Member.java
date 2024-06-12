@@ -1,6 +1,8 @@
 package com.github.kellyihyeon.stanceadmin.domain.member;
 
 import com.github.kellyihyeon.stanceadmin.application.auth.dto.SignUpForm;
+import com.github.kellyihyeon.stanceadmin.shared.exception.CustomException;
+import com.github.kellyihyeon.stanceadmin.shared.exception.ErrorCode;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -78,5 +80,11 @@ public class Member {
         this.memberType = MemberType.ACTIVE;
         this.registrationStatus = RegistrationStatus.REGISTERED;
         this.signUpDate = LocalDateTime.now();
+    }
+
+    public void verifyPassword(String inputPassword, PasswordEncoder passwordEncoder) {
+        if (!passwordEncoder.matches(inputPassword, this.password)) {
+            throw new CustomException(ErrorCode.INVALID_PASSWORD);
+        }
     }
 }
