@@ -1,7 +1,6 @@
 package com.github.kellyihyeon.stanceadmin.application.auth;
 
 import com.github.kellyihyeon.stanceadmin.application.auth.dto.LoginForm;
-import com.github.kellyihyeon.stanceadmin.application.auth.dto.SignUpForm;
 import com.github.kellyihyeon.stanceadmin.domain.member.Member;
 import com.github.kellyihyeon.stanceadmin.domain.member.RegistrationStatus;
 import com.github.kellyihyeon.stanceadmin.infrastructure.repository.member.MemberRepository;
@@ -23,9 +22,9 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
-    public void signUp(SignUpForm signUpForm) {
-        checkDuplicatedUser(signUpForm.email());
-        Member member = new Member(signUpForm, passwordEncoder);
+    public void signUp(String email, String password, String name) {
+        checkDuplicatedUser(email);
+        Member member = new Member(email, password, name, passwordEncoder);
         memberRepository.save(member);
     }
 
