@@ -31,7 +31,7 @@ public class AuthController {
     public ResponseEntity<Void> signUp(
             @RequestBody @Valid SignUpForm signUpForm
     ) {
-        authService.signUp(signUpForm);
+        authService.signUp(signUpForm.email(), signUpForm.password(), signUpForm.name());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
