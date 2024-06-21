@@ -2,7 +2,6 @@ package com.github.kellyihyeon.stanceadmin.domain.member;
 
 import com.github.kellyihyeon.stanceadmin.shared.exception.CustomException;
 import com.github.kellyihyeon.stanceadmin.shared.exception.ErrorCode;
-import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,63 +11,61 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.time.LocalDateTime;
 import java.util.Locale;
 
-@Entity
 @Getter
-@Table(name = "members")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "code", nullable = false)
     private String code;
 
-    @Column(name = "email")
     private String email;
 
-    @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "nickname")
     private String nickname;
 
-    @Column(name = "back_number")
     private Integer backNumber;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "member_role", nullable = false)
     private MemberRole  memberRole;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "permission_level", nullable = false)
     private PermissionLevel permissionLevel;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "member_type", nullable = false)
     private MemberType memberType;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "registration_status", nullable = false)
     private RegistrationStatus registrationStatus;
 
-    @Column(name = "sign_up_date", nullable = false)
     private LocalDateTime signUpDate;
 
-    @Column(name = "withdrawal_date")
     private LocalDateTime withdrawalDate;
 
-    @Column(name = "updater_id")
     private Long updaterId;
 
-    @Column(name = "updated_date")
     private LocalDateTime updatedDate;
 
+    public Member(Long id, String code, String email, String password, String name, String nickname, Integer backNumber, MemberRole memberRole, PermissionLevel permissionLevel, MemberType memberType, RegistrationStatus registrationStatus, LocalDateTime signUpDate, LocalDateTime withdrawalDate, Long updaterId, LocalDateTime updatedDate) {
+        this.id = id;
+        this.code = code;
+        this.email = email;
+        this.password = password;
+        this.name = name;
+        this.nickname = nickname;
+        this.backNumber = backNumber;
+        this.memberRole = memberRole;
+        this.permissionLevel = permissionLevel;
+        this.memberType = memberType;
+        this.registrationStatus = registrationStatus;
+        this.signUpDate = signUpDate;
+        this.withdrawalDate = withdrawalDate;
+        this.updaterId = updaterId;
+        this.updatedDate = updatedDate;
+    }
+
     public Member(String email, String password, String name, PasswordEncoder passwordEncoder) {
+        validateRequiredFields(email, password, name);
+
         final int MEMBER_CODE_LENGTH = 8;
         this.code = RandomStringUtils.randomAlphanumeric(MEMBER_CODE_LENGTH).toUpperCase(Locale.ROOT);
         this.email = email;
@@ -79,6 +76,12 @@ public class Member {
         this.memberType = MemberType.ACTIVE;
         this.registrationStatus = RegistrationStatus.REGISTERED;
         this.signUpDate = LocalDateTime.now();
+    }
+
+    private void validateRequiredFields(String email, String password, String name) {
+        if (email == null || password == null || name == null) {
+            throw new CustomException(ErrorCode.MISSING_REQUIRED_FIELD);
+        }
     }
 
     public void verifyPassword(String inputPassword, PasswordEncoder passwordEncoder) {
