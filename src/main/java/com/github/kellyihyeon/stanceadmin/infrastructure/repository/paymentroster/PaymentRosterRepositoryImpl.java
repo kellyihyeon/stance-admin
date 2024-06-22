@@ -14,7 +14,7 @@ import java.time.Year;
 import java.util.List;
 
 import static com.github.kellyihyeon.stanceadmin.domain.deposit.QDeposit.deposit;
-import static com.github.kellyihyeon.stanceadmin.domain.member.QMember.member;
+import static com.github.kellyihyeon.stanceadmin.infrastructure.repository.member.QMemberEntity.memberEntity;
 
 @Repository
 @RequiredArgsConstructor
@@ -34,8 +34,8 @@ public class PaymentRosterRepositoryImpl implements PaymentRosterRepositoryCusto
                 .select(
                         new QDepositor(
                                 deposit.id,
-                                member.id,
-                                member.name,
+                                memberEntity.id,
+                                memberEntity.name,
                                 deposit.category,
                                 deposit.amount,
                                 deposit.dueYear,
@@ -43,15 +43,15 @@ public class PaymentRosterRepositoryImpl implements PaymentRosterRepositoryCusto
                                 deposit.depositDate
                         )
                 )
-                .from(member)
+                .from(memberEntity)
                 .leftJoin(deposit)
-                .on(deposit.memberId.eq(member.id)
+                .on(deposit.memberId.eq(memberEntity.id)
                         .and(deposit.category.eq(category))
                         .and(deposit.dueYear.eq(year))
                         .and(deposit.dueMonth.eq(month))
                 )
                 .where(
-                        member.memberType.in(MemberType.ACTIVE, MemberType.INACTIVE)
+                        memberEntity.memberType.in(MemberType.ACTIVE, MemberType.INACTIVE)
                 )
                 .fetch();
     }

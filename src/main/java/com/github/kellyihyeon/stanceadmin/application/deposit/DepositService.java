@@ -12,7 +12,7 @@ import com.github.kellyihyeon.stanceadmin.domain.member.MemberType;
 import com.github.kellyihyeon.stanceadmin.domain.member.MembershipFeeType;
 import com.github.kellyihyeon.stanceadmin.infrastructure.repository.accountbook.AccountBookRepository;
 import com.github.kellyihyeon.stanceadmin.infrastructure.repository.deposit.DepositRepository;
-import com.github.kellyihyeon.stanceadmin.infrastructure.repository.member.MemberRepository;
+import com.github.kellyihyeon.stanceadmin.domain.member.MemberRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

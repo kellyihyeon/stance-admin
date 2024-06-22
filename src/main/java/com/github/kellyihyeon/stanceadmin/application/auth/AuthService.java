@@ -3,7 +3,7 @@ package com.github.kellyihyeon.stanceadmin.application.auth;
 import com.github.kellyihyeon.stanceadmin.application.auth.dto.LoginForm;
 import com.github.kellyihyeon.stanceadmin.domain.member.Member;
 import com.github.kellyihyeon.stanceadmin.domain.member.RegistrationStatus;
-import com.github.kellyihyeon.stanceadmin.infrastructure.repository.member.MemberRepository;
+import com.github.kellyihyeon.stanceadmin.domain.member.MemberRepository;
 import com.github.kellyihyeon.stanceadmin.shared.exception.CustomException;
 import com.github.kellyihyeon.stanceadmin.shared.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
