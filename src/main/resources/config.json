@@ -1,0 +1,10 @@
+{
+  "basePackage" : "com.github.kellyihyeon.stanceadmin",
+  "modelPackage" : "com.github.kellyihyeon.stanceadmin.models",
+  "apiPackage" : "com.github.kellyihyeon.stanceadmin.apis",
+  "interfaceOnly" : true,
+  "useTags" : true,
+  "useSpringfox": false,
+  "skipDefaultInterface": true,
+  "dateLibrary": "java8"
+}

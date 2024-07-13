@@ -1,0 +1,1025 @@
+openapi: 3.0.3
+info:
+  title: Stance Admin API
+  description: 스탠스 어드민 API 탐구
+  version: 1.0.11
+servers:
+  - url: https://admin.stance.com
+tags:
+  - name: account
+    description: 스탠스 계좌
+    
+  - name: account-transaction
+    description: 계좌 거래 내역
+    
+  - name: membership-fee
+    description: 회비
+    
+  - name: event
+    description: 이벤트
+    
+  - name: event-applicant
+    description: 이벤트 신청자
+
+# 계좌
+paths:
+  /accounts/balance:
+    get:
+      tags:
+        - account
+      summary: 계좌의 잔액을 반환합니다.
+      operationId: getBalance
+     
+      responses:
+        '200':
+          description: 성공
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountBalance'
+                
+  /accounts:
+    get:
+      tags:
+        - account
+      summary: 스탠스에 등록된 모든 계좌를 조회합니다.
+      operationId: getAllAccounts
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Accounts'
+        '500':
+          description: Internal server error
+    post:
+      tags:
+        - account
+      summary: 계좌를 등록합니다.
+      operationId: createAccount
+      requestBody:
+        description: 계좌를 등록하기 위해 필요한 데이터 입니다.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Account'
+        required: true
+      responses:
+        '201':
+          description: Account successfully created
+        '400':
+          description: Invalid input
+        '500':
+          description: Internal server error
+          
+  /accounts/{id}/{status}:
+    put:
+      tags:
+        - account
+      summary: 계좌의 활성 상태를 업데이트 합니다.
+      operationId: updateAccountStatus
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: 업데이트 하려는 계좌의 id
+        - name: status
+          in: path
+          required: true
+          schema:
+            type: string
+            enum:
+              - ACTIVE
+              - INACTIVE
+              - SUSPENDED
+          description: 업데이트 할 계좌의 새로운 상태
+      responses:
+        '200':
+          description: Account status successfully updated
+        '404':
+          description: Account not found
+        '500':
+          description: Internal server error
+  /accounts/{id}:
+    delete:
+      tags:
+        - account
+      summary: 계좌를 삭제합니다.
+      operationId: deleteAccountById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: The ID of the account to delete
+      responses:
+        '204':
+          description: Account successfully deleted
+        '404':
+          description: Account not found
+        '500':
+          description: Internal server error
+
+# 계좌 거래 내역 
+  /account-transactions:
+    get:
+      tags:
+        - account-transaction
+      summary: 모임 통장 입출금 내역을 조회합니다.
+      operationId: getAllAccountTransactions
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AccountTransactions'
+        '500':
+          description: Internal server error
+          
+  /account-transactions/deposits/event:
+    post:
+      tags:
+        - account-transaction
+      summary: 이벤트 입금 내역을 등록합니다.
+      operationId: saveEventDepositTransaction
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EventDeposit'
+        required: true
+      responses:
+        '201':
+          description: Account successfully created
+        '400':
+          description: Invalid input
+        '500':
+          description: Internal server error
+  /account-transactions/deposits/membership-fee:
+    post:
+      tags:
+        - account-transaction
+      summary: 회비 입금 내역을 등록합니다.
+      operationId: saveMembershipFeeDepositTransaction
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MembershipFeeDeposit'
+        required: true
+      responses:
+        '201':
+          description: Account successfully created
+        '400':
+          description: Invalid input
+        '500':
+          description: Internal server error
+  /account-transactions/deposits/bank:
+    post:
+      tags:
+        - account-transaction
+      summary: 은행 입금 내역을 등록합니다.
+      operationId: saveBankDepositTransaction
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BankDeposit'
+        required: true
+      responses:
+        '201':
+          description: Account successfully created
+        '400':
+          description: Invalid input
+        '500':
+          description: Internal server error
+  /account-transactions/withdrawals/card-payment:
+    post:
+      tags:
+        - account-transaction
+      summary: 카드 결제 내역을 등록합니다.
+      operationId: saveCardPaymentTransaction
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CardPayment'
+        required: true
+      responses:
+        '201':
+          description: Account successfully created
+        '400':
+          description: Invalid input
+        '500':
+          description: Internal server error
+  /account-transactions/withdrawals/transfer:
+    post:
+      tags:
+        - account-transaction
+      summary: 일반 이체 내역을 등록합니다.
+      operationId: saveTransferTransaction
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Transfer'
+        required: true
+      responses:
+        '201':
+          description: Account successfully created
+        '400':
+          description: Invalid input
+        '500':
+          description: Internal server error
+  /account-transactions/deposits/top3:
+    get:
+      tags:
+        - account-transaction
+      summary: 이달의 입금 내역 상위 3개를 조회합니다.
+      operationId: getTop3Deposits
+      parameters:
+        - name: year
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int32
+          description: 조회할 연도(예:2024)
+        - name: month
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int32
+            minimum: 1
+            maximum: 12
+          description: 조회할 월 (1에서 12 사이)
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TopDeposits'
+        '500':
+          description: Internal server error
+          
+  /account-transactions/expenses/top3:
+    get:
+      tags:
+        - account-transaction
+      summary: 이달의 지출 내역 상위 3개를 조회합니다.
+      operationId: getTop3Expenses
+      parameters:
+        - name: year
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int32
+          description: 조회할 연도(예:2024)
+        - name: month
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int32
+            minimum: 1
+            maximum: 12
+          description: 조회할 월 (1에서 12 사이)
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TopExpenses'
+        '500':
+          description: Internal server error
+          
+  /account-transactions/{year}/monthly-summary:
+    get:
+      tags:
+        - account-transaction
+      summary: 연도별 월별 내역을 조회합니다.
+      operationId: getMonthlySummaryByYear
+      parameters:
+        - name: year
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+          description: 조회할 연도(예:2024)
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MonthlySummary'
+        '500':
+          description: Internal server error
+    
+  
+  
+# 회비 입금 내역
+  /membership-fee/deposite-rate:
+    get:
+      tags:
+        - membership-fee
+      summary: 특정 연도와 월의 회비 입금률을 조회합니다.
+      operationId: getDepositRate
+      parameters:
+        - name: year
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int32
+          description: 조회할 연도(예:2024)
+        - name: month
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int32
+            minimum: 1
+            maximum: 12
+          description: 조회할 월 (1에서 12 사이)
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DepositeRate'
+        '500':
+          description: Internal server error
+  /membership-fee/{depositStatus}:
+    get:
+      tags:
+        - membership-fee
+      summary: 특정 입금 상태에 따른 회비 입금자 목록을 조회합니다.
+      description: |
+        주어진 입금 상태(depositStatus)에 따라 해당 회비를 입금한 회원 목록을 조회합니다.
+        - 'COMPLETED': 회비를 입금한 회원 목록을 반환합니다.
+        - 'NOT_COMPLETED': 회비를 입금하지 않은 회원 목록을 반환합니다.
+      operationId: getMembershipFeePayersByDepositStatus
+      parameters:
+        - name: depositStatus
+          in: path
+          required: true
+          schema:
+            type: string
+            enum:
+              - COMPLETED
+              - NOT_COMPLETED
+          description: 조회할 입금 상태
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MembershipFeePayers'
+        '500':
+          description: Internal server error
+          
+# 이벤트
+  /events:
+    get:
+      tags:
+        - event
+      summary: 전체 이벤트 목록을 조회합니다.
+      operationId: getAllEvents
+      responses:
+        '200':
+          description: 전체 이벤트 목록에 보여질 데이터 입니다.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Events'
+        '500':
+          description: Internal server error
+    post:
+        tags:
+          - event
+        summary: 이벤트를 생성합니다.
+        operationId: addEvent
+        requestBody:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event'
+          required: true
+        responses:
+          '201':
+            description: Account successfully created
+          '400':
+            description: Invalid input
+          '500':
+            description: Internal server error
+  /events/{status}:
+    get:
+      tags:
+        - event
+      summary: 특정 상태의 이벤트를 조회합니다.
+      description: 주어진 상태(status)에 따라 활성화되거나 비활성화된 이벤트 목록을 조회합니다.
+      operationId: getEventsByStatus
+      parameters:
+        - name: status
+          in: path
+          required: true
+          schema:
+            type: string
+            enum:
+              - ACTIVE
+              - INACTIVE
+          description: 업데이트 할 계좌의 새로운 상태
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EventName'
+        '500':
+          description: Internal server error
+        
+# 이벤트 신청자
+  /event-applicants:
+    post:
+      tags:
+        - event-applicant
+      summary: 이벤트 신청자를 등록합니다.
+      operationId: saveEventApplicant
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EventApplicant'
+        required: true
+      responses:
+        '201':
+          description: Account successfully created
+        '400':
+          description: Invalid input
+        '500':
+          description: Internal server error
+    
+  /event-applicants/{depositStatus}:
+    get:
+      tags:
+        - event-applicant
+      summary: 특정 입금 상태에 따른 이벤트 신청 입금자 목록을 조회합니다.
+      description: |
+        주어진 입금 상태(depositStatus)에 따라 해당 이벤트비를 입금한 회원 목록을 조회합니다.
+        - 'COMPLETED': 이벤트비를 입금한 회원 목록을 반환합니다.
+        - 'NOT_COMPLETED': 이벤트비를 입금하지 않은 회원 목록을 반환합니다.
+      operationId: getEventPayersByDepositStatus
+      parameters:
+        - name: depositStatus
+          in: path
+          required: true
+          schema:
+            type: string
+            enum:
+              - COMPLETED
+              - NOT_COMPLETED
+          description: 조회할 입금 상태
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EventPayers'
+        '500':
+          description: Internal server error
+
+components:
+  schemas:
+    EventPayers:
+      type: object
+      properties:
+        eventId:
+          type: integer
+          format: int64
+          description: 이벤트 아이디
+        eventName:
+          type: string
+          description: 이벤트명
+        eventDescription:
+          type: string
+          description: 이벤트 설명
+        memberName:
+          type: string
+          description: 회원명
+        amount:
+          type: number
+          format: double
+          description: 금액
+        isDeposited:
+          type: boolean
+          description: |
+            입금 여부 (true: 입금 완료, false: 입금 미완료)
+        depositDate:
+          type: string
+          format: date
+          description: 입금 일자 (YYYY-MM-DD 형식)
+      required:
+        - eventId
+        - eventName
+        - eventDescription
+        - memberName
+        - amount
+        - isDeposited
+        
+    MonthlySummary:
+      type: object
+      properties:
+        month:
+          type: integer
+          description: 월을 나타냅니다 (1부터 12까지).
+        depositAmount:
+          type: number
+          format: double
+          description: 해당 월의 총 입금액을 나타냅니다.
+        expenseAmount:
+          type: number
+          format: double
+          description: 해당 월의 총 지출액을 나타냅니다.
+      required:
+        - month
+        - depositAmount
+        - expenseAmount
+        
+    TopExpenses:
+      type: object
+      properties:
+        expenses:
+          type: array
+          items:
+            $ref: '#/components/schemas/TopExpense'
+          description: 상위 지출 내역 목록입니다.
+        totalAmount:
+          type: number
+          format: double
+          description: 총 지출 누적액입니다.
+      required:
+        - expenses
+        - totalAmount
+        
+    TopExpense:
+      type: object
+      properties:
+        expenseCategory:
+          type: string
+          description: 지출 카테고리를 나타냅니다.
+        expenseAmount:
+          type: number
+          format: double
+          description: 지출 금액을 나타냅니다.
+  
+    TopDeposit:
+      type: object
+      properties:
+        depositCategory:
+          type: string
+          description: 입금 카테고리를 나타냅니다.
+        depositAmount:
+          type: number
+          format: double
+          description: 입금 금액을 나타냅니다.
+          
+    TopDeposits:
+      type: object
+      properties:
+        deposits:
+          type: array
+          items:
+            $ref: '#/components/schemas/TopDeposit'
+          description: 상위 입금 내역 목록입니다.
+        totalAmount:
+          type: number
+          format: double
+          description: 총 입금 누적액입니다.
+      required:
+        - deposits
+        - totalAmount
+  
+    MembershipFeePayers:
+      type: object
+      properties:
+        memberId:
+          type: integer
+          format: int64
+          description: 회원 ID
+        memberName:
+          type: string
+          description: 회원 이름
+        amount:
+          type: number
+          format: double
+        memberStatus:
+          type: string
+          enum:
+            - ACTIVE
+            - DORMANT
+            - GUEST
+        isDeposited:
+          type: boolean
+        depositDate:
+          type: string
+          format: date
+          description: 입금 일자 (YYYY-MM-DD 형식)
+      required:
+        - memberId
+        - memberName
+        - amount
+        - memberStatus
+        - isDeposited
+        - depositDate
+        
+    DepositeRate:
+      type: object
+      properties:
+        year:
+          type: integer
+          format: int32
+          description: 연도
+        month:
+          type: integer
+          format: int32
+          description: 월
+        depositRate:
+          type: number
+          format: double
+          description: 예치율 (퍼센트)
+        totalMembers:
+          type: integer
+          format: int32
+          description: 총 회원 수
+        paidMembers:
+          type: integer
+          format: int32
+          description: 입금한 회원 수
+      required:
+        - year
+        - month
+        - depositRate
+        - totalMembers
+        - paidMembers
+        
+    AccountTransactions:
+      type: object
+      properties:
+        transactionId:
+          type: integer
+          format: int64
+        depositDate:
+          type: string
+          format: date-time
+        transactionType:
+          type: string
+          enum:
+            - DEPOSIT
+            - WITHDRAWAL
+        transactionCategory:
+          type: string
+        transactionParty:
+          type: string
+        amount:
+          type: number
+          format: double
+        balance:
+          type: number
+          format: double
+    
+    EventName:
+      type: object
+      properties:
+        eventId:
+          type: integer
+          format: int64
+          description: 이벤트 ID
+        eventName:
+          type: string
+          description: 이벤트 이름
+      required:
+        - eventId
+        - eventName
+        
+    EventApplicant:
+      type: object
+      properties:
+        eventId:
+          type: integer
+          format: int64
+        applicantIds:
+          type: array
+          items:
+            type: integer
+            format: int64
+        description:
+          type: string
+        depositStatus:
+          type: string
+          enum:
+            - NOT_COMPLETED
+            - COMPLETED
+            
+    Events:
+      type: object
+      properties:
+        eventId:
+          type: integer
+          format: int64
+        eventName:
+          type: string
+        description:
+          type: string
+        amount:
+          type: number
+          format: double
+        depositDate:
+          type: string
+          format: date-time
+        status:
+          type: string
+          enum:
+            - ACTIVE
+            - INACTIVE
+        
+    Event:
+      type: object
+      properties:
+        eventName:
+          type: string
+        amount:
+          type: number
+          format: double
+        description:
+          type: string
+        dueDate:
+          type: string
+          format: date-time
+        status:
+          type: string
+          enum:
+            - ACTIVE
+            - NOT_ACTIVE
+    
+    Transfer:
+      type: object
+      properties:
+        senderId:
+          type: integer
+          format: int64
+        expenseCategory:
+          type: string
+          enum:
+            - BEVERAGE_PURCHASE
+            - RENTAL_FEE
+            - LESSON_FEE
+            - FRIENDLY_GAME_EXPENSE
+            - COMPETITION_PARTICIPATION_FEE
+            - UNIFORM_EXPENSE
+            - TEAM_PARTY_EXPENSE
+        recipientName:
+          type: string
+          description: 수취인 이름
+        recipientAccountNumber:
+          type: string
+          description: 수취인 계좌 번호
+        amount:
+          type: number
+          format: double
+        expenseDate:
+          type: string
+          format: date-time  
+        description:
+          type: string
+          
+    CardPayment:
+      type: object
+      properties:
+        cardHolderId:
+          type: integer
+          format: int64
+        expenseCategory:
+          type: string
+          enum:
+            - BEVERAGE_PURCHASE
+            - RENTAL_FEE
+            - LESSON_FEE
+            - FRIENDLY_GAME_EXPENSE
+            - COMPETITION_PARTICIPATION_FEE
+            - UNIFORM_EXPENSE
+            - TEAM_PARTY_EXPENSE
+        cardUsageLocation:
+          type: string
+          description: 카드 사용처
+        amount:
+          type: number
+          format: double
+        expenseDate:
+          type: string
+          format: date-time  
+        description:
+          type: string
+    
+    BankDeposit:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+            - INTEREST
+            - CASHBACK
+        depositor:
+          type: string
+        depositDate:
+          type: string
+          format: date-time
+        amount:
+          type: number
+          format: double
+        description:
+          type: string
+  
+    MembershipFeeDeposit:
+      type: object
+      properties:
+        depositorIds:
+          type: array
+          items:
+            type: integer
+            format: int64
+        depositDate:
+          type: string
+          format: date-time
+        amount:
+          type: number
+          format: double
+        dueDate:
+          type: string
+          format: date-time
+        memberType:
+          type: string
+          enum:
+            - ACTIVE
+            - INACTIVE
+            - GUEST
+        description:
+          type: string
+        
+        
+    EventDeposit:
+      type: object
+      properties:
+        eventId:
+          type: integer
+          format: int64
+        depositorIds:
+          type: array
+          items:
+            type: integer
+            format: int64
+        depositDate:
+          type: string
+          format: date-time
+        amount:
+          type: number
+          format: double
+        description:
+          type: string
+
+    Account:
+      type: object
+      properties:
+        isDefault:
+          type: boolean
+          description: Indicates if this is the default account
+        accountNickname:
+          type: string
+          description: The nickname for the account
+        accountHolder:
+          type: string
+        accountNumber:
+          type: string
+        bank:
+          type: string
+          enum:
+            - KB
+            - SH
+        usageStartDate:
+          type: string
+          format: date-time
+          description: The date and time when usage of the account starts
+        usageEndDate:
+          type: string
+          format: date-time
+        accountStatus:
+          type: string
+          enum:
+            - ACTIVE
+            - INACTIVE
+            - SUSPENDED
+          description: The status of the account
+      required:
+        - isDefault
+        - purpose
+        - accountNickname
+        - accountHolder
+        - accountNumber
+        - bank
+        - usageStartDate
+        - usageEndDate
+        - accountStatus
+    Accounts:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: The ID of the account
+        isDefault:
+          type: boolean
+          description: Indicates if this is the default account
+        purpose:
+          type: string
+          enum:
+            - DEFAULT
+          description: The purpose of the account
+        accountNickname:
+          type: string
+          description: The nickname for the account
+        accountStatus:
+          type: string
+          enum:
+            - ACTIVE
+            - INACTIVE
+            - SUSPENDED
+          description: The status of the account
+    
+    AccountBalance:
+      properties:
+        balance:
+          format: decimal
+          description: balance의 타입은 BigDecimal 입니다.
+
+    ApiResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        type:
+          type: string
+        message:
+          type: string
+      xml:
+        name: '##default'
+  
+  securitySchemes:
+    petstore_auth:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: https://petstore3.swagger.io/oauth/authorize
+          scopes:
+            write:pets: modify pets in your account
+            read:pets: read your pets
+    api_key:
+      type: apiKey
+      name: api_key
+      in: header
