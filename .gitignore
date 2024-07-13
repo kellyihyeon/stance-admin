@@ -35,3 +35,9 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### openapi generator
+src/main/openapi-generated/**
+
+### Ignore macOS .DS_Store files
+.DS_Store
