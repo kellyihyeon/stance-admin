@@ -65,7 +65,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Account'
+              $ref: '#/components/schemas/AccountInput'
         required: true
       responses:
         '201':
@@ -923,7 +923,7 @@ components:
         description:
           type: string
 
-    Account:
+    AccountInput:
       type: object
       properties:
         isDefault:
@@ -953,7 +953,6 @@ components:
           enum:
             - ACTIVE
             - INACTIVE
-            - SUSPENDED
           description: The status of the account
       required:
         - isDefault

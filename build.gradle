@@ -67,7 +67,12 @@ openApiGenerate {
 }
 
 tasks.named("openApiGenerate") {
-    it-> it.doLast {
+
+    it -> it.doFirst {
+        delete("${projectDir}/src/main/openapi-generated")
+    }
+
+    it.doLast {
         delete("${projectDir}/src/main/pom.xml")
         delete("${projectDir}/src/main/README.md")
         delete("${projectDir}/src/main/.openapi-generator-ignore")
