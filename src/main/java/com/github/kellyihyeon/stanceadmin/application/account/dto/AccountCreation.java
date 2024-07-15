@@ -3,7 +3,7 @@ package com.github.kellyihyeon.stanceadmin.application.account.dto;
 import com.github.kellyihyeon.stanceadmin.domain.account.AccountStatus;
 import com.github.kellyihyeon.stanceadmin.domain.account.Bank;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public record AccountCreation(
         boolean isDefault,
@@ -11,8 +11,8 @@ public record AccountCreation(
         String accountHolder,
         String accountNumber,
         Bank bank,
-        LocalDateTime usageStartDate,
-        LocalDateTime usageEndDate,
+        LocalDate usageStartDate,
+        LocalDate usageEndDate,
         AccountStatus status
 ) {
 }

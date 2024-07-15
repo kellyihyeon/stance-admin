@@ -943,11 +943,11 @@ components:
             - SH
         usageStartDate:
           type: string
-          format: date-time
-          description: The date and time when usage of the account starts
+          format: date
+          description: The date when usage of the account starts
         usageEndDate:
           type: string
-          format: date-time
+          format: date
         accountStatus:
           type: string
           enum:

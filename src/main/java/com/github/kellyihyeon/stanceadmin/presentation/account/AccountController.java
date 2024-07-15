@@ -8,6 +8,7 @@ import com.github.kellyihyeon.stanceadmin.domain.account.Bank;
 import com.github.kellyihyeon.stanceadmin.models.AccountBalance;
 import com.github.kellyihyeon.stanceadmin.models.AccountInput;
 import com.github.kellyihyeon.stanceadmin.models.Accounts;
+import com.github.kellyihyeon.stanceadmin.presentation.TimeConverter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,8 +31,8 @@ public class AccountController implements AccountApi {
                 accountInput.getAccountHolder(),
                 accountInput.getAccountNumber(),
                 Bank.valueOf(accountInput.getBank().getValue()),
-                null,
-                null,
+                TimeConverter.convertToLocalDate(accountInput.getUsageStartDate()),
+                TimeConverter.convertToLocalDate(accountInput.getUsageEndDate()),
                 AccountStatus.valueOf(accountInput.getAccountStatus().getValue()));
 
         accountService.createAccount(accountCreation);
