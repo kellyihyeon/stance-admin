@@ -1,10 +1,12 @@
 package com.github.kellyihyeon.stanceadmin.domain.account;
 
+import com.github.kellyihyeon.stanceadmin.infrastructure.repository.account.AccountEntity;
+
 import java.util.List;
 
 public interface AccountRepository {
 
-    void createAccount(Account account);
+    void createAccount(AccountEntity accountEntity);
 
     List<Account> getAllAccounts();
 

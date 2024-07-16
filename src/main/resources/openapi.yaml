@@ -945,9 +945,6 @@ components:
           type: string
           format: date
           description: The date when usage of the account starts
-        usageEndDate:
-          type: string
-          format: date
         accountStatus:
           type: string
           enum:

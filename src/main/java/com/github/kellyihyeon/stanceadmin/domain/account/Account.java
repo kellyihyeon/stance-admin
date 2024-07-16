@@ -51,6 +51,19 @@ public class Account {
         requireNonNull(accountStatus, "'계좌 상태' 는 null 이어서는 안됩니다.");
         requireNonNull(createdAt, "'데이터 생성일' 은 null 이어서는 안됩니다.");
         requireNonNull(creatorId, "'데이터 생성자 ID' 는 null 이어서는 안됩니다.");
+
+        this.isDefault = isDefault;
+        this.accountNickname = accountNickname;
+        this.balance = balance;
+        this.accountHolder = accountHolder;
+        this.accountNumber = accountNumber;
+        this.bank = bank;
+        this.usageStartDate = usageStartDate;
+        this.accountStatus = accountStatus;
+        this.createdAt = createdAt;
+        this.creatorId = creatorId;
+
+
     }
 
     private <T> T requireNonNull(T obj, String message) {

@@ -32,7 +32,6 @@ public class AccountController implements AccountApi {
                 accountInput.getAccountNumber(),
                 Bank.valueOf(accountInput.getBank().getValue()),
                 TimeConverter.convertToLocalDate(accountInput.getUsageStartDate()),
-                TimeConverter.convertToLocalDate(accountInput.getUsageEndDate()),
                 AccountStatus.valueOf(accountInput.getAccountStatus().getValue()));
 
         accountService.createAccount(accountCreation);

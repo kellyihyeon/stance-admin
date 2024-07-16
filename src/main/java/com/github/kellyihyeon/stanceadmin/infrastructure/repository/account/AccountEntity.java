@@ -40,7 +40,7 @@ public class AccountEntity {
     @Column(name = "usage_start_date", nullable = false)
     private LocalDate usageStartDate;
 
-    @Column(name = "usage_end_date", nullable = false)
+    @Column(name = "usage_end_date")
     private LocalDate usageEndDate;
 
     @Enumerated(EnumType.STRING)
@@ -53,10 +53,10 @@ public class AccountEntity {
     @Column(name = "creator_id", nullable = false)
     private Long creatorId;
 
-    @Column(name = "updated_at", nullable = false)
+    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @Column(name = "updater_id", nullable = false)
+    @Column(name = "updater_id")
     private Long updaterId;
 
     private AccountEntity(boolean isDefault, String accountNickname, Double balance, String accountHolder, String accountNumber, Bank bank, LocalDate usageStartDate, AccountStatus accountStatus, LocalDateTime createdAt, Long creatorId) {
