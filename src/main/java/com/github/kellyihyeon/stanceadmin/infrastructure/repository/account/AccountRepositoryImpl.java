@@ -1,7 +1,9 @@
 package com.github.kellyihyeon.stanceadmin.infrastructure.repository.account;
 
+import com.github.kellyihyeon.stanceadmin.application.account.AccountMapper;
 import com.github.kellyihyeon.stanceadmin.domain.account.Account;
 import com.github.kellyihyeon.stanceadmin.domain.account.AccountRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -31,5 +33,13 @@ public class AccountRepositoryImpl implements AccountRepository {
     @Override
     public void deleteAccount(Long id) {
 
+    }
+
+    @Override
+    public Account getDefaultAccount() {
+        AccountEntity defaultAccountEntity = entityRepository.findByIsDefault(true)
+                .orElseThrow(() -> new EntityNotFoundException("기본 계좌로 설정된 계좌가 없어요."));
+
+        return AccountMapper.toDomain(defaultAccountEntity);
     }
 }

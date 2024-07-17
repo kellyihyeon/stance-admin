@@ -13,4 +13,6 @@ public interface AccountRepository {
     void modifyAccount(Account updatedAccount);
 
     void deleteAccount(Long id);
+
+    Account getDefaultAccount();
 }

@@ -4,12 +4,14 @@ import com.github.kellyihyeon.stanceadmin.domain.account.AccountStatus;
 import com.github.kellyihyeon.stanceadmin.domain.account.Bank;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
+@Getter
 @Table(name = "accounts")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class AccountEntity {

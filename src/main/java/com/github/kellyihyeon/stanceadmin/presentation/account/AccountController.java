@@ -13,7 +13,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.math.BigDecimal;
 import java.net.URI;
 import java.util.List;
 
@@ -50,7 +49,7 @@ public class AccountController implements AccountApi {
 
     @Override
     public ResponseEntity<AccountBalance> getBalance() {
-        AccountBalance balance = new AccountBalance().balance(new BigDecimal("870000"));
+        AccountBalance balance = accountService.getBalance();
         return ResponseEntity.ok(balance);
     }
 

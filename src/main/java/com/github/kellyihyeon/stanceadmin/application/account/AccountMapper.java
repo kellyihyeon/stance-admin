@@ -20,4 +20,18 @@ public class AccountMapper {
         );
     }
 
+    public static Account toDomain(AccountEntity accountEntity) {
+        return new Account(
+                accountEntity.getIsDefault(),
+                accountEntity.getAccountNickname(),
+                accountEntity.getBalance(),
+                accountEntity.getAccountHolder(),
+                accountEntity.getAccountNumber(),
+                accountEntity.getBank(),
+                accountEntity.getUsageStartDate(),
+                accountEntity.getAccountStatus(),
+                accountEntity.getCreatedAt(),
+                accountEntity.getCreatorId()
+        );
+    }
 }
