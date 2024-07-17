@@ -33,8 +33,7 @@ public class AccountService {
                 loggedInAdminId
         );
 
-        AccountEntity entity = AccountMapper.toEntity(account);
-        accountRepository.createAccount(entity);
+        accountRepository.createAccount(account);
     }
 
     public AccountBalance getBalance() {

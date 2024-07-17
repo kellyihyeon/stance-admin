@@ -16,8 +16,9 @@ public class AccountRepositoryImpl implements AccountRepository {
     private final JpaAccountEntityRepository entityRepository;
 
     @Override
-    public void createAccount(AccountEntity accountEntity) {
-        entityRepository.save(accountEntity);
+    public void createAccount(Account account) {
+        AccountEntity entity = AccountMapper.toEntity(account);
+        entityRepository.save(entity);
     }
 
     @Override
