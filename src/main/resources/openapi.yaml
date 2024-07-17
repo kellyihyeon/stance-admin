@@ -940,7 +940,13 @@ components:
           type: string
           enum:
             - KB
+            - HN
+            - WR
+            - IBK
+            - NH
             - SH
+            - KAKAO
+            - TOSS
         usageStartDate:
           type: string
           format: date

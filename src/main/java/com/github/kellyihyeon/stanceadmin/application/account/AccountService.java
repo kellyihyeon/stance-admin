@@ -3,7 +3,6 @@ package com.github.kellyihyeon.stanceadmin.application.account;
 import com.github.kellyihyeon.stanceadmin.application.account.dto.AccountCreation;
 import com.github.kellyihyeon.stanceadmin.domain.account.Account;
 import com.github.kellyihyeon.stanceadmin.domain.account.AccountRepository;
-import com.github.kellyihyeon.stanceadmin.infrastructure.repository.account.AccountEntity;
 import com.github.kellyihyeon.stanceadmin.models.AccountBalance;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
