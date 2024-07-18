@@ -29,6 +29,7 @@ public class MemberShipFeeDepositTransactionEntity {
     @Column(name = "due_date", nullable = false)
     private LocalDate dueDate;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "member_type", nullable = false)
     private MemberType memberType;
 

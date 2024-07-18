@@ -6,6 +6,8 @@ import com.github.kellyihyeon.stanceadmin.domain.accounttransaction.MembershipFe
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class AccountTransactionService {
@@ -14,7 +16,10 @@ public class AccountTransactionService {
 
 
     public void createMembershipFeeDepositTransaction(MemberShipFeeDepositCreation serviceDto) {
-        MembershipFeeDepositTransaction domain = serviceDto.toDomain();
-        repository.createMembershipFeeDepositTransaction(domain);
+        List<MembershipFeeDepositTransaction> transactions = serviceDto.toDomain();
+
+        for (MembershipFeeDepositTransaction domain : transactions) {
+            repository.createMembershipFeeDepositTransaction(domain);
+        }
     }
 }

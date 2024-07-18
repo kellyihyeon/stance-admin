@@ -4,6 +4,8 @@ import com.github.kellyihyeon.stanceadmin.domain.accounttransaction.MembershipFe
 import com.github.kellyihyeon.stanceadmin.domain.member.MemberType;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public record MemberShipFeeDepositCreation (
@@ -15,8 +17,27 @@ public record MemberShipFeeDepositCreation (
         String description
 ) {
 
-    public MembershipFeeDepositTransaction toDomain() {
-        return null;
+    public List<MembershipFeeDepositTransaction> toDomain() {
+        List<MembershipFeeDepositTransaction> transactions = new ArrayList<>();
+        LocalDateTime now = LocalDateTime.now();
+        Long loggedInId = 999L;
+
+        for (Long depositorId : depositorIds) {
+            transactions.add(
+                    new MembershipFeeDepositTransaction(
+                            depositorId,
+                            depositDate,
+                            amount,
+                            dueDate,
+                            memberType,
+                            description,
+                            now,
+                            loggedInId
+                    )
+            );
+        }
+
+        return transactions;
     }
 
 }

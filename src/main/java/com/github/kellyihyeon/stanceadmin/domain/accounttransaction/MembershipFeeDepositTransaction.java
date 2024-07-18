@@ -34,12 +34,13 @@ public class MembershipFeeDepositTransaction {
 
     private Long updaterId;
 
-    public MembershipFeeDepositTransaction(Long depositorId, LocalDate depositDate, Double amount, LocalDate dueDate, MemberType memberType, LocalDateTime createdAt, Long creatorId) {
+    public MembershipFeeDepositTransaction(Long depositorId, LocalDate depositDate, Double amount, LocalDate dueDate, MemberType memberType, String description, LocalDateTime createdAt, Long creatorId) {
         this.depositorId = depositorId;
         this.depositDate = depositDate;
         this.amount = amount;
         this.dueDate = dueDate;
         this.memberType = memberType;
+        this.description = description;
         this.createdAt = createdAt;
         this.creatorId = creatorId;
     }
