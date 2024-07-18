@@ -3,12 +3,14 @@ package com.github.kellyihyeon.stanceadmin.infrastructure.repository.accounttran
 import com.github.kellyihyeon.stanceadmin.domain.member.MemberType;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "membership_fee_deposit_transactions")
 public class MemberShipFeeDepositTransactionEntity {

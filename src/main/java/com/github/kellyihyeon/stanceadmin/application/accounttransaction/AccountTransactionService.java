@@ -19,7 +19,13 @@ public class AccountTransactionService {
         List<MembershipFeeDepositTransaction> transactions = serviceDto.toDomain();
 
         for (MembershipFeeDepositTransaction domain : transactions) {
-            repository.createMembershipFeeDepositTransaction(domain);
+            Long transactionId = repository.createMembershipFeeDepositTransaction(domain);
+            this.createAccountTransaction(transactionId);
         }
+    }
+
+    public void createAccountTransaction(Long transactionId) {
+        // create AccountTransaction
+        repository.createAccountTransaction(null);
     }
 }

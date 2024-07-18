@@ -24,8 +24,7 @@ public class AccountTransaction {
 
     private Long creatorId;
 
-    public AccountTransaction(Long id, Long accountId, TransactionType transactionType, Long transactionId, TransactionSubType transactionSubType, LocalDateTime createdAt, Long creatorId) {
-        this.id = id;
+    public AccountTransaction(Long accountId, TransactionType transactionType, Long transactionId, TransactionSubType transactionSubType, LocalDateTime createdAt, Long creatorId) {
         this.accountId = accountId;
         this.transactionType = transactionType;
         this.transactionId = transactionId;
