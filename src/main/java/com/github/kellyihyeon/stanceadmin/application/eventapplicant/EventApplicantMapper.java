@@ -2,7 +2,7 @@ package com.github.kellyihyeon.stanceadmin.application.eventapplicant;
 
 import com.github.kellyihyeon.stanceadmin.application.eventapplicant.dto.EventApplicantCreation;
 import com.github.kellyihyeon.stanceadmin.domain.eventapplicant.EventApplicantRegistry;
-import com.github.kellyihyeon.stanceadmin.infrastructure.repository.eventapplicant.EventApplicantEntity;
+import com.github.kellyihyeon.stanceadmin.infrastructure.repository.eventapplicant.EventApplicantRegistryEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +24,7 @@ public class EventApplicantMapper {
         return eventApplicantRegistries;
     }
 
-    public static EventApplicantEntity toEntity(EventApplicantRegistry eventApplicantRegistry) {
+    public static EventApplicantRegistryEntity toEntity(EventApplicantRegistry eventApplicantRegistry) {
         return null;
     }
 }
