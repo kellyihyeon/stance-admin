@@ -26,4 +26,15 @@ public class EventMapper {
                 event.getStatus()
         );
     }
+
+    public static Event toDomain(EventEntity eventEntity) {
+        return Event.create(
+                eventEntity.getId(),
+                eventEntity.getEventItem(),
+                eventEntity.getAmount(),
+                eventEntity.getDueDate(),
+                eventEntity.getDescription(),
+                eventEntity.getStatus()
+        );
+    }
 }

@@ -6,7 +6,7 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "event_applicant")
+@Table(name = "event_applicant_registry")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class EventApplicantRegistryEntity {
 

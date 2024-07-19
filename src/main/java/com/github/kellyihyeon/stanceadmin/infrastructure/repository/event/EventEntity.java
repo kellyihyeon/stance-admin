@@ -4,11 +4,13 @@ import com.github.kellyihyeon.stanceadmin.domain.event.EventItem;
 import com.github.kellyihyeon.stanceadmin.domain.event.EventStatus;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
 @Entity
+@Getter
 @Table(name = "events")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class EventEntity {
