@@ -7,7 +7,14 @@ import com.github.kellyihyeon.stanceadmin.infrastructure.repository.event.EventE
 public class EventMapper {
 
     public static Event toDomain(EventCreation eventCreation) {
-        return null;
+        return Event.create(
+                null,
+                eventCreation.eventItem(),
+                eventCreation.amount(),
+                eventCreation.dueDate(),
+                eventCreation.description(),
+                eventCreation.status()
+        );
     }
 
     public static EventEntity toEntity(Event event) {
