@@ -176,7 +176,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/MembershipFeeDeposit'
+              $ref: '#/components/schemas/MembershipFeeDepositInput'
         required: true
       responses:
         '201':
@@ -876,7 +876,7 @@ components:
         description:
           type: string
   
-    MembershipFeeDeposit:
+    MembershipFeeDepositInput:
       type: object
       properties:
         depositorIds:
@@ -886,13 +886,13 @@ components:
             format: int64
         depositDate:
           type: string
-          format: date-time
+          format: date
         amount:
           type: number
           format: double
         dueDate:
           type: string
-          format: date-time
+          format: date
         memberType:
           type: string
           enum:
@@ -901,8 +901,13 @@ components:
             - GUEST
         description:
           type: string
-        
-        
+      required:
+        - depositorIds
+        - depositDate
+        - amount
+        - dueDate
+        - memberType
+
     EventDeposit:
       type: object
       properties:
