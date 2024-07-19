@@ -784,6 +784,11 @@ components:
       properties:
         eventItem:
           type: string
+          enum:
+          - TEAM_PARTY
+          - UNIFORM
+          - MEMBERSHIP_TRAINING
+
         amount:
           type: number
           format: double
@@ -791,7 +796,7 @@ components:
           type: string
         dueDate:
           type: string
-          format: date-time
+          format: date
         status:
           type: string
           enum:

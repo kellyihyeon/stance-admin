@@ -3,9 +3,12 @@ package com.github.kellyihyeon.stanceadmin.presentation.event;
 import com.github.kellyihyeon.stanceadmin.apis.EventApi;
 import com.github.kellyihyeon.stanceadmin.application.event.EventService;
 import com.github.kellyihyeon.stanceadmin.application.event.dto.EventCreation;
+import com.github.kellyihyeon.stanceadmin.domain.event.EventItem;
+import com.github.kellyihyeon.stanceadmin.domain.event.EventStatus;
 import com.github.kellyihyeon.stanceadmin.models.EventInput;
 import com.github.kellyihyeon.stanceadmin.models.EventName;
 import com.github.kellyihyeon.stanceadmin.models.Events;
+import com.github.kellyihyeon.stanceadmin.presentation.TimeConverter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,11 +26,11 @@ public class EventController implements EventApi {
     @Override
     public ResponseEntity<Void> addEvent(EventInput eventInput) {
         EventCreation eventCreation = new EventCreation(
-                eventInput.getEventItem(),
+                EventItem.valueOf(eventInput.getEventItem().getValue()),
                 eventInput.getAmount(),
-                eventInput.getDueDate(),
+                TimeConverter.convertToLocalDate(eventInput.getDueDate()),
                 eventInput.getDescription(),
-                eventInput.getStatus()
+                EventStatus.valueOf(eventInput.getStatus().getValue())
         );
 
         eventService.createEvent(eventCreation);

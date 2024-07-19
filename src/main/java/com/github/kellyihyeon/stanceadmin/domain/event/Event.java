@@ -32,7 +32,7 @@ public class Event {
         this.status = status;
     }
 
-    public Event create(Long id, EventItem eventItem, Double amount, LocalDate dueDate, String description, EventStatus status) {
+    public static Event create(Long id, EventItem eventItem, Double amount, LocalDate dueDate, String description, EventStatus status) {
         Objects.requireNonNull(eventItem, "eventItem 은 null 이어서는 안됩니다.");
         Objects.requireNonNull(amount, "amount 은 null 이어서는 안됩니다.");
         Objects.requireNonNull(dueDate, "dueDate 는 null 이어서는 안됩니다.");

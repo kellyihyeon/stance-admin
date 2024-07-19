@@ -1,12 +1,22 @@
 package com.github.kellyihyeon.stanceadmin.application.event.dto;
 
-import com.github.kellyihyeon.stanceadmin.models.EventInput;
+import com.github.kellyihyeon.stanceadmin.domain.event.EventItem;
+import com.github.kellyihyeon.stanceadmin.domain.event.EventStatus;
 
-import java.util.Date;
+import java.time.LocalDate;
 
-public class EventCreation {
+public record EventCreation(
+        EventItem eventItem,
+        Double amount,
+        LocalDate dueDate,
+        String description,
+        EventStatus status) {
 
-    public EventCreation(String eventItem, Double amount, Date dueDate, String description, EventInput.StatusEnum status) {
-
+    public EventCreation(EventItem eventItem, Double amount, LocalDate dueDate, String description, EventStatus status) {
+        this.eventItem = eventItem;
+        this.amount = amount;
+        this.dueDate = dueDate;
+        this.description = description;
+        this.status = status;
     }
 }
