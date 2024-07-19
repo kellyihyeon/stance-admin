@@ -18,6 +18,12 @@ public class EventMapper {
     }
 
     public static EventEntity toEntity(Event event) {
-        return null;
+        return new EventEntity(
+                event.getEventItem(),
+                event.getAmount(),
+                event.getDueDate(),
+                event.getDescription(),
+                event.getStatus()
+        );
     }
 }
