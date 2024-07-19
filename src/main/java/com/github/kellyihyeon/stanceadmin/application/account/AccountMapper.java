@@ -22,6 +22,7 @@ public class AccountMapper {
 
     public static Account toDomain(AccountEntity accountEntity) {
         return new Account(
+                accountEntity.getId(),
                 accountEntity.getIsDefault(),
                 accountEntity.getAccountNickname(),
                 accountEntity.getBalance(),

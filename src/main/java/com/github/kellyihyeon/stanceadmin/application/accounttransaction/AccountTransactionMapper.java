@@ -6,6 +6,13 @@ import com.github.kellyihyeon.stanceadmin.infrastructure.repository.accounttrans
 public class AccountTransactionMapper {
 
     public static AccountTransactionEntity toEntity(AccountTransaction accountTransaction) {
-        return null;
+        return new AccountTransactionEntity(
+                accountTransaction.getAccountId(),
+                accountTransaction.getTransactionType(),
+                accountTransaction.getTransactionId(),
+                accountTransaction.getTransactionSubType(),
+                accountTransaction.getCreatedAt(),
+                accountTransaction.getCreatorId()
+        );
     }
 }

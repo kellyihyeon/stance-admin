@@ -5,6 +5,7 @@ import com.github.kellyihyeon.stanceadmin.domain.account.AccountRepository;
 import com.github.kellyihyeon.stanceadmin.domain.accounttransaction.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -16,7 +17,7 @@ public class AccountTransactionService {
     private final AccountTransactionRepository repository;
     private final AccountRepository accountRepository;
 
-
+    @Transactional
     public void createMembershipFeeDepositTransaction(MemberShipFeeDepositCreation serviceDto) {
         List<MembershipFeeDepositTransaction> transactions = serviceDto.toDomain();
 

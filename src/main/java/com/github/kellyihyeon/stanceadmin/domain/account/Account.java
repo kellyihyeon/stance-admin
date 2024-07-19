@@ -3,11 +3,13 @@ package com.github.kellyihyeon.stanceadmin.domain.account;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+@ToString
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Account {
@@ -40,7 +42,7 @@ public class Account {
 
     private Long updaterId;
 
-    public Account(Boolean isDefault, String accountNickname, Double balance, String accountHolder, String accountNumber, Bank bank, LocalDate usageStartDate, AccountStatus accountStatus, LocalDateTime createdAt, Long creatorId) {
+    public Account(Long id, Boolean isDefault, String accountNickname, Double balance, String accountHolder, String accountNumber, Bank bank, LocalDate usageStartDate, AccountStatus accountStatus, LocalDateTime createdAt, Long creatorId) {
         requireNonNull(isDefault, "'기본 계좌 여부' 는 null 이어서는 안됩니다.");
         requireNonNull(accountNickname, "'계좌 별칭' 은 null 이어서는 안됩니다.");
         requireNonNull(balance, "'잔액' 은 null 이어서는 안됩니다.");
@@ -52,6 +54,7 @@ public class Account {
         requireNonNull(createdAt, "'데이터 생성일' 은 null 이어서는 안됩니다.");
         requireNonNull(creatorId, "'데이터 생성자 ID' 는 null 이어서는 안됩니다.");
 
+        this.id = id;
         this.isDefault = isDefault;
         this.accountNickname = accountNickname;
         this.balance = balance;

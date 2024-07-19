@@ -20,6 +20,7 @@ public class AccountService {
         Double initialBalance = (double) 0;
 
         Account account = new Account(
+                null,
                 accountCreation.isDefault(),
                 accountCreation.accountNickname(),
                 initialBalance,
