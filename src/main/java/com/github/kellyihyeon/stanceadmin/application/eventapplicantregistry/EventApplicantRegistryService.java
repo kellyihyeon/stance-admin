@@ -7,6 +7,7 @@ import com.github.kellyihyeon.stanceadmin.domain.eventapplicantregistry.EventApp
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -20,8 +21,21 @@ public class EventApplicantRegistryService {
         eventService.existsActiveEvent(eventApplicantRegistryCreation.eventId());
         List<EventApplicantRegistry> eventApplicantRegistries = EventApplicantRegistryMapper.toDomains(eventApplicantRegistryCreation);
 
+        LocalDateTime now = LocalDateTime.now();
+        Long loggedInId = 999L;
+
         for (EventApplicantRegistry eventApplicantRegistry : eventApplicantRegistries) {
-            eventApplicantRegistryRepository.createEventApplicant(eventApplicantRegistry);
+            eventApplicantRegistryRepository.createEventApplicant(
+                    new EventApplicantRegistry(
+                            eventApplicantRegistry.getId(),
+                            eventApplicantRegistry.getEventId(),
+                            eventApplicantRegistry.getApplicantId(),
+                            eventApplicantRegistry.getDescription(),
+                            eventApplicantRegistry.getDepositStatus(),
+                            now,
+                            loggedInId
+                    )
+            );
         }
     }
 }
