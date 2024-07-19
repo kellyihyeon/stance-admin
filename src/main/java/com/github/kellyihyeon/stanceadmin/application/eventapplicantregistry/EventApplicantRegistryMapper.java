@@ -29,7 +29,9 @@ public class EventApplicantRegistryMapper {
                 eventApplicantRegistry.getEventId(),
                 eventApplicantRegistry.getApplicantId(),
                 eventApplicantRegistry.getDescription(),
-                eventApplicantRegistry.getDepositStatus()
+                eventApplicantRegistry.getDepositStatus(),
+                eventApplicantRegistry.getCreatedAt(),
+                eventApplicantRegistry.getCreatorId()
         );
     }
 }

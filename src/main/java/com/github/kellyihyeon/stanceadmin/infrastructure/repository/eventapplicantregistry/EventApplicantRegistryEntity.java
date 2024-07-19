@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "event_applicant_registry")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -27,12 +29,26 @@ public class EventApplicantRegistryEntity {
     @Column(name = "deposit_status", nullable = false)
     private DepositStatus depositStatus;
 
+    @Column(name = "created_at", nullable = false)
+    private LocalDateTime createdAt;
 
-    public EventApplicantRegistryEntity(Long eventId, Long applicantId, String description, DepositStatus depositStatus) {
+    @Column(name = "creator_id", nullable = false)
+    private Long creatorId;
+
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+
+    @Column(name = "updater_id")
+    private Long updaterId;
+
+
+    public EventApplicantRegistryEntity(Long eventId, Long applicantId, String description, DepositStatus depositStatus, LocalDateTime createdAt, Long creatorId) {
         this.eventId = eventId;
         this.applicantId = applicantId;
         this.description = description;
         this.depositStatus = depositStatus;
+        this.createdAt = createdAt;
+        this.creatorId = creatorId;
     }
 }
 
