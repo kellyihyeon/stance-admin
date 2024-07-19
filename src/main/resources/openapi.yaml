@@ -434,7 +434,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Event'
+                $ref: '#/components/schemas/EventInput'
           required: true
         responses:
           '201':
@@ -779,10 +779,10 @@ components:
             - ACTIVE
             - INACTIVE
         
-    Event:
+    EventInput:
       type: object
       properties:
-        eventName:
+        eventItem:
           type: string
         amount:
           type: number
@@ -796,8 +796,13 @@ components:
           type: string
           enum:
             - ACTIVE
-            - NOT_ACTIVE
-    
+            - INACTIVE
+      required:
+        - eventItem
+        - amount
+        - dueDate
+        - status
+
     Transfer:
       type: object
       properties:
