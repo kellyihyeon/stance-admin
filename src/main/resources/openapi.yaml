@@ -751,12 +751,10 @@ components:
             format: int64
         description:
           type: string
-        depositStatus:
-          type: string
-          enum:
-            - NOT_COMPLETED
-            - COMPLETED
-            
+      required:
+        - eventId
+        - applicantIds
+
     Events:
       type: object
       properties:

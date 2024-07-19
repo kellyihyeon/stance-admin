@@ -11,10 +11,7 @@ public record EventApplicantCreation (
         DepositStatus depositStatus
 )
 {
-    public EventApplicantCreation(Long eventId, List<Long> applicantIds, String description, DepositStatus depositStatus) {
-        this.eventId = eventId;
-        this.applicantIds = applicantIds;
-        this.description = description;
-        this.depositStatus = depositStatus;
+    public EventApplicantCreation(Long eventId, List<Long> applicantIds, String description) {
+        this(eventId, applicantIds, description, DepositStatus.NOT_COMPLETED);
     }
 }

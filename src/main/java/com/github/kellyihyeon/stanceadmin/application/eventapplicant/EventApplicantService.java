@@ -6,6 +6,8 @@ import com.github.kellyihyeon.stanceadmin.domain.eventapplicant.EventApplicantRe
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class EventApplicantService {
@@ -13,7 +15,10 @@ public class EventApplicantService {
     private final EventApplicantRepository eventApplicantRepository;
 
     public void createEventApplicant(EventApplicantCreation eventApplicantCreation) {
-        EventApplicant eventApplicant = EventApplicantMapper.toDomain(eventApplicantCreation);
-        eventApplicantRepository.createEventApplicant(eventApplicant);
+        List<EventApplicant> eventApplicants = EventApplicantMapper.toDomains(eventApplicantCreation);
+
+        for (EventApplicant eventApplicant : eventApplicants) {
+            eventApplicantRepository.createEventApplicant(eventApplicant);
+        }
     }
 }
