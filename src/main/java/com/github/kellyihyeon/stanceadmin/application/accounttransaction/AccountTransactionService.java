@@ -32,7 +32,7 @@ public class AccountTransactionService {
         Long loggedInId = 999L;
 
         Long defaultAccountId = accountRepository.getDefaultAccount().getId();
-        AccountTransaction accountTransaction = new AccountTransaction(
+        AccountTransaction accountTransaction = AccountTransaction.create(
                 defaultAccountId,
                 TransactionType.DEPOSIT,
                 transactionId,
