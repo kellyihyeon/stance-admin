@@ -1,4 +1,4 @@
-package com.github.kellyihyeon.stanceadmin.domain.eventapplicant;
+package com.github.kellyihyeon.stanceadmin.domain.eventapplicantregistry;
 
 public enum DepositStatus {
     COMPLETED("입금 완료"),

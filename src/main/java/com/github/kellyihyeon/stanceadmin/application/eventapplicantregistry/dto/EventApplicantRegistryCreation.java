@@ -1,15 +1,15 @@
-package com.github.kellyihyeon.stanceadmin.application.eventapplicant.dto;
+package com.github.kellyihyeon.stanceadmin.application.eventapplicantregistry.dto;
 
 import java.util.List;
 
-public record EventApplicantCreation (
+public record EventApplicantRegistryCreation(
         Long eventId,
         List<Long> applicantIds,
         String description
 )
 {
 
-    public EventApplicantCreation(Long eventId, List<Long> applicantIds, String description) {
+    public EventApplicantRegistryCreation(Long eventId, List<Long> applicantIds, String description) {
         this.eventId = eventId;
         this.applicantIds = applicantIds;
         this.description = description;

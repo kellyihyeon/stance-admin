@@ -1,6 +1,6 @@
-package com.github.kellyihyeon.stanceadmin.infrastructure.repository.eventapplicant;
+package com.github.kellyihyeon.stanceadmin.infrastructure.repository.eventapplicantregistry;
 
-import com.github.kellyihyeon.stanceadmin.domain.eventapplicant.DepositStatus;
+import com.github.kellyihyeon.stanceadmin.domain.eventapplicantregistry.DepositStatus;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

@@ -1,4 +1,4 @@
-package com.github.kellyihyeon.stanceadmin.domain.eventapplicant;
+package com.github.kellyihyeon.stanceadmin.domain.eventapplicantregistry;
 
 import lombok.AccessLevel;
 import lombok.Getter;

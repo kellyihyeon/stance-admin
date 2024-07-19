@@ -1,8 +1,8 @@
-package com.github.kellyihyeon.stanceadmin.presentation.eventapplicant;
+package com.github.kellyihyeon.stanceadmin.presentation.eventapplicantregistry;
 
 import com.github.kellyihyeon.stanceadmin.apis.EventApplicantApi;
-import com.github.kellyihyeon.stanceadmin.application.eventapplicant.EventApplicantService;
-import com.github.kellyihyeon.stanceadmin.application.eventapplicant.dto.EventApplicantCreation;
+import com.github.kellyihyeon.stanceadmin.application.eventapplicantregistry.EventApplicantRegistryService;
+import com.github.kellyihyeon.stanceadmin.application.eventapplicantregistry.dto.EventApplicantRegistryCreation;
 import com.github.kellyihyeon.stanceadmin.models.EventApplicantInput;
 import com.github.kellyihyeon.stanceadmin.models.EventPayers;
 import lombok.RequiredArgsConstructor;
@@ -14,9 +14,9 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-public class EventApplicantController implements EventApplicantApi {
+public class EventApplicantRegistryController implements EventApplicantApi {
 
-    private final EventApplicantService eventApplicantService;
+    private final EventApplicantRegistryService eventApplicantRegistryService;
 
     @Override
     public ResponseEntity<List<EventPayers>> getEventPayersByDepositStatus(String depositStatus) {
@@ -25,13 +25,13 @@ public class EventApplicantController implements EventApplicantApi {
 
     @Override
     public ResponseEntity<Void> saveEventApplicant(EventApplicantInput eventApplicantInput) {
-        EventApplicantCreation eventApplicantCreation = new EventApplicantCreation(
+        EventApplicantRegistryCreation eventApplicantRegistryCreation = new EventApplicantRegistryCreation(
                 eventApplicantInput.getEventId(),
                 eventApplicantInput.getApplicantIds(),
                 eventApplicantInput.getDescription()
         );
 
-        eventApplicantService.createEventApplicant(eventApplicantCreation);
+        eventApplicantRegistryService.createEventApplicant(eventApplicantRegistryCreation);
         return ResponseEntity.created(URI.create("")).build();
     }
 }
