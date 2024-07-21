@@ -4,5 +4,5 @@ public interface EventRepository {
 
     void createEvent(Event event);
 
-    Event findByIdAndStatus(Long eventId, EventStatus status);
+    boolean existsByIdAndStatus(Long eventId, EventStatus status);
 }

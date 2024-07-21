@@ -18,7 +18,10 @@ public class EventApplicantRegistryService {
     private final EventService eventService;
 
     public void createEventApplicant(EventApplicantRegistryCreation eventApplicantRegistryCreation) {
-        eventService.existsActiveEvent(eventApplicantRegistryCreation.eventId());
+        if (!eventService.existsActiveEvent(eventApplicantRegistryCreation.eventId())) {
+            throw new IllegalArgumentException("존재하지 않는 이벤트예요.");
+        }
+
         List<EventApplicantRegistry> eventApplicantRegistries = EventApplicantRegistryMapper.toDomains(eventApplicantRegistryCreation);
 
         LocalDateTime now = LocalDateTime.now();

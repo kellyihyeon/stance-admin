@@ -18,7 +18,7 @@ public class EventService {
         eventRepository.createEvent(event);
     }
 
-    public void existsActiveEvent(Long eventId) {
-        eventRepository.findByIdAndStatus(eventId, EventStatus.ACTIVE);
+    public boolean existsActiveEvent(Long eventId) {
+        return eventRepository.existsByIdAndStatus(eventId, EventStatus.ACTIVE);
     }
 }

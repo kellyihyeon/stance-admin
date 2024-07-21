@@ -4,7 +4,6 @@ import com.github.kellyihyeon.stanceadmin.application.event.EventMapper;
 import com.github.kellyihyeon.stanceadmin.domain.event.Event;
 import com.github.kellyihyeon.stanceadmin.domain.event.EventRepository;
 import com.github.kellyihyeon.stanceadmin.domain.event.EventStatus;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -21,8 +20,7 @@ public class EventRepositoryImpl implements EventRepository {
     }
 
     @Override
-    public Event findByIdAndStatus(Long eventId, EventStatus status) {
-        EventEntity eventEntity = jpaEventRepository.findByIdAndStatus(eventId, status).orElseThrow(() -> new EntityNotFoundException("존재하지 않는 이벤트예요."));
-        return EventMapper.toDomain(eventEntity);
+    public boolean existsByIdAndStatus(Long eventId, EventStatus status) {
+        return jpaEventRepository.existsByIdAndStatus(eventId, status);
     }
 }
