@@ -54,4 +54,15 @@ public class EventApplicantRegistry {
         return new EventApplicantRegistry(id, eventId, applicantId, description, DepositStatus.NOT_COMPLETED);
 
     }
+
+    public void markAsPaid() {
+        this.depositStatus = DepositStatus.COMPLETED;
+    }
+
+    public void markAsUnpaid() {
+        if (DepositStatus.COMPLETED.equals(this.depositStatus)) {
+            throw new IllegalArgumentException("이미 입금완료 처리된 명단은 미입금 처리 할 수 없습니다.");
+        }
+        this.depositStatus = DepositStatus.NOT_COMPLETED;
+    }
 }
