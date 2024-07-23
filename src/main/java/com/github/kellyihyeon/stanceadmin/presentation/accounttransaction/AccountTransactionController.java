@@ -51,7 +51,7 @@ public class AccountTransactionController implements AccountTransactionApi {
     }
 
     @Override
-    public ResponseEntity<Void> saveEventDepositTransaction(EventDeposit eventDeposit) {
+    public ResponseEntity<Void> saveEventDepositTransaction(EventDepositInput eventDepositInput) {
         return null;
     }
 

@@ -157,7 +157,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/EventDeposit'
+              $ref: '#/components/schemas/EventDepositInput'
         required: true
       responses:
         '201':
@@ -916,7 +916,7 @@ components:
         - dueDate
         - memberType
 
-    EventDeposit:
+    EventDepositInput:
       type: object
       properties:
         eventId:
@@ -929,12 +929,17 @@ components:
             format: int64
         depositDate:
           type: string
-          format: date-time
+          format: date
         amount:
           type: number
           format: double
         description:
           type: string
+      required:
+        - eventId
+        - depositorIds
+        - depositDate
+        - amount
 
     AccountInput:
       type: object
