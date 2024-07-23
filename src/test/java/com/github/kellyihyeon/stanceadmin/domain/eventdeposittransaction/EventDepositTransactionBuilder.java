@@ -63,6 +63,7 @@ public class EventDepositTransactionBuilder {
 
     public EventDepositTransaction build() {
         return EventDepositTransaction.create(
+                id,
                 eventId,
                 applicantId,
                 amount,
