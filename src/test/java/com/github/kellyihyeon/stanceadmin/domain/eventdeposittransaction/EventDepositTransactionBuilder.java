@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 
 public class EventDepositTransactionBuilder {
 
+    private Long id = 1L;
     private Long eventId = 1L;
     private Long applicantId = 2L;
     private Double amount = (double) 70000L;
@@ -18,6 +19,11 @@ public class EventDepositTransactionBuilder {
         return new EventDepositTransactionBuilder();
     }
 
+
+    public EventDepositTransactionBuilder id(Long id) {
+        this.id = id;
+        return this;
+    }
 
     public EventDepositTransactionBuilder eventId(Long eventId) {
         this.eventId = eventId;

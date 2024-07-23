@@ -19,4 +19,8 @@ public class EventDepositTransaction {
         Objects.requireNonNull(createdAt, "createdAt 은 null 이어선 안됩니다.");
         return null;
     }
+
+    public Long getId() {
+        return null;
+    }
 }
