@@ -80,6 +80,14 @@ tasks.named("openApiGenerate") {
     }
 }
 
+tasks.named('compileJava') {
+    it -> it.dependsOn(tasks.named('openApiGenerate'))
+}
+
+tasks.named('processResources') {
+    it -> it.dependsOn(tasks.named('openApiGenerate'))
+}
+
 sourceSets {
     main {
         java {
