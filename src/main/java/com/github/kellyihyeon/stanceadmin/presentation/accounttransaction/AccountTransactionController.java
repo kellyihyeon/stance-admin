@@ -2,6 +2,7 @@ package com.github.kellyihyeon.stanceadmin.presentation.accounttransaction;
 
 import com.github.kellyihyeon.stanceadmin.apis.AccountTransactionApi;
 import com.github.kellyihyeon.stanceadmin.application.accounttransaction.AccountTransactionService;
+import com.github.kellyihyeon.stanceadmin.application.accounttransaction.dto.EventDepositCreation;
 import com.github.kellyihyeon.stanceadmin.application.accounttransaction.dto.MemberShipFeeDepositCreation;
 import com.github.kellyihyeon.stanceadmin.domain.member.MemberType;
 import com.github.kellyihyeon.stanceadmin.models.*;
@@ -51,7 +52,15 @@ public class AccountTransactionController implements AccountTransactionApi {
     }
 
     @Override
-    public ResponseEntity<Void> saveEventDepositTransaction(EventDepositInput eventDepositInput) {
+    public ResponseEntity<Void> saveEventDepositTransaction(EventDepositInput input) {
+        EventDepositCreation serviceDto = EventDepositCreation.create(
+                input.getEventId(),
+                input.getDepositorIds(),
+                input.getAmount(),
+                TimeConverter.convertToLocalDate(input.getDepositDate()),
+                input.getDescription()
+        );
+
         return null;
     }
 
