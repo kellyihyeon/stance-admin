@@ -22,3 +22,4 @@ logging:
     com.github.kellyihyeon.stanceadmin: debug
     org.hibernate.SQL: debug
     org.hibernate.type.descriptor.sql: trace  # 파라미터 값 출력
+    org.springframework.test.web.servlet: DEBUG
