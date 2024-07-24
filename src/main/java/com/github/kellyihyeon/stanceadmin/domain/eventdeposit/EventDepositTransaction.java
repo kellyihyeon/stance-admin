@@ -1,4 +1,4 @@
-package com.github.kellyihyeon.stanceadmin.domain.eventdeposittransaction;
+package com.github.kellyihyeon.stanceadmin.domain.eventdeposit;
 
 import lombok.AccessLevel;
 import lombok.Getter;

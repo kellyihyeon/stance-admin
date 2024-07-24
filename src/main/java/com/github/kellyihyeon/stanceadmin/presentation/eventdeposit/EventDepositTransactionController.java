@@ -1,7 +1,7 @@
 package com.github.kellyihyeon.stanceadmin.presentation.eventdeposit;
 
 import com.github.kellyihyeon.stanceadmin.apis.EventDepositTransactionApi;
-import com.github.kellyihyeon.stanceadmin.application.accounttransaction.dto.EventDepositCreation;
+import com.github.kellyihyeon.stanceadmin.application.eventdeposit.dto.EventDepositCreation;
 import com.github.kellyihyeon.stanceadmin.application.eventdeposit.EventDepositTransactionService;
 import com.github.kellyihyeon.stanceadmin.models.EventDepositInput;
 import com.github.kellyihyeon.stanceadmin.presentation.TimeConverter;

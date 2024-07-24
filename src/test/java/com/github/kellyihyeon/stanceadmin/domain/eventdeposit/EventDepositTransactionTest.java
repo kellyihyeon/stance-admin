@@ -1,4 +1,4 @@
-package com.github.kellyihyeon.stanceadmin.domain.eventdeposittransaction;
+package com.github.kellyihyeon.stanceadmin.domain.eventdeposit;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

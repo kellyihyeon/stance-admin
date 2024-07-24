@@ -1,4 +1,4 @@
-package com.github.kellyihyeon.stanceadmin.domain.eventdeposittransaction;
+package com.github.kellyihyeon.stanceadmin.domain.eventdeposit;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

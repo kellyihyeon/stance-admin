@@ -1,6 +1,6 @@
-package com.github.kellyihyeon.stanceadmin.application.accounttransaction.dto;
+package com.github.kellyihyeon.stanceadmin.application.eventdeposit.dto;
 
-import com.github.kellyihyeon.stanceadmin.domain.eventdeposittransaction.EventDepositTransaction;
+import com.github.kellyihyeon.stanceadmin.domain.eventdeposit.EventDepositTransaction;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
