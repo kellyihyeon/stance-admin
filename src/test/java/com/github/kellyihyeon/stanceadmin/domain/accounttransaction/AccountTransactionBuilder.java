@@ -66,6 +66,7 @@ public class AccountTransactionBuilder {
                 transactionType,
                 transactionId,
                 transactionSubType,
+                amount,
                 createdAt,
                 creatorId
         );
