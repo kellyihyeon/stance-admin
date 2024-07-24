@@ -1,6 +1,7 @@
 package com.github.kellyihyeon.stanceadmin.application.eventdeposit.dto;
 
 import com.github.kellyihyeon.stanceadmin.domain.eventdeposit.EventDepositTransaction;
+import lombok.Getter;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -8,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@Getter
 public class EventDepositCreation {
 
     private final Long eventId;
