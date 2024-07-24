@@ -1,8 +1,10 @@
 package com.github.kellyihyeon.stanceadmin.application.accounttransaction;
 
+import com.github.kellyihyeon.stanceadmin.application.accounttransaction.dto.EventDepositCreation;
 import com.github.kellyihyeon.stanceadmin.application.accounttransaction.dto.MemberShipFeeDepositCreation;
 import com.github.kellyihyeon.stanceadmin.domain.account.AccountRepository;
 import com.github.kellyihyeon.stanceadmin.domain.accounttransaction.*;
+import com.github.kellyihyeon.stanceadmin.domain.eventdeposittransaction.EventDepositTransaction;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,5 +44,12 @@ public class AccountTransactionService {
                 loggedInId
         );
         repository.createAccountTransaction(accountTransaction);
+    }
+
+    public void saveEventDepositTransaction(EventDepositCreation serviceDto) {
+        Long loggedInId = 999L;
+        LocalDateTime now = LocalDateTime.now();
+
+        List<EventDepositTransaction> transactions = serviceDto.toDomains(loggedInId, now);
     }
 }

@@ -61,7 +61,8 @@ public class AccountTransactionController implements AccountTransactionApi {
                 input.getDescription()
         );
 
-        return null;
+        service.saveEventDepositTransaction(serviceDto);
+        return ResponseEntity.created(URI.create("")).build();
     }
 
     @Override
