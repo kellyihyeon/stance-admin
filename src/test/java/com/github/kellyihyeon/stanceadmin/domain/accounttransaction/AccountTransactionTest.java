@@ -3,9 +3,24 @@ package com.github.kellyihyeon.stanceadmin.domain.accounttransaction;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class AccountTransactionTest {
+
+    @Test
+    @DisplayName("입금인 경우 최신 잔액에 입금액을 더한다.")
+    void 입금_내역의_경우_잔액_계산하기() {
+        Double latestBalance = (double) 100000;
+        AccountTransaction accountTransaction = AccountTransactionBuilder.builder()
+                .amount((double) 70000)
+                .build();
+
+        Double actualBalance = accountTransaction.calculateBalance(latestBalance, TransactionType.DEPOSIT);
+        Double expectedBalance = (double) 170000;
+
+        assertEquals(expectedBalance, actualBalance);
+    }
 
     @Test
     @DisplayName("accountId 가 null 이면 NullPointerException이 발생한다.")

@@ -45,4 +45,8 @@ public class AccountTransaction {
 
         return new AccountTransaction(id, accountId, transactionType, transactionId, transactionSubType, createdAt, creatorId);
     }
+
+    public Double calculateBalance(Double latestBalance, TransactionType deposit) {
+        return (double) 0;
+    }
 }
