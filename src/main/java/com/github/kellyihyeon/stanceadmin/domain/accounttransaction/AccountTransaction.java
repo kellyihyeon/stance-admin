@@ -74,10 +74,12 @@ public class AccountTransaction {
     }
 
     public Double addAmountToBalance(Double latestBalance) {
-        return null;
+        this.balance = latestBalance + this.amount;
+        return this.balance;
     }
 
     public Double subtractAmountFromBalance(Double latestBalance) {
-        return null;
+        this.balance = latestBalance - this.amount;
+        return this.balance;
     }
 }
