@@ -5,4 +5,6 @@ public interface AccountTransactionRepository {
     Long createMembershipFeeDepositTransaction(MembershipFeeDepositTransaction domain);
 
     void createAccountTransaction(AccountTransaction accountTransaction);
+
+    AccountTransaction findLatestAccountTransaction();
 }

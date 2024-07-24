@@ -40,4 +40,12 @@ public class AccountService {
         Account defaultAccount = accountRepository.getDefaultAccount();
         return new AccountBalance().balance(defaultAccount.getBalance());
     }
+
+    public Account getDefaultAccount() {
+        return accountRepository.getDefaultAccount();
+    }
+
+    public void updateBalance(Double balance) {
+
+    }
 }

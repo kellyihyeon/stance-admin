@@ -27,4 +27,9 @@ public class AccountTransactionRepositoryImpl implements AccountTransactionRepos
         AccountTransactionEntity entity = AccountTransactionMapper.toEntity(accountTransaction);
         jpaAccountTransactionRepository.save(entity);
     }
+
+    @Override
+    public AccountTransaction findLatestAccountTransaction() {
+        return null;
+    }
 }
