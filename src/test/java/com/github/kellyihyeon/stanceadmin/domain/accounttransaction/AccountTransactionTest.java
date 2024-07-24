@@ -9,14 +9,29 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class AccountTransactionTest {
 
     @Test
-    @DisplayName("입금인 경우 최신 잔액에 입금액을 더한다.")
-    void 입금_내역의_경우_잔액_계산하기() {
+    @DisplayName("출금 내역인 경우 최신 잔액에서 출금액을 빼서 계산하다.")
+    void 출금_내역인_경우_잔액() {
         Double latestBalance = (double) 100000;
         AccountTransaction accountTransaction = AccountTransactionBuilder.builder()
                 .amount((double) 70000)
                 .build();
 
-        Double actualBalance = accountTransaction.calculateBalance(latestBalance, TransactionType.DEPOSIT);
+        Double actualBalance = accountTransaction.subtractAmountFromBalance(latestBalance);
+        Double expectedBalance = (double) 30000;
+
+        assertEquals(expectedBalance, actualBalance);
+
+    }
+
+    @Test
+    @DisplayName("입금 내역인 경우 최신 잔액에서 입금액을 더해서 계산한다.")
+    void 입금_내역인_경우_잔액() {
+        Double latestBalance = (double) 100000;
+        AccountTransaction accountTransaction = AccountTransactionBuilder.builder()
+                .amount((double) 70000)
+                .build();
+
+        Double actualBalance = accountTransaction.addAmountToBalance(latestBalance);
         Double expectedBalance = (double) 170000;
 
         assertEquals(expectedBalance, actualBalance);

@@ -73,15 +73,11 @@ public class AccountTransaction {
         return new AccountTransaction(id, accountId, transactionType, transactionId, transactionSubType, amount, createdAt, creatorId);
     }
 
-    public Double calculateBalance(Double latestBalance, TransactionType transactionType) {
-        if (TransactionType.DEPOSIT.equals(transactionType)) {
-            this.balance = latestBalance + this.amount;
-        }
+    public Double addAmountToBalance(Double latestBalance) {
+        return null;
+    }
 
-        if (TransactionType.WITHDRAW.equals(transactionType)) {
-            this.balance = latestBalance - this.amount;
-        }
-
-        return this.balance;
+    public Double subtractAmountFromBalance(Double latestBalance) {
+        return null;
     }
 }
