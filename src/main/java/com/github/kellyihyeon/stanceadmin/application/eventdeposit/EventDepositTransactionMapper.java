@@ -6,6 +6,14 @@ import com.github.kellyihyeon.stanceadmin.infrastructure.repository.eventdeposit
 public class EventDepositTransactionMapper {
 
     public static EventDepositTransactionEntity toEntity(EventDepositTransaction domain) {
-        return null;
+        return EventDepositTransactionEntity.create(
+                domain.getEventId(),
+                domain.getApplicantId(),
+                domain.getAmount(),
+                domain.getDepositDate(),
+                domain.getDescription(),
+                domain.getCreatedAt(),
+                domain.getCreatorId()
+        );
     }
 }

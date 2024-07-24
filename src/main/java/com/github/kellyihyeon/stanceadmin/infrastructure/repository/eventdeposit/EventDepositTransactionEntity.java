@@ -2,6 +2,7 @@ package com.github.kellyihyeon.stanceadmin.infrastructure.repository.eventdeposi
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
@@ -9,6 +10,7 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
+@Getter
 @Table(name = "event_deposit_transactions")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class EventDepositTransactionEntity {

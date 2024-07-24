@@ -15,7 +15,6 @@ public class EventDepositTransactionRepositoryImpl implements EventDepositTransa
     @Override
     public Long saveEventDepositTransaction(EventDepositTransaction domain) {
         EventDepositTransactionEntity entity = EventDepositTransactionMapper.toEntity(domain);
-        jpaRepository.save(entity);
-        return 1L;
+        return jpaRepository.save(entity).getId();
     }
 }
