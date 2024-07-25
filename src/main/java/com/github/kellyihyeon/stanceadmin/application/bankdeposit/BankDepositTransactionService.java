@@ -18,7 +18,7 @@ public class BankDepositTransactionService {
         Long loggedInId = 999L;
         LocalDateTime now = LocalDateTime.now();
 
-        BankDepositTransaction bankDepositTransaction = bankDepositCreation.toDomain(loggedInId, now);
+        BankDepositTransaction bankDepositTransaction = BankDepositTransactionMapper.toDomain(loggedInId, now);
         Long transactionId = repository.saveBankDepositTransaction(bankDepositTransaction).getId();
     }
 }
