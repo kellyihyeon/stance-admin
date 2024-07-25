@@ -3,9 +3,53 @@ package com.github.kellyihyeon.stanceadmin.domain.accounttransaction;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class AccountTransactionTest {
+
+    @Test
+    @DisplayName("트랜잭션을 다루는 객체를 생성한다.")
+    void 트랜잭션_객체_생성() {
+        TransactionIdentity depositTransaction = new TransactionIdentity().create(5L, TransactionType.DEPOSIT, TransactionSubType.EVENT);
+
+        assertEquals(5L, depositTransaction.getTransactionId());
+        assertEquals(TransactionType.DEPOSIT, depositTransaction.getType());
+
+        TransactionIdentity withdrawalTransaction = new TransactionIdentity().create(6L, TransactionType.WITHDRAW, TransactionSubType.TRANSFER);
+
+        assertEquals(6L, withdrawalTransaction.getTransactionId());
+        assertEquals(TransactionType.WITHDRAW, withdrawalTransaction.getType());
+    }
+
+    @Test
+    @DisplayName("출금 내역인 경우 최신 잔액에서 출금액을 빼서 계산하다.")
+    void 출금_내역인_경우_잔액() {
+        Double latestBalance = (double) 100000;
+        AccountTransaction accountTransaction = AccountTransactionBuilder.builder()
+                .amount((double) 70000)
+                .build();
+
+        Double actualBalance = accountTransaction.subtractAmountFromBalance(latestBalance);
+        Double expectedBalance = (double) 30000;
+
+        assertEquals(expectedBalance, actualBalance);
+
+    }
+
+    @Test
+    @DisplayName("입금 내역인 경우 최신 잔액에서 입금액을 더해서 계산한다.")
+    void 입금_내역인_경우_잔액() {
+        Double latestBalance = (double) 100000;
+        AccountTransaction accountTransaction = AccountTransactionBuilder.builder()
+                .amount((double) 70000)
+                .build();
+
+        Double actualBalance = accountTransaction.addAmountToBalance(latestBalance);
+        Double expectedBalance = (double) 170000;
+
+        assertEquals(expectedBalance, actualBalance);
+    }
 
     @Test
     @DisplayName("accountId 가 null 이면 NullPointerException이 발생한다.")

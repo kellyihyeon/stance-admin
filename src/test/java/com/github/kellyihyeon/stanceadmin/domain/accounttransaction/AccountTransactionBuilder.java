@@ -14,6 +14,8 @@ public class AccountTransactionBuilder {
 
     private TransactionSubType transactionSubType = TransactionSubType.MEMBERSHIP_FEE;
 
+    private Double amount = (double) 1000;
+
     private LocalDateTime createdAt = LocalDateTime.now();
 
     private Long creatorId = 999L;
@@ -42,6 +44,11 @@ public class AccountTransactionBuilder {
         return this;
     }
 
+    public AccountTransactionBuilder amount(Double amount) {
+        this.amount = amount;
+        return this;
+    }
+
     public AccountTransactionBuilder createdAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
         return this;
@@ -54,11 +61,11 @@ public class AccountTransactionBuilder {
 
     public AccountTransaction build() {
         return AccountTransaction.create(
-                id,
                 accountId,
                 transactionType,
                 transactionId,
                 transactionSubType,
+                amount,
                 createdAt,
                 creatorId
         );
