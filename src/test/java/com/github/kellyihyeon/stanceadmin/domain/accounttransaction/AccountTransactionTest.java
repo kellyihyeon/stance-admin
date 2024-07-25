@@ -9,6 +9,19 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class AccountTransactionTest {
 
     @Test
+    void 입금_내역과_관련된_transaction_객체를_생성() {
+        Long transactionId = 5L;
+        TransactionType type = TransactionType.DEPOSIT;
+        TransactionSubType subType = TransactionSubType.EVENT;
+
+        TransactionIdentity transactionIdentity = new TransactionIdentity();
+        TransactionIdentity depositTransaction = transactionIdentity.createDeposit(transactionId, type, subType);
+
+        assertEquals(5L, depositTransaction.getTransactionId());
+        assertEquals(TransactionType.DEPOSIT, depositTransaction.getType());
+    }
+
+    @Test
     @DisplayName("출금 내역인 경우 최신 잔액에서 출금액을 빼서 계산하다.")
     void 출금_내역인_경우_잔액() {
         Double latestBalance = (double) 100000;

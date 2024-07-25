@@ -61,7 +61,6 @@ public class AccountTransactionBuilder {
 
     public AccountTransaction build() {
         return AccountTransaction.create(
-                id,
                 accountId,
                 transactionType,
                 transactionId,

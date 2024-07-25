@@ -35,7 +35,6 @@ public class AccountTransactionService {
 
         Long defaultAccountId = accountService.getDefaultAccount().getId();
         AccountTransaction accountTransaction = AccountTransaction.create(
-                null,
                 defaultAccountId,
                 transactionType,
                 transactionId,
