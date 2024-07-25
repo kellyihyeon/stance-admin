@@ -9,16 +9,17 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class AccountTransactionTest {
 
     @Test
-    void 입금_내역과_관련된_transaction_객체를_생성() {
-        Long transactionId = 5L;
-        TransactionType type = TransactionType.DEPOSIT;
-        TransactionSubType subType = TransactionSubType.EVENT;
-
-        TransactionIdentity transactionIdentity = new TransactionIdentity();
-        TransactionIdentity depositTransaction = transactionIdentity.createDeposit(transactionId, type, subType);
+    @DisplayName("트랜잭션을 다루는 객체를 생성한다.")
+    void 트랜잭션_객체_생성() {
+        TransactionIdentity depositTransaction = new TransactionIdentity().create(5L, TransactionType.DEPOSIT, TransactionSubType.EVENT);
 
         assertEquals(5L, depositTransaction.getTransactionId());
         assertEquals(TransactionType.DEPOSIT, depositTransaction.getType());
+
+        TransactionIdentity withdrawalTransaction = new TransactionIdentity().create(6L, TransactionType.WITHDRAW, TransactionSubType.TRANSFER);
+
+        assertEquals(6L, withdrawalTransaction.getTransactionId());
+        assertEquals(TransactionType.WITHDRAW, withdrawalTransaction.getType());
     }
 
     @Test
