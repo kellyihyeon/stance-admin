@@ -204,7 +204,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/BankDeposit'
+              $ref: '#/components/schemas/BankDepositInput'
         required: true
       responses:
         '201':
@@ -874,7 +874,7 @@ components:
         description:
           type: string
     
-    BankDeposit:
+    BankDepositInput:
       type: object
       properties:
         type:
@@ -882,17 +882,22 @@ components:
           enum:
             - INTEREST
             - CASHBACK
-        depositor:
+        depositSource:
           type: string
         depositDate:
           type: string
-          format: date-time
+          format: date
         amount:
           type: number
           format: double
         description:
           type: string
-  
+      required:
+        - type
+        - depositSource
+        - depositDate
+        - amount
+
     MembershipFeeDepositInput:
       type: object
       properties:
