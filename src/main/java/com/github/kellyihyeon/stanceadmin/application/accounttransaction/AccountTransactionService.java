@@ -22,13 +22,7 @@ public class AccountTransactionService {
 
 
     @Transactional
-    public void saveDepositAccountTransaction() {
-        // 파라미터 객체
-        Long transactionId = 1L;
-        TransactionType transactionType = TransactionType.DEPOSIT;
-        TransactionSubType transactionSubType = TransactionSubType.EVENT;
-        Double amount = (double) 70000;
-
+    public void saveDepositAccountTransaction(TransactionIdentity transactionIdentity, Double amount) {
         // 유저 객체
         LocalDateTime now = LocalDateTime.now();
         Long loggedInId = 999L;
@@ -36,9 +30,9 @@ public class AccountTransactionService {
         Long defaultAccountId = accountService.getDefaultAccount().getId();
         AccountTransaction accountTransaction = AccountTransaction.create(
                 defaultAccountId,
-                transactionType,
-                transactionId,
-                transactionSubType,
+                transactionIdentity.getType(),
+                transactionIdentity.getTransactionId(),
+                transactionIdentity.getSubtype(),
                 amount,
                 now,
                 loggedInId
