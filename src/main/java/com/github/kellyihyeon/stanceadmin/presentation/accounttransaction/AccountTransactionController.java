@@ -51,11 +51,6 @@ public class AccountTransactionController implements AccountTransactionApi {
     }
 
     @Override
-    public ResponseEntity<Void> saveEventDepositTransaction(EventDeposit eventDeposit) {
-        return null;
-    }
-
-    @Override
     public ResponseEntity<Void> saveMembershipFeeDepositTransaction(MembershipFeeDepositInput input) {
         MemberShipFeeDepositCreation serviceDto = new MemberShipFeeDepositCreation(
                 input.getDepositorIds(),

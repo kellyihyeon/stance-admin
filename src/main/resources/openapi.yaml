@@ -11,7 +11,10 @@ tags:
     
   - name: account-transaction
     description: 계좌 거래 내역
-    
+
+  - name: event-deposit-transaction
+    description: 이벤트 입금 내역
+
   - name: membership-fee
     description: 회비
     
@@ -146,18 +149,19 @@ paths:
                   $ref: '#/components/schemas/AccountTransactions'
         '500':
           description: Internal server error
-          
+
+  # 이벤트 입금 내역
   /account-transactions/deposits/event:
     post:
       tags:
-        - account-transaction
+        - event-deposit-transaction
       summary: 이벤트 입금 내역을 등록합니다.
       operationId: saveEventDepositTransaction
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/EventDeposit'
+              $ref: '#/components/schemas/EventDepositInput'
         required: true
       responses:
         '201':
@@ -166,6 +170,7 @@ paths:
           description: Invalid input
         '500':
           description: Internal server error
+
   /account-transactions/deposits/membership-fee:
     post:
       tags:
@@ -916,7 +921,7 @@ components:
         - dueDate
         - memberType
 
-    EventDeposit:
+    EventDepositInput:
       type: object
       properties:
         eventId:
@@ -929,12 +934,17 @@ components:
             format: int64
         depositDate:
           type: string
-          format: date-time
+          format: date
         amount:
           type: number
           format: double
         description:
           type: string
+      required:
+        - eventId
+        - depositorIds
+        - depositDate
+        - amount
 
     AccountInput:
       type: object

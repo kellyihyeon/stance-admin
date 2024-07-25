@@ -58,6 +58,7 @@ public class AccountTransactionService {
         }
     }
 
+    // TODO: saveAccountTransaction 메서드로 이동시킬 것
     public void createAccountTransaction(Long transactionId) {
         LocalDateTime now = LocalDateTime.now();
         Long loggedInId = 999L;
@@ -72,6 +73,26 @@ public class AccountTransactionService {
                 now,
                 loggedInId
         );
+        repository.createAccountTransaction(accountTransaction);
+    }
+
+    public void saveAccountTransaction(Long transactionId, TransactionType type, TransactionSubType subType) {
+        LocalDateTime now = LocalDateTime.now();
+        Long loggedInId = 999L;
+
+        // TODO: 기본으로 설정된 계좌가 없을 경우 예외처리
+        Long defaultAccountId = accountRepository.getDefaultAccount().getId();
+
+        AccountTransaction accountTransaction = AccountTransaction.create(
+                null,
+                defaultAccountId,
+                type,
+                transactionId,
+                subType,
+                now,
+                loggedInId
+        );
+
         repository.createAccountTransaction(accountTransaction);
     }
 }

@@ -48,6 +48,17 @@ dependencies {
 
     // openapi generator
     implementation "org.openapitools:openapi-generator:7.7.0"
+
+    // SLF4J Logback 의존성 추가
+    testImplementation 'ch.qos.logback:logback-classic:1.4.11'
+
+    // SLF4J SimpleLogger 의존성 제외
+    configurations {
+        all {
+            exclude group: 'org.slf4j', module: 'slf4j-simple'
+        }
+    }
+
 }
 
 openApiGenerate {
