@@ -15,6 +15,10 @@ tags:
   - name: event-deposit-transaction
     description: 이벤트 입금 내역
 
+
+  - name: bank-deposit-transaction
+    description: 은행 입금 내역
+
   - name: membership-fee
     description: 회비
     
@@ -193,7 +197,7 @@ paths:
   /account-transactions/deposits/bank:
     post:
       tags:
-        - account-transaction
+        - bank-deposit-transaction
       summary: 은행 입금 내역을 등록합니다.
       operationId: saveBankDepositTransaction
       requestBody:

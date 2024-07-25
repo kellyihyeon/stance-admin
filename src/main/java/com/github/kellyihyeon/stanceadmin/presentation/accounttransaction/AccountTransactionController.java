@@ -41,11 +41,6 @@ public class AccountTransactionController implements AccountTransactionApi {
     }
 
     @Override
-    public ResponseEntity<Void> saveBankDepositTransaction(BankDeposit bankDeposit) {
-        return null;
-    }
-
-    @Override
     public ResponseEntity<Void> saveCardPaymentTransaction(CardPayment cardPayment) {
         return null;
     }
