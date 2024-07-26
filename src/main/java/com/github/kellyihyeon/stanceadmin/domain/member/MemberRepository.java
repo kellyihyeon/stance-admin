@@ -4,5 +4,5 @@ import java.util.List;
 
 public interface MemberRepository {
 
-    List<Member> findParticipatingMembers(List<MemberType> memberTypes);
+    List<Member> findParticipatingMembers(MemberRole memberRole, List<MemberStatus> memberStatuses);
 }
