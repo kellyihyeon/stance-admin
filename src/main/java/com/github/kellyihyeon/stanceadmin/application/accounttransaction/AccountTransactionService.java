@@ -40,7 +40,7 @@ public class AccountTransactionService {
         );
 
         Double balance = accountTransaction.addAmountToBalance(getLatestBalance());
-        repository.createAccountTransaction(accountTransaction);
+        repository.saveAccountTransaction(accountTransaction);
 
         accountService.updateBalance(balance);
     }
@@ -80,7 +80,7 @@ public class AccountTransactionService {
                 now,
                 loggedInId
         );
-        repository.createAccountTransaction(accountTransaction);
+        repository.saveAccountTransaction(accountTransaction);
     }
 
     public void saveAccountTransaction(Long transactionId, TransactionType type, TransactionSubType subType) {
@@ -100,6 +100,6 @@ public class AccountTransactionService {
                 loggedInId
         );
 
-        repository.createAccountTransaction(accountTransaction);
+        repository.saveAccountTransaction(accountTransaction);
     }
 }
