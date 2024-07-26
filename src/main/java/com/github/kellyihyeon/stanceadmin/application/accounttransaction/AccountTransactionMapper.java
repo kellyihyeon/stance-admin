@@ -17,4 +17,8 @@ public class AccountTransactionMapper {
                 accountTransaction.getCreatorId()
         );
     }
+
+    public static AccountTransaction toDomain(AccountTransactionEntity entity) {
+        return null;
+    }
 }

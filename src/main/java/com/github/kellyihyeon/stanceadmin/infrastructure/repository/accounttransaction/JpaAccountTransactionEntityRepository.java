@@ -3,4 +3,6 @@ package com.github.kellyihyeon.stanceadmin.infrastructure.repository.accounttran
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface JpaAccountTransactionEntityRepository extends JpaRepository<AccountTransactionEntity, Long> {
+
+    AccountTransactionEntity findFirstByOrderByCreatedAtDesc();
 }
