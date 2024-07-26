@@ -18,7 +18,9 @@ public class BankDepositTransactionMapperImpl implements BankDepositTransactionM
                 serviceDto.getType(),
                 serviceDto.getDepositSource(),
                 serviceDto.getAmount(),
-                serviceDto.getDepositDate()
+                serviceDto.getDepositDate(),
+                loggedInId,
+                now
         );
     }
 
