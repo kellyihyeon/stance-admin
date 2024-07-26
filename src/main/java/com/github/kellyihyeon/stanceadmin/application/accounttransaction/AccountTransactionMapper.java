@@ -19,6 +19,14 @@ public class AccountTransactionMapper {
     }
 
     public static AccountTransaction toDomain(AccountTransactionEntity entity) {
-        return null;
+        return AccountTransaction.create(
+                entity.getId(),
+                entity.getAccountId(),
+                entity.getTransactionType(),
+                entity.getTransactionId(),
+                entity.getTransactionSubType(),
+                entity.getCreatedAt(),
+                entity.getCreatorId()
+        );
     }
 }
