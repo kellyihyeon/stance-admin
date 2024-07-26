@@ -1,7 +1,7 @@
 package com.github.kellyihyeon.stanceadmin.application.accounttransaction;
 
-import com.github.kellyihyeon.stanceadmin.domain.accounttransaction.MembershipFeeDepositTransaction;
-import com.github.kellyihyeon.stanceadmin.infrastructure.repository.accounttransaction.MemberShipFeeDepositTransactionEntity;
+import com.github.kellyihyeon.stanceadmin.domain.membershipfeedeposit.MembershipFeeDepositTransaction;
+import com.github.kellyihyeon.stanceadmin.infrastructure.entity.membershipfeedeposit.MemberShipFeeDepositTransactionEntity;
 
 public class MembershipFeeDepositTransactionMapper {
 

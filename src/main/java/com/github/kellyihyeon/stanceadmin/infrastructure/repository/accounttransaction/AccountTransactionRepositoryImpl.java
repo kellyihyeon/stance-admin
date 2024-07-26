@@ -4,7 +4,9 @@ import com.github.kellyihyeon.stanceadmin.application.accounttransaction.Account
 import com.github.kellyihyeon.stanceadmin.application.accounttransaction.MembershipFeeDepositTransactionMapper;
 import com.github.kellyihyeon.stanceadmin.domain.accounttransaction.AccountTransaction;
 import com.github.kellyihyeon.stanceadmin.domain.accounttransaction.AccountTransactionRepository;
-import com.github.kellyihyeon.stanceadmin.domain.accounttransaction.MembershipFeeDepositTransaction;
+import com.github.kellyihyeon.stanceadmin.domain.membershipfeedeposit.MembershipFeeDepositTransaction;
+import com.github.kellyihyeon.stanceadmin.infrastructure.entity.membershipfeedeposit.MemberShipFeeDepositTransactionEntity;
+import com.github.kellyihyeon.stanceadmin.infrastructure.repository.membershipfeedeposit.JpaMembershipFeeDepositTransactionEntityRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

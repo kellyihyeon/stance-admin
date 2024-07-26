@@ -1,4 +1,4 @@
-package com.github.kellyihyeon.stanceadmin.domain.accounttransaction;
+package com.github.kellyihyeon.stanceadmin.domain.membershipfeedeposit;
 
 import com.github.kellyihyeon.stanceadmin.domain.member.MemberType;
 import lombok.AccessLevel;

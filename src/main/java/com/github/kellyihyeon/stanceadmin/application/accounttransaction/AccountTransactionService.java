@@ -4,6 +4,7 @@ import com.github.kellyihyeon.stanceadmin.application.account.AccountService;
 import com.github.kellyihyeon.stanceadmin.application.accounttransaction.dto.MemberShipFeeDepositCreation;
 import com.github.kellyihyeon.stanceadmin.domain.account.AccountRepository;
 import com.github.kellyihyeon.stanceadmin.domain.accounttransaction.*;
+import com.github.kellyihyeon.stanceadmin.domain.membershipfeedeposit.MembershipFeeDepositTransaction;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -1,4 +1,4 @@
-package com.github.kellyihyeon.stanceadmin.infrastructure.repository.accounttransaction;
+package com.github.kellyihyeon.stanceadmin.infrastructure.entity.membershipfeedeposit;
 
 import com.github.kellyihyeon.stanceadmin.domain.member.MemberType;
 import jakarta.persistence.*;

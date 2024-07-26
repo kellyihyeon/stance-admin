@@ -1,6 +1,6 @@
 package com.github.kellyihyeon.stanceadmin.application.accounttransaction.dto;
 
-import com.github.kellyihyeon.stanceadmin.domain.accounttransaction.MembershipFeeDepositTransaction;
+import com.github.kellyihyeon.stanceadmin.domain.membershipfeedeposit.MembershipFeeDepositTransaction;
 import com.github.kellyihyeon.stanceadmin.domain.member.MemberType;
 
 import java.time.LocalDate;
