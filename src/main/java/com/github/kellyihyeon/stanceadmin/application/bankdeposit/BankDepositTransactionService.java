@@ -32,6 +32,6 @@ public class BankDepositTransactionService {
         BankDepositTransaction persistedBankDepositTransaction = repository.saveBankDepositTransaction(bankDepositTransaction);
 
         TransactionIdentity transactionIdentity = TransactionIdentity.create(persistedBankDepositTransaction.getId(), TransactionType.DEPOSIT, TransactionSubType.BANK);
-        accountTransactionService.saveDepositAccountTransaction(transactionIdentity, persistedBankDepositTransaction.getAmount());
+        accountTransactionService.saveAccountTransaction(transactionIdentity, persistedBankDepositTransaction.getAmount());
     }
 }
