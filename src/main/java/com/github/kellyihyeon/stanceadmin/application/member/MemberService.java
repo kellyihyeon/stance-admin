@@ -25,9 +25,8 @@ public class MemberService {
 
         List<MemberSummaryResponse> result = new ArrayList<>();
         for (Member member : participatingMembers) {
-            Long memberId = 1L;
             result.add(
-                    new MemberSummaryResponse(memberId, member.getName(), member.getMemberType())
+                    new MemberSummaryResponse(member.getId(), member.getName(), member.getMemberStatus())
             );
         }
 

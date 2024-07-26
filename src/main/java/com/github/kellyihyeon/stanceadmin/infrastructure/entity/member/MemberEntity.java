@@ -43,10 +43,6 @@ public class MemberEntity {
     private MemberStatus memberStatus;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "member_type", nullable = false)
-    private MemberType memberType;
-
-    @Enumerated(EnumType.STRING)
     @Column(name = "registration_status", nullable = false)
     private RegistrationStatus registrationStatus;
 
