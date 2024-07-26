@@ -8,8 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 
-import java.util.List;
-
 @Controller
 @RequiredArgsConstructor
 public class MembershipFeeDepositTransactionController implements MembershipFeeDepositTransactionApi {
@@ -17,11 +15,11 @@ public class MembershipFeeDepositTransactionController implements MembershipFeeD
     private final MembershipFeeDepositTransactionService membershipFeeDepositService;
 
     @Override
-    public ResponseEntity<List<DepositRateResponse>> getDepositRate(Integer year, Integer month) {
+    public ResponseEntity<DepositRateResponse> getDepositRate(Integer year, Integer month) {
         validateYear(year);
         validateMonth(month);
 
-        List<DepositRateResponse> result = membershipFeeDepositService.getDepositRate(new DepositDateCondition(year, month));
+        DepositRateResponse result = membershipFeeDepositService.getDepositRate(new DepositDateCondition(year, month));
         return ResponseEntity.ok(result);
     }
 

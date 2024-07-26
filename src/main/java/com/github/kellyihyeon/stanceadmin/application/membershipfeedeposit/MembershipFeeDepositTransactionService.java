@@ -1,7 +1,7 @@
 package com.github.kellyihyeon.stanceadmin.application.membershipfeedeposit;
 
+import com.github.kellyihyeon.stanceadmin.application.member.MemberService;
 import com.github.kellyihyeon.stanceadmin.application.membershipfeedeposit.dto.DepositDateCondition;
-import com.github.kellyihyeon.stanceadmin.domain.member.Member;
 import com.github.kellyihyeon.stanceadmin.domain.membershipfeedeposit.MembershipFeeDepositRepository;
 import com.github.kellyihyeon.stanceadmin.models.DepositRateResponse;
 import lombok.RequiredArgsConstructor;
@@ -9,24 +9,42 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.YearMonth;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class MembershipFeeDepositTransactionService {
 
     private final MembershipFeeDepositRepository repository;
+    private final MemberService memberService;
 
-    public List<DepositRateResponse> getDepositRate(DepositDateCondition depositDateCondition) {
+    public DepositRateResponse getDepositRate(DepositDateCondition depositDateCondition) {
         validateDepositDate(depositDateCondition);
 
         YearMonth yearMonth = YearMonth.of(depositDateCondition.year(), depositDateCondition.month());
         LocalDate startDate = yearMonth.atDay(1);
         LocalDate endDate = yearMonth.atEndOfMonth();
 
-        List<Member> paidMembers = repository.findPaidMembers(startDate, endDate);
+        int totalPaidMembers = repository.findPaidMembers(startDate, endDate).size();
+        int totalParticipatingMembers = memberService.getParticipatingMembers().size();
 
-        return null;
+        double depositRatePercentage = calculateDepositRate(totalPaidMembers, totalParticipatingMembers);
+
+        return new DepositRateResponse(
+                depositDateCondition.year(),
+                depositDateCondition.month(),
+                depositRatePercentage,
+                totalParticipatingMembers,
+                totalPaidMembers
+        );
+    }
+
+    private double calculateDepositRate(int totalPaidMembers, int totalParticipatingMembers) {
+        if (totalParticipatingMembers == 0) {
+            throw new IllegalArgumentException("나누려고 하는 멤버의 수가 0이 되면 안돼요.");
+        }
+
+        double depositRate = (double) totalPaidMembers / totalParticipatingMembers;
+        return depositRate * 100;
     }
 
     private void validateDepositDate(DepositDateCondition depositDateCondition) {
