@@ -1,16 +1,31 @@
 package com.github.kellyihyeon.stanceadmin.application.membershipfeedeposit;
 
 import com.github.kellyihyeon.stanceadmin.application.membershipfeedeposit.dto.DepositDateCondition;
+import com.github.kellyihyeon.stanceadmin.domain.member.Member;
+import com.github.kellyihyeon.stanceadmin.domain.membershipfeedeposit.MembershipFeeDepositRepository;
 import com.github.kellyihyeon.stanceadmin.models.DepositRateResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class MembershipFeeDepositTransactionService {
+
+    private final MembershipFeeDepositRepository repository;
 
     public List<DepositRateResponse> getDepositRate(DepositDateCondition depositDateCondition) {
         validateDepositDate(depositDateCondition);
+
+        YearMonth yearMonth = YearMonth.of(depositDateCondition.year(), depositDateCondition.month());
+        LocalDate startDate = yearMonth.atDay(1);
+        LocalDate endDate = yearMonth.atEndOfMonth();
+
+        List<Member> paidMembers = repository.findPaidMembers(startDate, endDate);
+
         return null;
     }
 
