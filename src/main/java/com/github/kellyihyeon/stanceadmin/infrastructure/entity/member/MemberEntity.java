@@ -4,6 +4,7 @@ import com.github.kellyihyeon.stanceadmin.domain.member.*;
 import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -36,12 +37,19 @@ public class MemberEntity {
     private UserPermissionLevel permissionLevel;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "member_status", nullable = false)
+    private MemberStatus memberStatus;
+
+    @Enumerated(EnumType.STRING)
     @Column(name = "member_type", nullable = false)
     private MemberType memberType;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "registration_status", nullable = false)
     private RegistrationStatus registrationStatus;
+
+    @Column(name = "joining_date", nullable = false)
+    private LocalDate joiningDate;
 
     @Column(name = "sign_up_date", nullable = false)
     private LocalDateTime signUpDate;
@@ -55,15 +63,17 @@ public class MemberEntity {
     @Column(name = "updated_date")
     private LocalDateTime updatedDate;
 
-    private MemberEntity(String invitationCode, String email, String password, String name, MemberRole memberRole, UserPermissionLevel permissionLevel, MemberType memberType, RegistrationStatus registrationStatus, LocalDateTime signUpDate) {
+    private MemberEntity(Long id, String invitationCode, String email, String password, String name, MemberRole memberRole, UserPermissionLevel permissionLevel, MemberStatus memberStatus, RegistrationStatus registrationStatus, LocalDate joiningDate, LocalDateTime signUpDate) {
+        this.id = id;
         this.invitationCode = invitationCode;
         this.email = email;
         this.password = password;
         this.name = name;
         this.memberRole = memberRole;
         this.permissionLevel = permissionLevel;
-        this.memberType = memberType;
+        this.memberStatus = memberStatus;
         this.registrationStatus = registrationStatus;
+        this.joiningDate = joiningDate;
         this.signUpDate = signUpDate;
     }
 }

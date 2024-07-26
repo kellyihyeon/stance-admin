@@ -4,11 +4,14 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member {
+
+    private Long id;
 
     private String invitationCode;
 
@@ -22,9 +25,13 @@ public class Member {
 
     private UserPermissionLevel permissionLevel;
 
+    private MemberStatus memberStatus;
+
     private MemberType memberType;
 
     private RegistrationStatus registrationStatus;
+
+    private LocalDate joiningDate;
 
     private LocalDateTime signUpDate;
 
@@ -34,15 +41,17 @@ public class Member {
 
     private LocalDateTime updatedDate;
 
-    private Member(String invitationCode, String email, String password, String name, MemberRole memberRole, UserPermissionLevel permissionLevel, MemberType memberType, RegistrationStatus registrationStatus, LocalDateTime signUpDate) {
+    private Member(Long id, String invitationCode, String email, String password, String name, MemberRole memberRole, UserPermissionLevel permissionLevel, MemberStatus memberStatus, RegistrationStatus registrationStatus, LocalDate joiningDate, LocalDateTime signUpDate) {
+        this.id = id;
         this.invitationCode = invitationCode;
         this.email = email;
         this.password = password;
         this.name = name;
         this.memberRole = memberRole;
         this.permissionLevel = permissionLevel;
-        this.memberType = memberType;
+        this.memberStatus = memberStatus;
         this.registrationStatus = registrationStatus;
+        this.joiningDate = joiningDate;
         this.signUpDate = signUpDate;
     }
 }
