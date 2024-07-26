@@ -23,7 +23,7 @@ public class TransactionIdentity {
         this.subtype = subtype;
     }
 
-    public TransactionIdentity create(Long transactionId, TransactionType type, TransactionSubType subtype) {
+    public static TransactionIdentity create(Long transactionId, TransactionType type, TransactionSubType subtype) {
         Objects.requireNonNull(transactionId, "transactionId 가 null 이어선 안됩니다.");
         Objects.requireNonNull(type, "type 이 null 이어선 안됩니다.");
         Objects.requireNonNull(subtype, "subtype 이 null 이어선 안됩니다.");
