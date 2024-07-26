@@ -96,7 +96,6 @@ public class BankDepositTransaction {
     }
 
     public static BankDepositTransaction createWithId(Long id, DepositType type, String depositSource, Double amount, LocalDate depositDate, Long creatorId, LocalDateTime createdAt) {
-        Objects.requireNonNull(id, "id 가 null 이어선 안됩니다.");
         Objects.requireNonNull(type, "type 이 null 이어선 안됩니다.");
         Objects.requireNonNull(depositSource, "depositSource 가 null 이어선 안됩니다.");
         Objects.requireNonNull(amount, "amount 가 null 이어선 안됩니다.");
