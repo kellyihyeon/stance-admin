@@ -11,10 +11,11 @@ import org.springframework.stereotype.Repository;
 public class BankDepositTransactionRepositoryImpl implements BankDepositTransactionRepository {
 
     private final JpaBankDepositTransactionEntityRepository jpaRepository;
+    private final BankDepositTransactionMapper mapper;
 
     @Override
     public BankDepositTransaction saveBankDepositTransaction(BankDepositTransaction bankDepositTransaction) {
-        BankDepositTransactionEntity entity = jpaRepository.save(BankDepositTransactionMapper.toEntity(bankDepositTransaction));
-        return BankDepositTransactionMapper.toDomain(entity);
+        BankDepositTransactionEntity entity = jpaRepository.save(mapper.toEntity(bankDepositTransaction));
+        return mapper.toDomain(entity);
     }
 }

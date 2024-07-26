@@ -13,12 +13,13 @@ import java.time.LocalDateTime;
 public class BankDepositTransactionService {
 
     private final BankDepositTransactionRepository repository;
+    private final BankDepositTransactionMapper mapper;
 
-    public void saveBankDepositTransaction(BankDepositCreation bankDepositCreation) {
+    public void saveBankDepositTransaction(BankDepositCreation serviceDto) {
         Long loggedInId = 999L;
         LocalDateTime now = LocalDateTime.now();
 
-        BankDepositTransaction bankDepositTransaction = BankDepositTransactionMapper.toDomain(loggedInId, now);
+        BankDepositTransaction bankDepositTransaction = mapper.toDomain(serviceDto, loggedInId, now);
         Long transactionId = repository.saveBankDepositTransaction(bankDepositTransaction).getId();
     }
 }

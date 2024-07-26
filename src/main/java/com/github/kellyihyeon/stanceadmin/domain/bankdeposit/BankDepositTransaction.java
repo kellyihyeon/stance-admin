@@ -45,6 +45,10 @@ public class BankDepositTransaction {
         );
     }
 
+    public static BankDepositTransaction create(DepositType type, String depositSource, Double amount, LocalDate depositDate) {
+        return null;
+    }
+
     public BankDepositTransaction depositCashback(Long id, Long depositorId, Double amount, LocalDate depositDate) {
         return BankDepositTransaction.deposit(
                 id,
