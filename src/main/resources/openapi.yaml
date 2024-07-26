@@ -379,9 +379,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/DepositRateResponse'
+                $ref: '#/components/schemas/DepositRateResponse'
         '500':
           description: Internal server error
 
