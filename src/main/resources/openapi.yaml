@@ -8,7 +8,7 @@ servers:
 tags:
   - name: account
     description: 스탠스 계좌
-    
+
   - name: account-transaction
     description: 계좌 거래 내역
 
@@ -19,12 +19,12 @@ tags:
   - name: bank-deposit-transaction
     description: 은행 입금 내역
 
-  - name: membership-fee
-    description: 회비
-    
+  - name: membership-fee-deposit-transaction
+    description: 회비 입금 내역
+
   - name: event
     description: 이벤트
-    
+
   - name: event-applicant
     description: 이벤트 신청자
 
@@ -36,7 +36,7 @@ paths:
         - account
       summary: 계좌의 잔액을 반환합니다.
       operationId: getBalance
-     
+
       responses:
         '200':
           description: 성공
@@ -44,7 +44,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/AccountBalance'
-                
+
   /accounts:
     get:
       tags:
@@ -81,7 +81,7 @@ paths:
           description: Invalid input
         '500':
           description: Internal server error
-          
+
   /accounts/{id}/{status}:
     put:
       tags:
@@ -135,7 +135,7 @@ paths:
         '500':
           description: Internal server error
 
-# 계좌 거래 내역 
+  # 계좌 거래 내역
   /account-transactions:
     get:
       tags:
@@ -285,7 +285,7 @@ paths:
                   $ref: '#/components/schemas/TopDeposits'
         '500':
           description: Internal server error
-          
+
   /account-transactions/expenses/top3:
     get:
       tags:
@@ -320,7 +320,7 @@ paths:
                   $ref: '#/components/schemas/TopExpenses'
         '500':
           description: Internal server error
-          
+
   /account-transactions/{year}/monthly-summary:
     get:
       tags:
@@ -346,14 +346,14 @@ paths:
                   $ref: '#/components/schemas/MonthlySummary'
         '500':
           description: Internal server error
-    
-  
-  
-# 회비 입금 내역
+
+
+
+  # 회비 입금 내역
   /membership-fee/deposite-rate:
     get:
       tags:
-        - membership-fee
+        - membership-fee-deposit-transaction
       summary: 특정 연도와 월의 회비 입금률을 조회합니다.
       operationId: getDepositRate
       parameters:
@@ -381,9 +381,10 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/DepositeRate'
+                  $ref: '#/components/schemas/DepositRateResponse'
         '500':
           description: Internal server error
+
   /membership-fee/{depositStatus}:
     get:
       tags:
@@ -415,8 +416,8 @@ paths:
                   $ref: '#/components/schemas/MembershipFeePayers'
         '500':
           description: Internal server error
-          
-# 이벤트
+
+  # 이벤트
   /events:
     get:
       tags:
@@ -435,23 +436,23 @@ paths:
         '500':
           description: Internal server error
     post:
-        tags:
-          - event
-        summary: 이벤트를 생성합니다.
-        operationId: addEvent
-        requestBody:
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/EventInput'
-          required: true
-        responses:
-          '201':
-            description: Account successfully created
-          '400':
-            description: Invalid input
-          '500':
-            description: Internal server error
+      tags:
+        - event
+      summary: 이벤트를 생성합니다.
+      operationId: addEvent
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EventInput'
+        required: true
+      responses:
+        '201':
+          description: Account successfully created
+        '400':
+          description: Invalid input
+        '500':
+          description: Internal server error
   /events/{status}:
     get:
       tags:
@@ -480,8 +481,8 @@ paths:
                   $ref: '#/components/schemas/EventName'
         '500':
           description: Internal server error
-        
-# 이벤트 신청자
+
+  # 이벤트 신청자
   /event-applicants:
     post:
       tags:
@@ -501,7 +502,7 @@ paths:
           description: Invalid input
         '500':
           description: Internal server error
-    
+
   /event-applicants/{depositStatus}:
     get:
       tags:
@@ -571,7 +572,7 @@ components:
         - memberName
         - amount
         - isDeposited
-        
+
     MonthlySummary:
       type: object
       properties:
@@ -590,7 +591,7 @@ components:
         - month
         - depositAmount
         - expenseAmount
-        
+
     TopExpenses:
       type: object
       properties:
@@ -606,7 +607,7 @@ components:
       required:
         - expenses
         - totalAmount
-        
+
     TopExpense:
       type: object
       properties:
@@ -617,7 +618,7 @@ components:
           type: number
           format: double
           description: 지출 금액을 나타냅니다.
-  
+
     TopDeposit:
       type: object
       properties:
@@ -628,7 +629,7 @@ components:
           type: number
           format: double
           description: 입금 금액을 나타냅니다.
-          
+
     TopDeposits:
       type: object
       properties:
@@ -644,7 +645,7 @@ components:
       required:
         - deposits
         - totalAmount
-  
+
     MembershipFeePayers:
       type: object
       properties:
@@ -677,8 +678,8 @@ components:
         - memberStatus
         - isDeposited
         - depositDate
-        
-    DepositeRate:
+
+    DepositRateResponse:
       type: object
       properties:
         year:
@@ -707,7 +708,7 @@ components:
         - depositRate
         - totalMembers
         - paidMembers
-        
+
     AccountTransactions:
       type: object
       properties:
@@ -732,7 +733,7 @@ components:
         balance:
           type: number
           format: double
-    
+
     EventName:
       type: object
       properties:
@@ -746,7 +747,7 @@ components:
       required:
         - eventId
         - eventName
-        
+
     EventApplicantInput:
       type: object
       properties:
@@ -785,16 +786,16 @@ components:
           enum:
             - ACTIVE
             - INACTIVE
-        
+
     EventInput:
       type: object
       properties:
         eventItem:
           type: string
           enum:
-          - TEAM_PARTY
-          - UNIFORM
-          - MEMBERSHIP_TRAINING
+            - TEAM_PARTY
+            - UNIFORM
+            - MEMBERSHIP_TRAINING
 
         amount:
           type: number
@@ -842,10 +843,10 @@ components:
           format: double
         expenseDate:
           type: string
-          format: date-time  
+          format: date-time
         description:
           type: string
-          
+
     CardPayment:
       type: object
       properties:
@@ -870,10 +871,10 @@ components:
           format: double
         expenseDate:
           type: string
-          format: date-time  
+          format: date-time
         description:
           type: string
-    
+
     BankDepositInput:
       type: object
       properties:
@@ -1024,7 +1025,7 @@ components:
             - INACTIVE
             - SUSPENDED
           description: The status of the account
-    
+
     AccountBalance:
       properties:
         balance:
@@ -1043,7 +1044,7 @@ components:
           type: string
       xml:
         name: '##default'
-  
+
   securitySchemes:
     petstore_auth:
       type: oauth2
