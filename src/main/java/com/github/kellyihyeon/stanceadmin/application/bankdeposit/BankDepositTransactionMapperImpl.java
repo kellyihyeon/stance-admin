@@ -33,6 +33,7 @@ public class BankDepositTransactionMapperImpl implements BankDepositTransactionM
 
     @Override
     public BankDepositTransactionEntity toEntity(BankDepositTransaction domain) {
+
         return null;
     }
 
