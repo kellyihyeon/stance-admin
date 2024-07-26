@@ -33,13 +33,27 @@ public class BankDepositTransactionMapperImpl implements BankDepositTransactionM
 
     @Override
     public BankDepositTransactionEntity toEntity(BankDepositTransaction domain) {
-
-        return null;
+        return BankDepositTransactionEntity.create(
+                domain.getDepositType(),
+                domain.getDepositSource(),
+                domain.getAmount(),
+                domain.getDepositDate(),
+                domain.getCreatedAt(),
+                domain.getCreatorId()
+        );
     }
 
     @Override
     public BankDepositTransaction toDomain(BankDepositTransactionEntity entity) {
-        return null;
+        return BankDepositTransaction.createWithId(
+                entity.getId(),
+                entity.getDepositType(),
+                entity.getDepositSource(),
+                entity.getAmount(),
+                entity.getDepositDate(),
+                entity.getCreatorId(),
+                entity.getCreatedAt()
+        );
     }
 
 }

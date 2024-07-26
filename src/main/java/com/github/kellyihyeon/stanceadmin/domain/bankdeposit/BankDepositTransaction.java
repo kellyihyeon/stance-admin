@@ -51,6 +51,16 @@ public class BankDepositTransaction {
         this.createdAt = now;
     }
 
+    private BankDepositTransaction(Long id, DepositType type, String depositSource, Double amount, LocalDate depositDate, Long creatorId, LocalDateTime createdAt) {
+        this.id = id;
+        this.depositType = type;
+        this.depositSource = depositSource;
+        this.amount = amount;
+        this.depositDate = depositDate;
+        this.creatorId = creatorId;
+        this.createdAt = createdAt;
+    }
+
     private static BankDepositTransaction deposit(Long id, DepositType type, Long depositorId, Double amount, LocalDate depositDate) {
         Objects.requireNonNull(id, "id 가 null 이어선 안됩니다.");
         Objects.requireNonNull(type, "type 이 null 이어선 안됩니다.");
@@ -82,6 +92,26 @@ public class BankDepositTransaction {
                 depositDate,
                 loggedInId,
                 now
+        );
+    }
+
+    public static BankDepositTransaction createWithId(Long id, DepositType type, String depositSource, Double amount, LocalDate depositDate, Long creatorId, LocalDateTime createdAt) {
+        Objects.requireNonNull(id, "id 가 null 이어선 안됩니다.");
+        Objects.requireNonNull(type, "type 이 null 이어선 안됩니다.");
+        Objects.requireNonNull(depositSource, "depositSource 가 null 이어선 안됩니다.");
+        Objects.requireNonNull(amount, "amount 가 null 이어선 안됩니다.");
+        Objects.requireNonNull(depositDate, "depositDate 가 null 이어선 안됩니다.");
+        Objects.requireNonNull(creatorId, "creatorId 가 null 이어선 안됩니다.");
+        Objects.requireNonNull(createdAt, "createdAt 이 null 이어선 안됩니다.");
+
+        return new BankDepositTransaction(
+                id,
+                type,
+                depositSource,
+                amount,
+                depositDate,
+                creatorId,
+                createdAt
         );
     }
 
