@@ -11,6 +11,8 @@ public class AccountTransactionMapper {
                 accountTransaction.getTransactionType(),
                 accountTransaction.getTransactionId(),
                 accountTransaction.getTransactionSubType(),
+                accountTransaction.getAmount(),
+                accountTransaction.getBalance(),
                 accountTransaction.getCreatedAt(),
                 accountTransaction.getCreatorId()
         );
