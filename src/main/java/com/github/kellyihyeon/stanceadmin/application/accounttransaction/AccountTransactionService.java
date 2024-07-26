@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -22,7 +23,7 @@ public class AccountTransactionService {
 
 
     @Transactional
-    public void saveDepositAccountTransaction(TransactionIdentity transactionIdentity, Double amount) {
+    public void saveAccountTransaction(TransactionIdentity transactionIdentity, Double amount) {
         // 유저 객체
         LocalDateTime now = LocalDateTime.now();
         Long loggedInId = 999L;
@@ -45,7 +46,13 @@ public class AccountTransactionService {
     }
 
     private Double getLatestBalance() {
-        return repository.findLatestAccountTransaction().getBalance();
+        AccountTransaction latestAccountTransaction = repository.findLatestAccountTransaction();
+
+        if (Objects.isNull(latestAccountTransaction)) {
+            return (double) 0;
+        }
+
+        return latestAccountTransaction.getBalance();
     }
 
     @Transactional

@@ -11,8 +11,22 @@ public class AccountTransactionMapper {
                 accountTransaction.getTransactionType(),
                 accountTransaction.getTransactionId(),
                 accountTransaction.getTransactionSubType(),
+                accountTransaction.getAmount(),
+                accountTransaction.getBalance(),
                 accountTransaction.getCreatedAt(),
                 accountTransaction.getCreatorId()
+        );
+    }
+
+    public static AccountTransaction toDomain(AccountTransactionEntity entity) {
+        return AccountTransaction.create(
+                entity.getId(),
+                entity.getAccountId(),
+                entity.getTransactionType(),
+                entity.getTransactionId(),
+                entity.getTransactionSubType(),
+                entity.getCreatedAt(),
+                entity.getCreatorId()
         );
     }
 }

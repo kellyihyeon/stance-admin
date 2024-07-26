@@ -33,6 +33,12 @@ public class AccountTransactionEntity {
     @Column(name = "transaction_sub_type", nullable = false)
     private TransactionSubType transactionSubType;
 
+    @Column(name = "amount", nullable = false)
+    private Double amount;
+
+    @Column(name = "balance", nullable = false)
+    private Double balance;
+
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
@@ -40,11 +46,13 @@ public class AccountTransactionEntity {
     private Long creatorId;
 
 
-    public AccountTransactionEntity(Long accountId, TransactionType transactionType, Long transactionId, TransactionSubType transactionSubType, LocalDateTime createdAt, Long creatorId) {
+    public AccountTransactionEntity(Long accountId, TransactionType transactionType, Long transactionId, TransactionSubType transactionSubType, Double amount, Double balance, LocalDateTime createdAt, Long creatorId) {
         this.accountId = accountId;
         this.transactionType = transactionType;
         this.transactionId = transactionId;
         this.transactionSubType = transactionSubType;
+        this.amount = amount;
+        this.balance = balance;
         this.createdAt = createdAt;
         this.creatorId = creatorId;
     }

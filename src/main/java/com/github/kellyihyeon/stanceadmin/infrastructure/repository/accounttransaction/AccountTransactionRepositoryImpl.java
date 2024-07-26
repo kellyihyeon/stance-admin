@@ -30,6 +30,7 @@ public class AccountTransactionRepositoryImpl implements AccountTransactionRepos
 
     @Override
     public AccountTransaction findLatestAccountTransaction() {
-        return null;
+        AccountTransactionEntity entity = jpaAccountTransactionRepository.findFirstByOrderByCreatedAtDesc();
+        return AccountTransactionMapper.toDomain(entity);
     }
 }
