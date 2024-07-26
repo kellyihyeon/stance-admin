@@ -2,12 +2,14 @@ package com.github.kellyihyeon.stanceadmin.infrastructure.entity.member;
 
 import com.github.kellyihyeon.stanceadmin.domain.member.*;
 import jakarta.persistence.*;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
+@Getter
 @NoArgsConstructor
 @Table(name = "members")
 public class MemberEntity {
