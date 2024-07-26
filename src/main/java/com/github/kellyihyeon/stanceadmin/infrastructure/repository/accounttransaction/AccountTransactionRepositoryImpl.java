@@ -23,7 +23,7 @@ public class AccountTransactionRepositoryImpl implements AccountTransactionRepos
     }
 
     @Override
-    public void createAccountTransaction(AccountTransaction accountTransaction) {
+    public void saveAccountTransaction(AccountTransaction accountTransaction) {
         AccountTransactionEntity entity = AccountTransactionMapper.toEntity(accountTransaction);
         jpaAccountTransactionRepository.save(entity);
     }
