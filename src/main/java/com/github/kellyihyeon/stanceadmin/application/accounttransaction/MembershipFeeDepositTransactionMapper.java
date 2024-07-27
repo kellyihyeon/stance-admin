@@ -1,20 +1,15 @@
 package com.github.kellyihyeon.stanceadmin.application.accounttransaction;
 
+import com.github.kellyihyeon.stanceadmin.domain.member.Member;
 import com.github.kellyihyeon.stanceadmin.domain.membershipfeedeposit.MembershipFeeDepositTransaction;
 import com.github.kellyihyeon.stanceadmin.infrastructure.entity.membershipfeedeposit.MemberShipFeeDepositTransactionEntity;
 
-public class MembershipFeeDepositTransactionMapper {
+import java.util.List;
 
-    public static MemberShipFeeDepositTransactionEntity toEntity(MembershipFeeDepositTransaction domain) {
-        return MemberShipFeeDepositTransactionEntity.create(
-                domain.getDepositorId(),
-                domain.getDepositDate(),
-                domain.getAmount(),
-                domain.getDueDate(),
-                domain.getMemberType(),
-                domain.getDescription(),
-                domain.getCreatedAt(),
-                domain.getCreatorId()
-        );
-    }
+public interface MembershipFeeDepositTransactionMapper {
+
+    MemberShipFeeDepositTransactionEntity toEntity(MembershipFeeDepositTransaction domain);
+
+    List<Member> toDomains(List<MemberShipFeeDepositTransactionEntity> entities);
+
 }

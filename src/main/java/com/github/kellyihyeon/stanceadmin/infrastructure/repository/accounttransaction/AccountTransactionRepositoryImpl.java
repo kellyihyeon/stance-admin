@@ -17,10 +17,12 @@ public class AccountTransactionRepositoryImpl implements AccountTransactionRepos
     private final JpaMembershipFeeDepositTransactionEntityRepository membershipFeeDepositRepository;
     private final JpaAccountTransactionEntityRepository jpaAccountTransactionRepository;
 
+    private final MembershipFeeDepositTransactionMapper membershipFeeDepositTransactionMapper;
+
 
     @Override
     public Long createMembershipFeeDepositTransaction(MembershipFeeDepositTransaction domain) {
-        MemberShipFeeDepositTransactionEntity entity = MembershipFeeDepositTransactionMapper.toEntity(domain);
+        MemberShipFeeDepositTransactionEntity entity = membershipFeeDepositTransactionMapper.toEntity(domain);
         return membershipFeeDepositRepository.save(entity).getId();
     }
 
