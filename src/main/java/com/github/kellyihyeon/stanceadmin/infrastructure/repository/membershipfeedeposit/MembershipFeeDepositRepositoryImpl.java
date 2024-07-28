@@ -3,6 +3,8 @@ package com.github.kellyihyeon.stanceadmin.infrastructure.repository.membershipf
 import com.github.kellyihyeon.stanceadmin.application.accounttransaction.MembershipFeeDepositTransactionMapper;
 import com.github.kellyihyeon.stanceadmin.application.member.MemberMapper;
 import com.github.kellyihyeon.stanceadmin.domain.member.Member;
+import com.github.kellyihyeon.stanceadmin.domain.member.MemberRole;
+import com.github.kellyihyeon.stanceadmin.domain.member.RegistrationStatus;
 import com.github.kellyihyeon.stanceadmin.domain.membershipfeedeposit.MembershipFeeDepositRepository;
 import com.github.kellyihyeon.stanceadmin.infrastructure.entity.member.MemberEntity;
 import com.github.kellyihyeon.stanceadmin.infrastructure.entity.membershipfeedeposit.MemberShipFeeDepositTransactionEntity;
@@ -37,10 +39,14 @@ public class MembershipFeeDepositRepositoryImpl implements MembershipFeeDepositR
     public List<Member> getDepositRoster(LocalDate startDate, LocalDate endDate) {
         List<MemberEntity> entities = jpaQueryFactory
                 .select(memberEntity)
-                .from(memberShipFeeDepositTransactionEntity)
-                .leftJoin(memberEntity)
-                .on(memberEntity.id.eq(memberShipFeeDepositTransactionEntity.depositorId))
-                .where(memberShipFeeDepositTransactionEntity.dueDate.between(startDate, endDate))
+                .from(memberEntity)
+                .leftJoin(memberShipFeeDepositTransactionEntity)
+                .on(memberEntity.id.eq(memberShipFeeDepositTransactionEntity.depositorId)
+                        .and(memberShipFeeDepositTransactionEntity.dueDate.between(startDate, endDate))
+                )
+                .where(memberEntity.memberRole.eq(MemberRole.MEMBER)
+                        .and(memberEntity.registrationStatus.eq(RegistrationStatus.REGISTERED))
+                )
                 .fetch();
 
         return memberMapper.toDomains(entities);
