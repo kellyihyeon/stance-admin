@@ -4,6 +4,8 @@ import com.github.kellyihyeon.stanceadmin.domain.member.Member;
 import com.github.kellyihyeon.stanceadmin.infrastructure.entity.member.MemberEntity;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class MemberMapperImpl implements MemberMapper {
 
@@ -22,5 +24,10 @@ public class MemberMapperImpl implements MemberMapper {
                 entity.getJoiningDate(),
                 entity.getSignUpDate()
         );
+    }
+
+    @Override
+    public List<Member> toDomains(List<MemberEntity> entities) {
+        return null;
     }
 }
