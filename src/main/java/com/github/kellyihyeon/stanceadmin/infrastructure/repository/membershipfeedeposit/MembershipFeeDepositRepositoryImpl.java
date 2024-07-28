@@ -43,7 +43,6 @@ public class MembershipFeeDepositRepositoryImpl implements MembershipFeeDepositR
                 .where(memberShipFeeDepositTransactionEntity.dueDate.between(startDate, endDate))
                 .fetch();
 
-        // TODO: mapper.toDomains() 구현
         return memberMapper.toDomains(entities);
     }
 }
