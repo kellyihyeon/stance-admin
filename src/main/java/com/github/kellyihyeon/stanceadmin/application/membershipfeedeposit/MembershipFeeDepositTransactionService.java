@@ -27,7 +27,7 @@ public class MembershipFeeDepositTransactionService {
         int totalPaidMembers = repository.findPaidMembers(startDate, endDate).size();
         int totalParticipatingMembers = memberService.getParticipatingMembers().size();
 
-        double depositRatePercentage = calculateDepositRate(totalPaidMembers, totalParticipatingMembers);
+        int depositRatePercentage = calculateDepositRate(totalPaidMembers, totalParticipatingMembers);
 
         return new DepositRateResponse(
                 depositDateCondition.year(),
@@ -38,13 +38,13 @@ public class MembershipFeeDepositTransactionService {
         );
     }
 
-    private double calculateDepositRate(int totalPaidMembers, int totalParticipatingMembers) {
+    private int calculateDepositRate(int totalPaidMembers, int totalParticipatingMembers) {
         if (totalParticipatingMembers == 0) {
             throw new IllegalArgumentException("나누려고 하는 멤버의 수가 0이 되면 안돼요.");
         }
 
         double depositRate = (double) totalPaidMembers / totalParticipatingMembers;
-        return depositRate * 100;
+        return (int) Math.floor(depositRate * 100);
     }
 
     private void validateDepositDate(DepositDateCondition depositDateCondition) {

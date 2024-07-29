@@ -689,8 +689,8 @@ components:
           format: int32
           description: 월
         depositRate:
-          type: number
-          format: double
+          type: integer
+          format: int32
           description: 예치율 (퍼센트)
         totalMembers:
           type: integer

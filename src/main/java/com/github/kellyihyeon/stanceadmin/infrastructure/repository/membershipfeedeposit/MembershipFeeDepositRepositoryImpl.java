@@ -1,13 +1,11 @@
 package com.github.kellyihyeon.stanceadmin.infrastructure.repository.membershipfeedeposit;
 
-import com.github.kellyihyeon.stanceadmin.application.accounttransaction.MembershipFeeDepositTransactionMapper;
 import com.github.kellyihyeon.stanceadmin.application.member.MemberMapper;
 import com.github.kellyihyeon.stanceadmin.domain.member.Member;
 import com.github.kellyihyeon.stanceadmin.domain.member.MemberRole;
 import com.github.kellyihyeon.stanceadmin.domain.member.RegistrationStatus;
 import com.github.kellyihyeon.stanceadmin.domain.membershipfeedeposit.MembershipFeeDepositRepository;
 import com.github.kellyihyeon.stanceadmin.infrastructure.entity.member.MemberEntity;
-import com.github.kellyihyeon.stanceadmin.infrastructure.entity.membershipfeedeposit.MemberShipFeeDepositTransactionEntity;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -22,16 +20,14 @@ import static com.github.kellyihyeon.stanceadmin.infrastructure.entity.membershi
 @RequiredArgsConstructor
 public class MembershipFeeDepositRepositoryImpl implements MembershipFeeDepositRepository {
 
-    private final JpaMembershipFeeDepositTransactionEntityRepository jpaRepository;
-    private final MembershipFeeDepositTransactionMapper mapper;
+    private final JPAQueryFactory jpaQueryFactory;
+
     private final MemberMapper memberMapper;
 
-    private final JPAQueryFactory jpaQueryFactory;
 
     @Override
     public List<Member> findPaidMembers(LocalDate startDate, LocalDate endDate) {
-        List<MemberShipFeeDepositTransactionEntity> entities = jpaRepository.findByDueDateBetween(startDate, endDate);
-        jpaQueryFactory
+        List<MemberEntity> entities = jpaQueryFactory
                 .select(memberEntity)
                 .from(memberEntity)
                 .leftJoin(memberShipFeeDepositTransactionEntity)
@@ -43,8 +39,7 @@ public class MembershipFeeDepositRepositoryImpl implements MembershipFeeDepositR
                 )
                 .fetch();
 
-        // TODO: mapper.toDomains() 구현
-        return mapper.toDomains(entities);
+        return memberMapper.toDomains(entities);
     }
 
     @Override
