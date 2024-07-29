@@ -31,6 +31,18 @@ public class MembershipFeeDepositRepositoryImpl implements MembershipFeeDepositR
     @Override
     public List<Member> findPaidMembers(LocalDate startDate, LocalDate endDate) {
         List<MemberShipFeeDepositTransactionEntity> entities = jpaRepository.findByDueDateBetween(startDate, endDate);
+        jpaQueryFactory
+                .select(memberEntity)
+                .from(memberEntity)
+                .leftJoin(memberShipFeeDepositTransactionEntity)
+                .on(memberEntity.id.eq(memberShipFeeDepositTransactionEntity.depositorId)
+                )
+                .where(memberEntity.memberRole.eq(MemberRole.MEMBER)
+                        .and(memberShipFeeDepositTransactionEntity.dueDate.between(startDate, endDate))
+                        .and(memberEntity.registrationStatus.eq(RegistrationStatus.REGISTERED))
+                )
+                .fetch();
+
         // TODO: mapper.toDomains() 구현
         return mapper.toDomains(entities);
     }
