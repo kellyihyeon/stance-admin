@@ -1,14 +1,22 @@
 package com.github.kellyihyeon.stanceadmin.application.membershipfeedeposit;
 
+import com.github.kellyihyeon.stanceadmin.application.accounttransaction.AccountTransactionService;
+import com.github.kellyihyeon.stanceadmin.application.accounttransaction.dto.MemberShipFeeDepositCreation;
 import com.github.kellyihyeon.stanceadmin.application.member.MemberService;
 import com.github.kellyihyeon.stanceadmin.application.membershipfeedeposit.dto.DepositDateCondition;
+import com.github.kellyihyeon.stanceadmin.domain.accounttransaction.TransactionIdentity;
+import com.github.kellyihyeon.stanceadmin.domain.accounttransaction.TransactionSubType;
+import com.github.kellyihyeon.stanceadmin.domain.accounttransaction.TransactionType;
 import com.github.kellyihyeon.stanceadmin.domain.membershipfeedeposit.MembershipFeeDepositRepository;
+import com.github.kellyihyeon.stanceadmin.domain.membershipfeedeposit.MembershipFeeDepositTransaction;
 import com.github.kellyihyeon.stanceadmin.models.DepositRateResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.YearMonth;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -16,6 +24,22 @@ public class MembershipFeeDepositTransactionService {
 
     private final MembershipFeeDepositRepository repository;
     private final MemberService memberService;
+
+    private final AccountTransactionService accountTransactionService;
+
+    @Transactional
+    public void createMembershipFeeDepositTransaction(MemberShipFeeDepositCreation serviceDto) {
+        List<MembershipFeeDepositTransaction> transactions = serviceDto.toDomain();
+
+        for (MembershipFeeDepositTransaction domain : transactions) {
+            Long transactionId = repository.createMembershipFeeDepositTransaction(domain);
+
+            accountTransactionService.saveAccountTransaction(
+                    TransactionIdentity.create(transactionId, TransactionType.DEPOSIT, TransactionSubType.MEMBERSHIP_FEE),
+                    serviceDto.amount()
+            );
+        }
+    }
 
     public DepositRateResponse getDepositRate(DepositDateCondition depositDateCondition) {
         validateDepositDate(depositDateCondition);

@@ -1,11 +1,14 @@
 package com.github.kellyihyeon.stanceadmin.infrastructure.repository.membershipfeedeposit;
 
+import com.github.kellyihyeon.stanceadmin.application.accounttransaction.MembershipFeeDepositTransactionMapper;
 import com.github.kellyihyeon.stanceadmin.application.member.MemberMapper;
 import com.github.kellyihyeon.stanceadmin.domain.member.Member;
 import com.github.kellyihyeon.stanceadmin.domain.member.MemberRole;
 import com.github.kellyihyeon.stanceadmin.domain.member.RegistrationStatus;
 import com.github.kellyihyeon.stanceadmin.domain.membershipfeedeposit.MembershipFeeDepositRepository;
+import com.github.kellyihyeon.stanceadmin.domain.membershipfeedeposit.MembershipFeeDepositTransaction;
 import com.github.kellyihyeon.stanceadmin.infrastructure.entity.member.MemberEntity;
+import com.github.kellyihyeon.stanceadmin.infrastructure.entity.membershipfeedeposit.MemberShipFeeDepositTransactionEntity;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -20,10 +23,18 @@ import static com.github.kellyihyeon.stanceadmin.infrastructure.entity.membershi
 @RequiredArgsConstructor
 public class MembershipFeeDepositRepositoryImpl implements MembershipFeeDepositRepository {
 
+    private final JpaMembershipFeeDepositTransactionEntityRepository jpaRepository;
     private final JPAQueryFactory jpaQueryFactory;
 
     private final MemberMapper memberMapper;
+    private final MembershipFeeDepositTransactionMapper membershipFeeDepositTransactionMapper;
 
+
+    @Override
+    public Long createMembershipFeeDepositTransaction(MembershipFeeDepositTransaction domain) {
+        MemberShipFeeDepositTransactionEntity entity = membershipFeeDepositTransactionMapper.toEntity(domain);
+        return jpaRepository.save(entity).getId();
+    }
 
     @Override
     public List<Member> findPaidMembers(LocalDate startDate, LocalDate endDate) {

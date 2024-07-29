@@ -1,18 +1,39 @@
 package com.github.kellyihyeon.stanceadmin.presentation.membershipfeedeposit;
 
 import com.github.kellyihyeon.stanceadmin.apis.MembershipFeeDepositTransactionApi;
+import com.github.kellyihyeon.stanceadmin.application.accounttransaction.dto.MemberShipFeeDepositCreation;
 import com.github.kellyihyeon.stanceadmin.application.membershipfeedeposit.MembershipFeeDepositTransactionService;
 import com.github.kellyihyeon.stanceadmin.application.membershipfeedeposit.dto.DepositDateCondition;
+import com.github.kellyihyeon.stanceadmin.domain.member.MemberType;
 import com.github.kellyihyeon.stanceadmin.models.DepositRateResponse;
+import com.github.kellyihyeon.stanceadmin.models.MembershipFeeDepositInput;
+import com.github.kellyihyeon.stanceadmin.presentation.TimeConverter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+
+import java.net.URI;
 
 @Controller
 @RequiredArgsConstructor
 public class MembershipFeeDepositTransactionController implements MembershipFeeDepositTransactionApi {
 
     private final MembershipFeeDepositTransactionService membershipFeeDepositService;
+
+    @Override
+    public ResponseEntity<Void> saveMembershipFeeDepositTransaction(MembershipFeeDepositInput input) {
+        MemberShipFeeDepositCreation serviceDto = new MemberShipFeeDepositCreation(
+                input.getDepositorIds(),
+                TimeConverter.convertToLocalDate(input.getDepositDate()),
+                input.getAmount(),
+                TimeConverter.convertToLocalDate(input.getDueDate()),
+                MemberType.valueOf(input.getMemberType().getValue()),
+                input.getDescription()
+        );
+
+        membershipFeeDepositService.createMembershipFeeDepositTransaction(serviceDto);
+        return ResponseEntity.created(URI.create("")).build();
+    }
 
     @Override
     public ResponseEntity<DepositRateResponse> getDepositRate(Integer year, Integer month) {
