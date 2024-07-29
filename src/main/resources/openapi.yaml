@@ -178,7 +178,7 @@ paths:
   /account-transactions/deposits/membership-fee:
     post:
       tags:
-        - account-transaction
+        - membership-fee-deposit-transaction
       summary: 회비 입금 내역을 등록합니다.
       operationId: saveMembershipFeeDepositTransaction
       requestBody:

@@ -1,16 +1,13 @@
 package com.github.kellyihyeon.stanceadmin.application.accounttransaction;
 
 import com.github.kellyihyeon.stanceadmin.application.account.AccountService;
-import com.github.kellyihyeon.stanceadmin.application.accounttransaction.dto.MemberShipFeeDepositCreation;
 import com.github.kellyihyeon.stanceadmin.domain.account.AccountRepository;
 import com.github.kellyihyeon.stanceadmin.domain.accounttransaction.*;
-import com.github.kellyihyeon.stanceadmin.domain.membershipfeedeposit.MembershipFeeDepositTransaction;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -54,34 +51,6 @@ public class AccountTransactionService {
         }
 
         return latestAccountTransaction.getBalance();
-    }
-
-    @Transactional
-    public void createMembershipFeeDepositTransaction(MemberShipFeeDepositCreation serviceDto) {
-        List<MembershipFeeDepositTransaction> transactions = serviceDto.toDomain();
-
-        for (MembershipFeeDepositTransaction domain : transactions) {
-            Long transactionId = repository.createMembershipFeeDepositTransaction(domain);
-            this.createAccountTransaction(transactionId);
-        }
-    }
-
-    // TODO: saveAccountTransaction 메서드로 이동시킬 것
-    public void createAccountTransaction(Long transactionId) {
-        LocalDateTime now = LocalDateTime.now();
-        Long loggedInId = 999L;
-
-        Long defaultAccountId = accountRepository.getDefaultAccount().getId();
-        AccountTransaction accountTransaction = AccountTransaction.create(
-                null,
-                defaultAccountId,
-                TransactionType.DEPOSIT,
-                transactionId,
-                TransactionSubType.MEMBERSHIP_FEE,
-                now,
-                loggedInId
-        );
-        repository.saveAccountTransaction(accountTransaction);
     }
 
     public void saveAccountTransaction(Long transactionId, TransactionType type, TransactionSubType subType) {
