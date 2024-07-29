@@ -9,12 +9,14 @@ import com.github.kellyihyeon.stanceadmin.domain.membershipfeedeposit.Membership
 import com.github.kellyihyeon.stanceadmin.domain.membershipfeedeposit.MembershipFeeDepositTransaction;
 import com.github.kellyihyeon.stanceadmin.infrastructure.entity.member.MemberEntity;
 import com.github.kellyihyeon.stanceadmin.infrastructure.entity.membershipfeedeposit.MemberShipFeeDepositTransactionEntity;
+import com.querydsl.core.Tuple;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.github.kellyihyeon.stanceadmin.infrastructure.entity.member.QMemberEntity.memberEntity;
 import static com.github.kellyihyeon.stanceadmin.infrastructure.entity.membershipfeedeposit.QMemberShipFeeDepositTransactionEntity.memberShipFeeDepositTransactionEntity;
@@ -38,8 +40,8 @@ public class MembershipFeeDepositRepositoryImpl implements MembershipFeeDepositR
 
     @Override
     public List<Member> findPaidMembers(LocalDate startDate, LocalDate endDate) {
-        List<MemberEntity> entities = jpaQueryFactory
-                .select(memberEntity)
+        List<Tuple> tuples = jpaQueryFactory
+                .select(memberEntity, memberShipFeeDepositTransactionEntity)
                 .from(memberEntity)
                 .leftJoin(memberShipFeeDepositTransactionEntity)
                 .on(memberEntity.id.eq(memberShipFeeDepositTransactionEntity.depositorId)
@@ -50,6 +52,9 @@ public class MembershipFeeDepositRepositoryImpl implements MembershipFeeDepositR
                 )
                 .fetch();
 
+        List<MemberEntity> entities = tuples.stream()
+                .map(tuple -> tuple.get(memberEntity))
+                .collect(Collectors.toList());
         return memberMapper.toDomains(entities);
     }
 
