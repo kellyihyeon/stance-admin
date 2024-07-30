@@ -4,6 +4,7 @@ import com.github.kellyihyeon.stanceadmin.apis.MembershipFeeDepositTransactionAp
 import com.github.kellyihyeon.stanceadmin.application.accounttransaction.dto.MemberShipFeeDepositCreation;
 import com.github.kellyihyeon.stanceadmin.application.membershipfeedeposit.MembershipFeeDepositTransactionService;
 import com.github.kellyihyeon.stanceadmin.application.membershipfeedeposit.dto.DepositDateCondition;
+import com.github.kellyihyeon.stanceadmin.domain.eventapplicantregistry.DepositStatus;
 import com.github.kellyihyeon.stanceadmin.domain.member.MemberType;
 import com.github.kellyihyeon.stanceadmin.models.DepositRateResponse;
 import com.github.kellyihyeon.stanceadmin.models.DepositStatusEnum;
@@ -25,7 +26,12 @@ public class MembershipFeeDepositTransactionController implements MembershipFeeD
 
     @Override
     public ResponseEntity<List<MembershipFeePayerResponse>> getMembershipFeePayersByDepositStatus(DepositStatusEnum depositStatus, Integer year, Integer month) {
-        return null;
+        DepositStatus status = DepositStatus.valueOf(depositStatus.getValue());
+        validateYear(year);
+        validateMonth(month);
+
+        List<MembershipFeePayerResponse> result = membershipFeeDepositService.getMembershipFeePayersByDepositStatus(status, new DepositDateCondition(year, month));
+        return ResponseEntity.ok(result);
     }
 
     @Override
