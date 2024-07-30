@@ -7,18 +7,26 @@ import com.github.kellyihyeon.stanceadmin.application.membershipfeedeposit.dto.D
 import com.github.kellyihyeon.stanceadmin.domain.member.MemberType;
 import com.github.kellyihyeon.stanceadmin.models.DepositRateResponse;
 import com.github.kellyihyeon.stanceadmin.models.MembershipFeeDepositInput;
+import com.github.kellyihyeon.stanceadmin.models.MembershipFeePayerResponse;
 import com.github.kellyihyeon.stanceadmin.presentation.TimeConverter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 
 import java.net.URI;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
 public class MembershipFeeDepositTransactionController implements MembershipFeeDepositTransactionApi {
 
     private final MembershipFeeDepositTransactionService membershipFeeDepositService;
+
+    @Override
+    public ResponseEntity<List<MembershipFeePayerResponse>> getMembershipFeePayersByDepositStatus(String depositStatus) {
+
+        return null;
+    }
 
     @Override
     public ResponseEntity<Void> saveMembershipFeeDepositTransaction(MembershipFeeDepositInput input) {
