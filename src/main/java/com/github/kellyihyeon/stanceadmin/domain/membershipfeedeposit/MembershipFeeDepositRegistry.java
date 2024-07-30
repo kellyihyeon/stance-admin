@@ -27,11 +27,12 @@ public class MembershipFeeDepositRegistry {
     private LocalDate depositDate;
 
 
-    private MembershipFeeDepositRegistry(Long memberId, String memberName, Double amount, MemberStatus memberStatus, LocalDate dueDate, LocalDate depositDate) {
+    private MembershipFeeDepositRegistry(Long memberId, String memberName, Double amount, MemberStatus memberStatus, DepositStatus depositStatus, LocalDate dueDate, LocalDate depositDate) {
         this.memberId = memberId;
         this.memberName = memberName;
         this.amount = amount;
         this.memberStatus = memberStatus;
+        this.depositStatus = depositStatus;
         this.dueDate = dueDate;
         this.depositDate = depositDate;
     }
@@ -46,6 +47,7 @@ public class MembershipFeeDepositRegistry {
                 memberName,
                 amount,
                 memberStatus,
+                DepositStatus.NOT_COMPLETED,
                 dueDate,
                 depositDate
         );
