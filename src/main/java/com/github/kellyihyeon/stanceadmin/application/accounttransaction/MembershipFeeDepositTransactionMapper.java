@@ -1,7 +1,9 @@
 package com.github.kellyihyeon.stanceadmin.application.accounttransaction;
 
 import com.github.kellyihyeon.stanceadmin.domain.member.Member;
+import com.github.kellyihyeon.stanceadmin.domain.membershipfeedeposit.MembershipFeeDepositRegistry;
 import com.github.kellyihyeon.stanceadmin.domain.membershipfeedeposit.MembershipFeeDepositTransaction;
+import com.github.kellyihyeon.stanceadmin.infrastructure.entity.member.MemberEntity;
 import com.github.kellyihyeon.stanceadmin.infrastructure.entity.membershipfeedeposit.MemberShipFeeDepositTransactionEntity;
 
 import java.util.List;
@@ -12,4 +14,5 @@ public interface MembershipFeeDepositTransactionMapper {
 
     List<Member> toDomains(List<MemberShipFeeDepositTransactionEntity> entities);
 
+    MembershipFeeDepositRegistry toDomain(MemberEntity entity, MemberShipFeeDepositTransactionEntity memberShipFeeDepositTransactionEntity);
 }

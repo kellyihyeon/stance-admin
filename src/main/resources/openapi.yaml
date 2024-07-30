@@ -386,7 +386,7 @@ paths:
   /membership-fee/{depositStatus}:
     get:
       tags:
-        - membership-fee
+        - membership-fee-deposit-transaction
       summary: 특정 입금 상태에 따른 회비 입금자 목록을 조회합니다.
       description: |
         주어진 입금 상태(depositStatus)에 따라 해당 회비를 입금한 회원 목록을 조회합니다.
@@ -398,11 +398,24 @@ paths:
           in: path
           required: true
           schema:
-            type: string
-            enum:
-              - COMPLETED
-              - NOT_COMPLETED
+            $ref: '#/components/schemas/DepositStatusEnum'
           description: 조회할 입금 상태
+        - name: year
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int32
+          description: 조회할 연도(예:2024)
+        - name: month
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int32
+            minimum: 1
+            maximum: 12
+          description: 조회할 월 (1에서 12 사이)
       responses:
         '200':
           description: successful operation
@@ -411,7 +424,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/MembershipFeePayers'
+                  $ref: '#/components/schemas/MembershipFeePayerResponse'
         '500':
           description: Internal server error
 
@@ -644,7 +657,13 @@ components:
         - deposits
         - totalAmount
 
-    MembershipFeePayers:
+    DepositStatusEnum:
+      type: string
+      enum:
+        - COMPLETED
+        - NOT_COMPLETED
+
+    MembershipFeePayerResponse:
       type: object
       properties:
         memberId:
@@ -659,22 +678,17 @@ components:
           format: double
         memberStatus:
           type: string
-          enum:
-            - ACTIVE
-            - DORMANT
-            - GUEST
-        isDeposited:
-          type: boolean
+        depositStatus:
+          type: string
         depositDate:
           type: string
-          format: date
           description: 입금 일자 (YYYY-MM-DD 형식)
       required:
         - memberId
         - memberName
         - amount
         - memberStatus
-        - isDeposited
+        - depositStatus
         - depositDate
 
     DepositRateResponse:

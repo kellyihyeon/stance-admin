@@ -4,21 +4,35 @@ import com.github.kellyihyeon.stanceadmin.apis.MembershipFeeDepositTransactionAp
 import com.github.kellyihyeon.stanceadmin.application.accounttransaction.dto.MemberShipFeeDepositCreation;
 import com.github.kellyihyeon.stanceadmin.application.membershipfeedeposit.MembershipFeeDepositTransactionService;
 import com.github.kellyihyeon.stanceadmin.application.membershipfeedeposit.dto.DepositDateCondition;
+import com.github.kellyihyeon.stanceadmin.domain.eventapplicantregistry.DepositStatus;
 import com.github.kellyihyeon.stanceadmin.domain.member.MemberType;
 import com.github.kellyihyeon.stanceadmin.models.DepositRateResponse;
+import com.github.kellyihyeon.stanceadmin.models.DepositStatusEnum;
 import com.github.kellyihyeon.stanceadmin.models.MembershipFeeDepositInput;
+import com.github.kellyihyeon.stanceadmin.models.MembershipFeePayerResponse;
 import com.github.kellyihyeon.stanceadmin.presentation.TimeConverter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 
 import java.net.URI;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
 public class MembershipFeeDepositTransactionController implements MembershipFeeDepositTransactionApi {
 
     private final MembershipFeeDepositTransactionService membershipFeeDepositService;
+
+    @Override
+    public ResponseEntity<List<MembershipFeePayerResponse>> getMembershipFeePayersByDepositStatus(DepositStatusEnum depositStatus, Integer year, Integer month) {
+        DepositStatus status = DepositStatus.valueOf(depositStatus.getValue());
+        validateYear(year);
+        validateMonth(month);
+
+        List<MembershipFeePayerResponse> result = membershipFeeDepositService.getMembershipFeePayersByDepositStatus(status, new DepositDateCondition(year, month));
+        return ResponseEntity.ok(result);
+    }
 
     @Override
     public ResponseEntity<Void> saveMembershipFeeDepositTransaction(MembershipFeeDepositInput input) {

@@ -7,9 +7,12 @@ import com.github.kellyihyeon.stanceadmin.application.membershipfeedeposit.dto.D
 import com.github.kellyihyeon.stanceadmin.domain.accounttransaction.TransactionIdentity;
 import com.github.kellyihyeon.stanceadmin.domain.accounttransaction.TransactionSubType;
 import com.github.kellyihyeon.stanceadmin.domain.accounttransaction.TransactionType;
+import com.github.kellyihyeon.stanceadmin.domain.eventapplicantregistry.DepositStatus;
+import com.github.kellyihyeon.stanceadmin.domain.membershipfeedeposit.MembershipFeeDepositRegistry;
 import com.github.kellyihyeon.stanceadmin.domain.membershipfeedeposit.MembershipFeeDepositRepository;
 import com.github.kellyihyeon.stanceadmin.domain.membershipfeedeposit.MembershipFeeDepositTransaction;
 import com.github.kellyihyeon.stanceadmin.models.DepositRateResponse;
+import com.github.kellyihyeon.stanceadmin.models.MembershipFeePayerResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +20,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -26,6 +31,49 @@ public class MembershipFeeDepositTransactionService {
     private final MemberService memberService;
 
     private final AccountTransactionService accountTransactionService;
+
+    public List<MembershipFeePayerResponse> getMembershipFeePayersByDepositStatus(DepositStatus status, DepositDateCondition depositDateCondition) {
+        validateDepositDate(depositDateCondition);
+
+        YearMonth yearMonth = YearMonth.of(depositDateCondition.year(), depositDateCondition.month());
+        LocalDate startDate = yearMonth.atDay(1);
+        LocalDate endDate = yearMonth.atEndOfMonth();
+
+        List<MembershipFeeDepositRegistry> registries = repository.getDepositRegistries(startDate, endDate);
+        List<MembershipFeeDepositRegistry> confirmedDepositRecords = checkDepositInformation(registries);
+
+        return createRegistryByDepositStatus(confirmedDepositRecords, status);
+    }
+
+    private List<MembershipFeePayerResponse> createRegistryByDepositStatus(List<MembershipFeeDepositRegistry> confirmedDepositRecords, DepositStatus status) {
+        return confirmedDepositRecords.stream()
+                .filter(record -> status.equals(record.getDepositStatus()))
+                .map(
+                        record -> new MembershipFeePayerResponse(
+                                record.getMemberId(),
+                                record.getMemberName(),
+                                Optional.ofNullable(record.getAmount())
+                                        .orElse((double)0),
+                                record.getMemberStatus().getDisplayName(),
+                                record.getDepositStatus().getDisplayName(),
+                                Optional.ofNullable(record.getDepositDate())
+                                        .map(LocalDate::toString)
+                                        .orElse("")
+
+                        )
+                )
+                .collect(Collectors.toList());
+    }
+
+    private List<MembershipFeeDepositRegistry> checkDepositInformation(List<MembershipFeeDepositRegistry> registries) {
+        for (MembershipFeeDepositRegistry registry : registries) {
+            if (registry.isDepositInfoConfirmed()) {
+                registry.complete();
+            }
+        }
+
+        return registries;
+    }
 
     @Transactional
     public void createMembershipFeeDepositTransaction(MemberShipFeeDepositCreation serviceDto) {

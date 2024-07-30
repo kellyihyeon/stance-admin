@@ -9,7 +9,7 @@ public interface MembershipFeeDepositRepository {
 
     List<Member> findPaidMembers(LocalDate startDate, LocalDate endDate);
 
-    List<Member> getDepositRoster(LocalDate startDate, LocalDate endDate);
+    List<MembershipFeeDepositRegistry> getDepositRegistries(LocalDate startDate, LocalDate endDate);
 
     Long createMembershipFeeDepositTransaction(MembershipFeeDepositTransaction domain);
 }

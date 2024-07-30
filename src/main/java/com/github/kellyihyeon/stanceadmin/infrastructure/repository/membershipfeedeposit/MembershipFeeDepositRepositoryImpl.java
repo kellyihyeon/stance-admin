@@ -2,9 +2,13 @@ package com.github.kellyihyeon.stanceadmin.infrastructure.repository.membershipf
 
 import com.github.kellyihyeon.stanceadmin.application.accounttransaction.MembershipFeeDepositTransactionMapper;
 import com.github.kellyihyeon.stanceadmin.application.member.MemberMapper;
+import com.github.kellyihyeon.stanceadmin.application.membershipfeedeposit.MembershipFeeDepositRegistryMapper;
+import com.github.kellyihyeon.stanceadmin.application.membershipfeedeposit.dto.DepositRegistryData;
+import com.github.kellyihyeon.stanceadmin.application.membershipfeedeposit.dto.QDepositRegistryData;
 import com.github.kellyihyeon.stanceadmin.domain.member.Member;
 import com.github.kellyihyeon.stanceadmin.domain.member.MemberRole;
 import com.github.kellyihyeon.stanceadmin.domain.member.RegistrationStatus;
+import com.github.kellyihyeon.stanceadmin.domain.membershipfeedeposit.MembershipFeeDepositRegistry;
 import com.github.kellyihyeon.stanceadmin.domain.membershipfeedeposit.MembershipFeeDepositRepository;
 import com.github.kellyihyeon.stanceadmin.domain.membershipfeedeposit.MembershipFeeDepositTransaction;
 import com.github.kellyihyeon.stanceadmin.infrastructure.entity.member.MemberEntity;
@@ -30,6 +34,7 @@ public class MembershipFeeDepositRepositoryImpl implements MembershipFeeDepositR
 
     private final MemberMapper memberMapper;
     private final MembershipFeeDepositTransactionMapper membershipFeeDepositTransactionMapper;
+    private final MembershipFeeDepositRegistryMapper registryMapper;
 
 
     @Override
@@ -59,9 +64,16 @@ public class MembershipFeeDepositRepositoryImpl implements MembershipFeeDepositR
     }
 
     @Override
-    public List<Member> getDepositRoster(LocalDate startDate, LocalDate endDate) {
-        List<MemberEntity> entities = jpaQueryFactory
-                .select(memberEntity)
+    public List<MembershipFeeDepositRegistry> getDepositRegistries(LocalDate startDate, LocalDate endDate) {
+        List<DepositRegistryData> registryDataDto = jpaQueryFactory
+                .select(new QDepositRegistryData(
+                        memberEntity.id,
+                        memberEntity.name,
+                        memberShipFeeDepositTransactionEntity.amount,
+                        memberEntity.memberStatus,
+                        memberShipFeeDepositTransactionEntity.dueDate,
+                        memberShipFeeDepositTransactionEntity.depositDate
+                ))
                 .from(memberEntity)
                 .leftJoin(memberShipFeeDepositTransactionEntity)
                 .on(memberEntity.id.eq(memberShipFeeDepositTransactionEntity.depositorId)
@@ -72,6 +84,6 @@ public class MembershipFeeDepositRepositoryImpl implements MembershipFeeDepositR
                 )
                 .fetch();
 
-        return memberMapper.toDomains(entities);
+        return registryMapper.toDomains(registryDataDto);
     }
 }
