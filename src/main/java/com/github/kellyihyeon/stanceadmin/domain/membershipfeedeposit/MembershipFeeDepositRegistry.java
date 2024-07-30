@@ -1,5 +1,6 @@
 package com.github.kellyihyeon.stanceadmin.domain.membershipfeedeposit;
 
+import com.github.kellyihyeon.stanceadmin.domain.eventapplicantregistry.DepositStatus;
 import com.github.kellyihyeon.stanceadmin.domain.member.MemberStatus;
 import lombok.Getter;
 import lombok.ToString;
@@ -19,7 +20,7 @@ public class MembershipFeeDepositRegistry {
 
     private MemberStatus memberStatus;
 
-    private boolean isDeposited;
+    private DepositStatus depositStatus;
 
     private LocalDate dueDate;
 
@@ -56,7 +57,7 @@ public class MembershipFeeDepositRegistry {
 
     public void complete() {
         if (isDepositInfoConfirmed()) {
-            this.isDeposited = true;
+            this.depositStatus = DepositStatus.COMPLETED;
         }
     }
 }
