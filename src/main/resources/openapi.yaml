@@ -398,10 +398,7 @@ paths:
           in: path
           required: true
           schema:
-            type: string
-            enum:
-              - COMPLETED
-              - NOT_COMPLETED
+            $ref: '#/components/schemas/DepositStatus'
           description: 조회할 입금 상태
         - name: year
           in: query
@@ -659,6 +656,12 @@ components:
       required:
         - deposits
         - totalAmount
+
+    DepositStatus:
+      type: string
+      enum:
+        - COMPLETED
+        - NOT_COMPLETED
 
     MembershipFeePayerResponse:
       type: object

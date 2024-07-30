@@ -6,6 +6,7 @@ import com.github.kellyihyeon.stanceadmin.application.membershipfeedeposit.Membe
 import com.github.kellyihyeon.stanceadmin.application.membershipfeedeposit.dto.DepositDateCondition;
 import com.github.kellyihyeon.stanceadmin.domain.member.MemberType;
 import com.github.kellyihyeon.stanceadmin.models.DepositRateResponse;
+import com.github.kellyihyeon.stanceadmin.models.DepositStatus;
 import com.github.kellyihyeon.stanceadmin.models.MembershipFeeDepositInput;
 import com.github.kellyihyeon.stanceadmin.models.MembershipFeePayerResponse;
 import com.github.kellyihyeon.stanceadmin.presentation.TimeConverter;
@@ -23,7 +24,7 @@ public class MembershipFeeDepositTransactionController implements MembershipFeeD
     private final MembershipFeeDepositTransactionService membershipFeeDepositService;
 
     @Override
-    public ResponseEntity<List<MembershipFeePayerResponse>> getMembershipFeePayersByDepositStatus(String depositStatus, Integer year, Integer month) {
+    public ResponseEntity<List<MembershipFeePayerResponse>> getMembershipFeePayersByDepositStatus(DepositStatus depositStatus, Integer year, Integer month) {
         return null;
     }
 
