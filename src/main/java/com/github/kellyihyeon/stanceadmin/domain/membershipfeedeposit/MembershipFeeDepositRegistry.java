@@ -22,4 +22,7 @@ public class MembershipFeeDepositRegistry {
 
     private LocalDate depositDate;
 
+    public static MembershipFeeDepositRegistry create(Long memberId, String memberName, Double amount, MemberStatus memberStatus, LocalDate dueDate, LocalDate depositDate) {
+        return null;
+    }
 }

@@ -2,6 +2,7 @@ package com.github.kellyihyeon.stanceadmin.infrastructure.repository.membershipf
 
 import com.github.kellyihyeon.stanceadmin.application.accounttransaction.MembershipFeeDepositTransactionMapper;
 import com.github.kellyihyeon.stanceadmin.application.member.MemberMapper;
+import com.github.kellyihyeon.stanceadmin.application.membershipfeedeposit.MembershipFeeDepositRegistryMapper;
 import com.github.kellyihyeon.stanceadmin.application.membershipfeedeposit.dto.DepositRegistryData;
 import com.github.kellyihyeon.stanceadmin.application.membershipfeedeposit.dto.QDepositRegistryData;
 import com.github.kellyihyeon.stanceadmin.domain.member.Member;
@@ -33,6 +34,7 @@ public class MembershipFeeDepositRepositoryImpl implements MembershipFeeDepositR
 
     private final MemberMapper memberMapper;
     private final MembershipFeeDepositTransactionMapper membershipFeeDepositTransactionMapper;
+    private final MembershipFeeDepositRegistryMapper registryMapper;
 
 
     @Override
@@ -63,7 +65,7 @@ public class MembershipFeeDepositRepositoryImpl implements MembershipFeeDepositR
 
     @Override
     public List<MembershipFeeDepositRegistry> getDepositRegistries(LocalDate startDate, LocalDate endDate) {
-        List<DepositRegistryData> registryData = jpaQueryFactory
+        List<DepositRegistryData> registryDataDto = jpaQueryFactory
                 .select(new QDepositRegistryData(
                         memberEntity.id,
                         memberEntity.name,
@@ -82,6 +84,6 @@ public class MembershipFeeDepositRepositoryImpl implements MembershipFeeDepositR
                 )
                 .fetch();
 
-        return null;
+        return registryMapper.toDomains(registryDataDto);
     }
 }
