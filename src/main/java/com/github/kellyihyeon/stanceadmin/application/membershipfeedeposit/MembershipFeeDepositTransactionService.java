@@ -7,9 +7,11 @@ import com.github.kellyihyeon.stanceadmin.application.membershipfeedeposit.dto.D
 import com.github.kellyihyeon.stanceadmin.domain.accounttransaction.TransactionIdentity;
 import com.github.kellyihyeon.stanceadmin.domain.accounttransaction.TransactionSubType;
 import com.github.kellyihyeon.stanceadmin.domain.accounttransaction.TransactionType;
+import com.github.kellyihyeon.stanceadmin.domain.eventapplicantregistry.DepositStatus;
 import com.github.kellyihyeon.stanceadmin.domain.membershipfeedeposit.MembershipFeeDepositRepository;
 import com.github.kellyihyeon.stanceadmin.domain.membershipfeedeposit.MembershipFeeDepositTransaction;
 import com.github.kellyihyeon.stanceadmin.models.DepositRateResponse;
+import com.github.kellyihyeon.stanceadmin.models.MembershipFeePayerResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +28,17 @@ public class MembershipFeeDepositTransactionService {
     private final MemberService memberService;
 
     private final AccountTransactionService accountTransactionService;
+
+    public List<MembershipFeePayerResponse> getMembershipFeePayersByDepositStatus(DepositStatus status, DepositDateCondition depositDateCondition) {
+        validateDepositDate(depositDateCondition);
+        YearMonth yearMonth = YearMonth.of(depositDateCondition.year(), depositDateCondition.month());
+        LocalDate startDate = yearMonth.atDay(1);
+        LocalDate endDate = yearMonth.atEndOfMonth();
+
+        repository.getDepositRegistries(startDate, endDate);
+
+        return null;
+    }
 
     @Transactional
     public void createMembershipFeeDepositTransaction(MemberShipFeeDepositCreation serviceDto) {
