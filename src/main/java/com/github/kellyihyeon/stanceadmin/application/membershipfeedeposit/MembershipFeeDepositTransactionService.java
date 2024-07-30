@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -32,6 +33,7 @@ public class MembershipFeeDepositTransactionService {
 
     public List<MembershipFeePayerResponse> getMembershipFeePayersByDepositStatus(DepositStatus status, DepositDateCondition depositDateCondition) {
         validateDepositDate(depositDateCondition);
+
         YearMonth yearMonth = YearMonth.of(depositDateCondition.year(), depositDateCondition.month());
         LocalDate startDate = yearMonth.atDay(1);
         LocalDate endDate = yearMonth.atEndOfMonth();
@@ -39,7 +41,24 @@ public class MembershipFeeDepositTransactionService {
         List<MembershipFeeDepositRegistry> registries = repository.getDepositRegistries(startDate, endDate);
         List<MembershipFeeDepositRegistry> confirmedDepositRecords = checkDepositInformation(registries);
 
-        return null;
+        return createRegistryByDepositStatus(confirmedDepositRecords, status);
+    }
+
+    private List<MembershipFeePayerResponse> createRegistryByDepositStatus(List<MembershipFeeDepositRegistry> confirmedDepositRecords, DepositStatus status) {
+        return confirmedDepositRecords.stream()
+                .filter(record -> status.equals(record.getDepositStatus()))
+                .map(
+                        record -> new MembershipFeePayerResponse(
+                                record.getMemberId(),
+                                record.getMemberName(),
+                                record.getAmount(),
+                                record.getMemberStatus().getDisplayName(),
+                                record.getDepositStatus().getDisplayName(),
+                                record.getDepositDate().toString()
+
+                        )
+                )
+                .collect(Collectors.toList());
     }
 
     private List<MembershipFeeDepositRegistry> checkDepositInformation(List<MembershipFeeDepositRegistry> registries) {

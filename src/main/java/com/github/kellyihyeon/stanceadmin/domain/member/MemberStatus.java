@@ -1,5 +1,8 @@
 package com.github.kellyihyeon.stanceadmin.domain.member;
 
+import lombok.Getter;
+
+@Getter
 public enum MemberStatus {
 
     ACTIVE("정기 회원"),

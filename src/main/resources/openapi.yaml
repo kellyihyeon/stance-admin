@@ -679,14 +679,13 @@ components:
           type: string
         depositDate:
           type: string
-          format: date
           description: 입금 일자 (YYYY-MM-DD 형식)
       required:
         - memberId
         - memberName
         - amount
         - memberStatus
-        - isDeposited
+        - depositStatus
         - depositDate
 
     DepositRateResponse:
