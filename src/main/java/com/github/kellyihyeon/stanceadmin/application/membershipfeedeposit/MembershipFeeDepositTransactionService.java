@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -51,10 +52,13 @@ public class MembershipFeeDepositTransactionService {
                         record -> new MembershipFeePayerResponse(
                                 record.getMemberId(),
                                 record.getMemberName(),
-                                record.getAmount(),
+                                Optional.ofNullable(record.getAmount())
+                                        .orElse((double)0),
                                 record.getMemberStatus().getDisplayName(),
                                 record.getDepositStatus().getDisplayName(),
-                                record.getDepositDate().toString()
+                                Optional.ofNullable(record.getDepositDate())
+                                        .map(LocalDate::toString)
+                                        .orElse("")
 
                         )
                 )
