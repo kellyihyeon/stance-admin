@@ -2,6 +2,8 @@ package com.github.kellyihyeon.stanceadmin.infrastructure.repository.membershipf
 
 import com.github.kellyihyeon.stanceadmin.application.accounttransaction.MembershipFeeDepositTransactionMapper;
 import com.github.kellyihyeon.stanceadmin.application.member.MemberMapper;
+import com.github.kellyihyeon.stanceadmin.application.membershipfeedeposit.dto.DepositRegistryData;
+import com.github.kellyihyeon.stanceadmin.application.membershipfeedeposit.dto.QDepositRegistryData;
 import com.github.kellyihyeon.stanceadmin.domain.member.Member;
 import com.github.kellyihyeon.stanceadmin.domain.member.MemberRole;
 import com.github.kellyihyeon.stanceadmin.domain.member.RegistrationStatus;
@@ -61,8 +63,15 @@ public class MembershipFeeDepositRepositoryImpl implements MembershipFeeDepositR
 
     @Override
     public List<MembershipFeeDepositRegistry> getDepositRegistries(LocalDate startDate, LocalDate endDate) {
-        List<Tuple> tuples = jpaQueryFactory
-                .select(memberEntity, memberShipFeeDepositTransactionEntity)
+        List<DepositRegistryData> registryData = jpaQueryFactory
+                .select(new QDepositRegistryData(
+                        memberEntity.id,
+                        memberEntity.name,
+                        memberShipFeeDepositTransactionEntity.amount,
+                        memberEntity.memberStatus,
+                        memberShipFeeDepositTransactionEntity.dueDate,
+                        memberShipFeeDepositTransactionEntity.depositDate
+                ))
                 .from(memberEntity)
                 .leftJoin(memberShipFeeDepositTransactionEntity)
                 .on(memberEntity.id.eq(memberShipFeeDepositTransactionEntity.depositorId)
@@ -73,13 +82,6 @@ public class MembershipFeeDepositRepositoryImpl implements MembershipFeeDepositR
                 )
                 .fetch();
 
-        return tuples.stream()
-                .map(tuple ->
-                        membershipFeeDepositTransactionMapper.toDomain(
-                                tuple.get(memberEntity),
-                                tuple.get(memberShipFeeDepositTransactionEntity)
-                        )
-                )
-                .collect(Collectors.toList());
+        return null;
     }
 }
