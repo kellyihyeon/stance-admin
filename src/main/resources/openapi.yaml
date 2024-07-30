@@ -675,12 +675,8 @@ components:
           format: double
         memberStatus:
           type: string
-          enum:
-            - ACTIVE
-            - DORMANT
-            - GUEST
-        isDeposited:
-          type: boolean
+        depositStatus:
+          type: string
         depositDate:
           type: string
           format: date
