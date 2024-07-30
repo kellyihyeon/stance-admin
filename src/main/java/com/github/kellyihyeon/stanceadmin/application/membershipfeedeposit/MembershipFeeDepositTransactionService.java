@@ -8,6 +8,7 @@ import com.github.kellyihyeon.stanceadmin.domain.accounttransaction.TransactionI
 import com.github.kellyihyeon.stanceadmin.domain.accounttransaction.TransactionSubType;
 import com.github.kellyihyeon.stanceadmin.domain.accounttransaction.TransactionType;
 import com.github.kellyihyeon.stanceadmin.domain.eventapplicantregistry.DepositStatus;
+import com.github.kellyihyeon.stanceadmin.domain.membershipfeedeposit.MembershipFeeDepositRegistry;
 import com.github.kellyihyeon.stanceadmin.domain.membershipfeedeposit.MembershipFeeDepositRepository;
 import com.github.kellyihyeon.stanceadmin.domain.membershipfeedeposit.MembershipFeeDepositTransaction;
 import com.github.kellyihyeon.stanceadmin.models.DepositRateResponse;
@@ -35,9 +36,20 @@ public class MembershipFeeDepositTransactionService {
         LocalDate startDate = yearMonth.atDay(1);
         LocalDate endDate = yearMonth.atEndOfMonth();
 
-        repository.getDepositRegistries(startDate, endDate);
+        List<MembershipFeeDepositRegistry> registries = repository.getDepositRegistries(startDate, endDate);
+        List<MembershipFeeDepositRegistry> confirmedDepositRecords = checkDepositInformation(registries);
 
         return null;
+    }
+
+    private List<MembershipFeeDepositRegistry> checkDepositInformation(List<MembershipFeeDepositRegistry> registries) {
+        for (MembershipFeeDepositRegistry registry : registries) {
+            if (registry.isDepositInfoConfirmed()) {
+                registry.complete();
+            }
+        }
+
+        return registries;
     }
 
     @Transactional
