@@ -23,8 +23,7 @@ public class MembershipFeeDepositTransactionController implements MembershipFeeD
     private final MembershipFeeDepositTransactionService membershipFeeDepositService;
 
     @Override
-    public ResponseEntity<List<MembershipFeePayerResponse>> getMembershipFeePayersByDepositStatus(String depositStatus) {
-
+    public ResponseEntity<List<MembershipFeePayerResponse>> getMembershipFeePayersByDepositStatus(String depositStatus, Integer year, Integer month) {
         return null;
     }
 
