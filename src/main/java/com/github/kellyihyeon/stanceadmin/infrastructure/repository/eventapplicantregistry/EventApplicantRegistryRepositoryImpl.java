@@ -27,4 +27,9 @@ public class EventApplicantRegistryRepositoryImpl implements EventApplicantRegis
         return null;
     }
 
+    @Override
+    public void saveAll(List<EventApplicantRegistry> eventApplicantRegistries) {
+
+    }
+
 }

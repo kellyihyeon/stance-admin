@@ -41,4 +41,14 @@ public class EventApplicantRegistryService {
             );
         }
     }
+
+    public void processDepositCompletion(Long eventId, List<Long> depositorIds) {
+        List<EventApplicantRegistry> eventApplicantRegistries = eventApplicantRegistryRepository.getRegistriesByEventIdAndDepositorIds(eventId, depositorIds);
+
+        for (EventApplicantRegistry registry : eventApplicantRegistries) {
+            registry.markAsPaid();
+        }
+
+        eventApplicantRegistryRepository.saveAll(eventApplicantRegistries);
+    }
 }

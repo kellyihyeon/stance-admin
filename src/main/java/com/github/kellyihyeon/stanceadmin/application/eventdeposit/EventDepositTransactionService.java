@@ -2,6 +2,7 @@ package com.github.kellyihyeon.stanceadmin.application.eventdeposit;
 
 import com.github.kellyihyeon.stanceadmin.application.accounttransaction.AccountTransactionService;
 import com.github.kellyihyeon.stanceadmin.application.event.EventService;
+import com.github.kellyihyeon.stanceadmin.application.eventapplicantregistry.EventApplicantRegistryService;
 import com.github.kellyihyeon.stanceadmin.application.eventdeposit.dto.EventDepositCreation;
 import com.github.kellyihyeon.stanceadmin.domain.accounttransaction.TransactionIdentity;
 import com.github.kellyihyeon.stanceadmin.domain.accounttransaction.TransactionSubType;
@@ -24,6 +25,8 @@ public class EventDepositTransactionService {
 
     private final AccountTransactionService accountTransactionService;
     private final EventService eventService;
+
+    private final EventApplicantRegistryService eventApplicantRegistryService;
 
 
 
@@ -49,6 +52,8 @@ public class EventDepositTransactionService {
                             now
                     )
             );
+
+            eventApplicantRegistryService.processDepositCompletion(serviceDto.getEventId(), serviceDto.getDepositorIds());
 
             accountTransactionService.saveAccountTransaction(
                     TransactionIdentity.create(transactionId, TransactionType.DEPOSIT, TransactionSubType.EVENT),

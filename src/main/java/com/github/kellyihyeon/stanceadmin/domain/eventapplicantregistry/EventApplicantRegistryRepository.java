@@ -8,4 +8,6 @@ public interface EventApplicantRegistryRepository {
 
     List<EventApplicantRegistry> getRegistriesByEventIdAndDepositorIds(Long eventId, List<Long> depositorIds);
 
+    void saveAll(List<EventApplicantRegistry> eventApplicantRegistries);
+
 }
