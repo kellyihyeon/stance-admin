@@ -14,7 +14,7 @@ public class EventDepositTransaction {
 
     private Long eventId;
 
-    private Long applicantId;
+    private Long depositorId;
 
     private Double amount;
 
@@ -31,9 +31,9 @@ public class EventDepositTransaction {
     private LocalDateTime updatedAt;
 
 
-    private EventDepositTransaction(Long eventId, Long applicantId, Double amount, LocalDate depositDate, String description, Long creatorId, LocalDateTime createdAt) {
+    private EventDepositTransaction(Long eventId, Long depositorId, Double amount, LocalDate depositDate, String description, Long creatorId, LocalDateTime createdAt) {
         this.eventId = eventId;
-        this.applicantId = applicantId;
+        this.depositorId = depositorId;
         this.amount = amount;
         this.depositDate = depositDate;
         this.description = description;

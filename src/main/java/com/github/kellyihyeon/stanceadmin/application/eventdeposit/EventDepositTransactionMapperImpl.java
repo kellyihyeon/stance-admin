@@ -16,7 +16,7 @@ public class EventDepositTransactionMapperImpl implements EventDepositTransactio
     public EventDepositTransactionEntity toEntity(EventDepositTransaction domain) {
         return EventDepositTransactionEntity.create(
                 domain.getEventId(),
-                domain.getApplicantId(),
+                domain.getDepositorId(),
                 domain.getAmount(),
                 domain.getDepositDate(),
                 domain.getDescription(),
