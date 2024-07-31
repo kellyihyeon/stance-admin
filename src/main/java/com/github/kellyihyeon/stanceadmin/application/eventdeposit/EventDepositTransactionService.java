@@ -3,6 +3,7 @@ package com.github.kellyihyeon.stanceadmin.application.eventdeposit;
 import com.github.kellyihyeon.stanceadmin.application.accounttransaction.AccountTransactionService;
 import com.github.kellyihyeon.stanceadmin.application.event.EventService;
 import com.github.kellyihyeon.stanceadmin.application.eventdeposit.dto.EventDepositCreation;
+import com.github.kellyihyeon.stanceadmin.domain.accounttransaction.TransactionIdentity;
 import com.github.kellyihyeon.stanceadmin.domain.accounttransaction.TransactionSubType;
 import com.github.kellyihyeon.stanceadmin.domain.accounttransaction.TransactionType;
 import com.github.kellyihyeon.stanceadmin.domain.eventdeposit.EventDepositTransaction;
@@ -20,6 +21,7 @@ public class EventDepositTransactionService {
 
     private final EventDepositTransactionRepository repository;
     private final AccountTransactionService accountTransactionService;
+
     private final EventService eventService;
 
 
@@ -48,9 +50,8 @@ public class EventDepositTransactionService {
             );
 
             accountTransactionService.saveAccountTransaction(
-                    transactionId,
-                    TransactionType.DEPOSIT,
-                    TransactionSubType.EVENT
+                    TransactionIdentity.create(transactionId, TransactionType.DEPOSIT, TransactionSubType.EVENT),
+                    serviceDto.getAmount()
             );
         }
     }
