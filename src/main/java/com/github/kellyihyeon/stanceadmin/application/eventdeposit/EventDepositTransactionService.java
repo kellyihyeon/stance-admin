@@ -2,6 +2,7 @@ package com.github.kellyihyeon.stanceadmin.application.eventdeposit;
 
 import com.github.kellyihyeon.stanceadmin.application.accounttransaction.AccountTransactionService;
 import com.github.kellyihyeon.stanceadmin.application.event.EventService;
+import com.github.kellyihyeon.stanceadmin.application.eventapplicantregistry.EventApplicantRegistryService;
 import com.github.kellyihyeon.stanceadmin.application.eventdeposit.dto.EventDepositCreation;
 import com.github.kellyihyeon.stanceadmin.domain.accounttransaction.TransactionIdentity;
 import com.github.kellyihyeon.stanceadmin.domain.accounttransaction.TransactionSubType;
@@ -20,9 +21,13 @@ import java.util.List;
 public class EventDepositTransactionService {
 
     private final EventDepositTransactionRepository repository;
-    private final AccountTransactionService accountTransactionService;
+    private final EventDepositTransactionMapper mapper;
 
+    private final AccountTransactionService accountTransactionService;
     private final EventService eventService;
+
+    private final EventApplicantRegistryService eventApplicantRegistryService;
+
 
 
     @Transactional
@@ -33,14 +38,13 @@ public class EventDepositTransactionService {
 
         Long loggedInId = 999L;
         LocalDateTime now = LocalDateTime.now();
-        List<EventDepositTransaction> transactions = serviceDto.toDomains(loggedInId, now);
+        List<EventDepositTransaction> transactions = mapper.toDomains(serviceDto, loggedInId, now);
 
         for (EventDepositTransaction eventDepositTransaction : transactions) {
             Long transactionId = repository.saveEventDepositTransaction(
-                    new EventDepositTransaction(
-                            eventDepositTransaction.getId(),
+                    EventDepositTransaction.createWithoutId(
                             eventDepositTransaction.getEventId(),
-                            eventDepositTransaction.getApplicantId(),
+                            eventDepositTransaction.getDepositorId(),
                             eventDepositTransaction.getAmount(),
                             eventDepositTransaction.getDepositDate(),
                             eventDepositTransaction.getDescription(),
@@ -48,6 +52,8 @@ public class EventDepositTransactionService {
                             now
                     )
             );
+
+            eventApplicantRegistryService.processDepositCompletion(serviceDto.getEventId(), serviceDto.getDepositorIds());
 
             accountTransactionService.saveAccountTransaction(
                     TransactionIdentity.create(transactionId, TransactionType.DEPOSIT, TransactionSubType.EVENT),

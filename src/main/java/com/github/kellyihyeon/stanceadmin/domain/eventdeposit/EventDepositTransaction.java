@@ -12,11 +12,9 @@ import java.util.Objects;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class EventDepositTransaction {
 
-    private Long id;
-
     private Long eventId;
 
-    private Long applicantId;
+    private Long depositorId;
 
     private Double amount;
 
@@ -33,10 +31,9 @@ public class EventDepositTransaction {
     private LocalDateTime updatedAt;
 
 
-    public EventDepositTransaction(Long id, Long eventId, Long applicantId, Double amount, LocalDate depositDate, String description, Long creatorId, LocalDateTime createdAt) {
-        this.id = id;
+    private EventDepositTransaction(Long eventId, Long depositorId, Double amount, LocalDate depositDate, String description, Long creatorId, LocalDateTime createdAt) {
         this.eventId = eventId;
-        this.applicantId = applicantId;
+        this.depositorId = depositorId;
         this.amount = amount;
         this.depositDate = depositDate;
         this.description = description;
@@ -44,18 +41,17 @@ public class EventDepositTransaction {
         this.createdAt = createdAt;
     }
 
-    public static EventDepositTransaction create(Long id, Long eventId, Long applicantId, Double amount, LocalDate depositDate, String description, Long creatorId, LocalDateTime createdAt) {
+    public static EventDepositTransaction createWithoutId(Long eventId, Long depositorId, Double amount, LocalDate depositDate, String description, Long creatorId, LocalDateTime createdAt) {
         Objects.requireNonNull(eventId, "eventId 는 null 이어선 안됩니다.");
-        Objects.requireNonNull(applicantId, "applicantId 는 null 이어선 안됩니다.");
+        Objects.requireNonNull(depositorId, "depositorId 는 null 이어선 안됩니다.");
         Objects.requireNonNull(amount, "amount 는 null 이어선 안됩니다.");
         Objects.requireNonNull(depositDate, "depositDate 는 null 이어선 안됩니다.");
         Objects.requireNonNull(creatorId, "creatorId 는 null 이어선 안됩니다.");
         Objects.requireNonNull(createdAt, "createdAt 은 null 이어선 안됩니다.");
 
         return new EventDepositTransaction(
-                id,
                 eventId,
-                applicantId,
+                depositorId,
                 amount,
                 depositDate,
                 description,

@@ -1,12 +1,12 @@
 package com.github.kellyihyeon.stanceadmin.domain.eventdeposit;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class EventDepositTransactionTest {
@@ -14,7 +14,6 @@ public class EventDepositTransactionTest {
     @Test
     void create() {
         EventDepositTransaction eventDepositTransaction = EventDepositTransactionBuilder.builder()
-                .id(5L)
                 .eventId(1L)
                 .applicantId(2L)
                 .amount((double) 70000)
@@ -23,7 +22,7 @@ public class EventDepositTransactionTest {
                 .createdAt(LocalDateTime.now())
                 .build();
 
-        assertThat(eventDepositTransaction.getId()).isEqualTo(5L);
+        Assertions.assertEquals(1L, eventDepositTransaction.getEventId());
     }
 
     @Test
@@ -39,7 +38,7 @@ public class EventDepositTransactionTest {
                 () -> EventDepositTransactionBuilder.builder()
                         .applicantId(null)
                         .build())
-                .isInstanceOf(NullPointerException.class).hasMessageContaining("applicantId 는 null 이어선 안됩니다.");
+                .isInstanceOf(NullPointerException.class).hasMessageContaining("depositorId 는 null 이어선 안됩니다.");
 
         assertThatThrownBy(
                 () -> EventDepositTransactionBuilder.builder()

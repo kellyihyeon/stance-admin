@@ -1,11 +1,8 @@
 package com.github.kellyihyeon.stanceadmin.application.eventdeposit.dto;
 
-import com.github.kellyihyeon.stanceadmin.domain.eventdeposit.EventDepositTransaction;
 import lombok.Getter;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -36,24 +33,5 @@ public class EventDepositCreation {
         Objects.requireNonNull(depositDate, "depositDate 는 null 이어선 안됩니다.");
 
         return new EventDepositCreation(eventId, depositorIds, amount, depositDate, description);
-    }
-
-    public List<EventDepositTransaction> toDomains(Long loggedInId, LocalDateTime now) {
-        List<EventDepositTransaction> transactions = new ArrayList<>();
-
-        for (Long depositorId : depositorIds) {
-            transactions.add(EventDepositTransaction.create(
-                    null,
-                    this.eventId,
-                    depositorId,
-                    this.amount,
-                    this.depositDate,
-                    this.description,
-                    loggedInId,
-                    now
-            ));
-        }
-
-        return transactions;
     }
 }
