@@ -6,6 +6,7 @@ import com.github.kellyihyeon.stanceadmin.infrastructure.repository.eventdeposit
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -26,7 +27,22 @@ public class EventDepositTransactionMapperImpl implements EventDepositTransactio
 
     @Override
     public List<EventDepositTransaction> toDomains(EventDepositCreation serviceDto, Long loggedInId, LocalDateTime now) {
-        return null;
+        List<EventDepositTransaction> result = new ArrayList<>();
+
+        for (Long depositorId : serviceDto.getDepositorIds()) {
+            result.add(EventDepositTransaction.create(
+                    null,
+                    serviceDto.getEventId(),
+                    depositorId,
+                    serviceDto.getAmount(),
+                    serviceDto.getDepositDate(),
+                    serviceDto.getDescription(),
+                    loggedInId,
+                    now
+            ));
+        }
+
+        return result;
     }
 
 }
