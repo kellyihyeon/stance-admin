@@ -32,7 +32,6 @@ public class EventApplicantRegistryService {
         for (EventApplicantRegistry eventApplicantRegistry : eventApplicantRegistries) {
             eventApplicantRegistryRepository.createEventApplicant(
                     new EventApplicantRegistry(
-                            eventApplicantRegistry.getId(),
                             eventApplicantRegistry.getEventId(),
                             eventApplicantRegistry.getApplicantId(),
                             eventApplicantRegistry.getDescription(),

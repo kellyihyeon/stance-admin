@@ -12,19 +12,18 @@ import java.util.List;
 public class EventApplicantRegistryMapperImpl implements EventApplicantRegistryMapper {
 
     @Override
-    public List<EventApplicantRegistry> toDomains(EventApplicantRegistryCreation eventApplicantRegistryCreation) {
-        List<EventApplicantRegistry> eventApplicantRegistries = new ArrayList<>();
+    public List<EventApplicantRegistry> toDomains(EventApplicantRegistryCreation serviceDto) {
+        List<EventApplicantRegistry> result = new ArrayList<>();
 
-        for (Long applicantId : eventApplicantRegistryCreation.applicantIds()) {
-            eventApplicantRegistries.add(EventApplicantRegistry.create(
-                    null,
-                    eventApplicantRegistryCreation.eventId(),
+        for (Long applicantId : serviceDto.applicantIds()) {
+            result.add(EventApplicantRegistry.create(
+                    serviceDto.eventId(),
                     applicantId,
-                    eventApplicantRegistryCreation.description()
+                    serviceDto.description()
             ));
-
         }
-        return eventApplicantRegistries;
+
+        return result;
     }
 
     @Override

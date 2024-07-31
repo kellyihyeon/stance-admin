@@ -13,8 +13,6 @@ import java.util.Objects;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class EventApplicantRegistry {
 
-    private Long id;
-
     private Long eventId;
 
     private Long applicantId;
@@ -31,8 +29,7 @@ public class EventApplicantRegistry {
 
     private Long updaterId;
 
-    public EventApplicantRegistry(Long id, Long eventId, Long applicantId, String description, DepositStatus depositStatus, LocalDateTime createdAt, Long creatorId) {
-        this.id = id;
+    public EventApplicantRegistry(Long eventId, Long applicantId, String description, DepositStatus depositStatus, LocalDateTime createdAt, Long creatorId) {
         this.eventId = eventId;
         this.applicantId = applicantId;
         this.description = description;
@@ -41,19 +38,18 @@ public class EventApplicantRegistry {
         this.creatorId = creatorId;
     }
 
-    private EventApplicantRegistry(Long id, Long eventId, Long applicantId, String description, DepositStatus depositStatus) {
-        this.id = id;
+    private EventApplicantRegistry(Long eventId, Long applicantId, String description, DepositStatus depositStatus) {
         this.eventId = eventId;
         this.applicantId = applicantId;
         this.description = description;
         this.depositStatus = depositStatus;
     }
 
-    public static EventApplicantRegistry create(Long id, Long eventId, Long applicantId, String description) {
+    public static EventApplicantRegistry create(Long eventId, Long applicantId, String description) {
         Objects.requireNonNull(eventId, "eventId 는 null 이어서는 안됩니다.");
         Objects.requireNonNull(applicantId, "applicantId 는 null 이어서는 안됩니다.");
 
-        return new EventApplicantRegistry(id, eventId, applicantId, description, DepositStatus.NOT_COMPLETED);
+        return new EventApplicantRegistry(eventId, applicantId, description, DepositStatus.NOT_COMPLETED);
 
     }
 
