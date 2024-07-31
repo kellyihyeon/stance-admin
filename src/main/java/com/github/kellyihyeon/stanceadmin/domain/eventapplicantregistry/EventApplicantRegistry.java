@@ -3,10 +3,12 @@ package com.github.kellyihyeon.stanceadmin.domain.eventapplicantregistry;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+@ToString
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class EventApplicantRegistry {

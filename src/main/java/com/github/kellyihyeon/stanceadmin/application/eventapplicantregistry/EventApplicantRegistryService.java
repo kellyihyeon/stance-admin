@@ -17,12 +17,14 @@ public class EventApplicantRegistryService {
     private final EventApplicantRegistryRepository eventApplicantRegistryRepository;
     private final EventService eventService;
 
+    private final EventApplicantRegistryMapper mapper;
+
     public void createEventApplicant(EventApplicantRegistryCreation eventApplicantRegistryCreation) {
         if (!eventService.existsActiveEvent(eventApplicantRegistryCreation.eventId())) {
             throw new IllegalArgumentException("존재하지 않는 이벤트예요.");
         }
 
-        List<EventApplicantRegistry> eventApplicantRegistries = EventApplicantRegistryMapper.toDomains(eventApplicantRegistryCreation);
+        List<EventApplicantRegistry> eventApplicantRegistries = mapper.toDomains(eventApplicantRegistryCreation);
 
         LocalDateTime now = LocalDateTime.now();
         Long loggedInId = 999L;

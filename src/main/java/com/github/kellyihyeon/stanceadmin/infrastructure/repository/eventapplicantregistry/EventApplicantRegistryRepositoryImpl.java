@@ -13,10 +13,11 @@ import java.util.List;
 public class EventApplicantRegistryRepositoryImpl implements EventApplicantRegistryRepository {
 
     private final JpaEventApplicantRegistryEntityRepository jpaRepository;
+    private final EventApplicantRegistryMapper mapper;
 
     @Override
     public void createEventApplicant(EventApplicantRegistry eventApplicantRegistry) {
-        EventApplicantRegistryEntity entity = EventApplicantRegistryMapper.toEntity(eventApplicantRegistry);
+        EventApplicantRegistryEntity entity = mapper.toEntity(eventApplicantRegistry);
         jpaRepository.save(entity);
     }
 
