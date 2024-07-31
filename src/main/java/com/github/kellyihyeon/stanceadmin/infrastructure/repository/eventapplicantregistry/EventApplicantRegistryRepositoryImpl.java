@@ -29,8 +29,9 @@ public class EventApplicantRegistryRepositoryImpl implements EventApplicantRegis
     }
 
     @Override
-    public void updateAll(List<EventApplicantRegistry> eventApplicantRegistries) {
-
+    public void updateAll(List<EventApplicantRegistry> domains) {
+        List<EventApplicantRegistryEntity> entities = mapper.toEntities(domains);
+        jpaRepository.saveAll(entities);
     }
 
 }

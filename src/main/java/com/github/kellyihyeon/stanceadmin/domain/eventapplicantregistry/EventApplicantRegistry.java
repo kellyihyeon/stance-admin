@@ -31,6 +31,7 @@ public class EventApplicantRegistry {
 
     private Long updaterId;
 
+    // TODO: createWithoutId 팩터리 메서드에서 이용하도록 수정
     public EventApplicantRegistry(Long eventId, Long applicantId, String description, DepositStatus depositStatus, LocalDateTime createdAt, Long creatorId) {
         this.eventId = eventId;
         this.applicantId = applicantId;
