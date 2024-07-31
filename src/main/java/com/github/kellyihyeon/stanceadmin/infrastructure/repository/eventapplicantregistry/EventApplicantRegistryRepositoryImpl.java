@@ -1,6 +1,7 @@
 package com.github.kellyihyeon.stanceadmin.infrastructure.repository.eventapplicantregistry;
 
 import com.github.kellyihyeon.stanceadmin.application.eventapplicantregistry.EventApplicantRegistryMapper;
+import com.github.kellyihyeon.stanceadmin.domain.eventapplicantregistry.EventApplicantDepositRegistry;
 import com.github.kellyihyeon.stanceadmin.domain.eventapplicantregistry.EventApplicantRegistry;
 import com.github.kellyihyeon.stanceadmin.domain.eventapplicantregistry.EventApplicantRegistryRepository;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +33,11 @@ public class EventApplicantRegistryRepositoryImpl implements EventApplicantRegis
     public void updateAll(List<EventApplicantRegistry> domains) {
         List<EventApplicantRegistryEntity> entities = mapper.toEntities(domains);
         jpaRepository.saveAll(entities);
+    }
+
+    @Override
+    public List<EventApplicantDepositRegistry> getEventApplicantRegistriesByEventId(Long eventId) {
+        return null;
     }
 
 }

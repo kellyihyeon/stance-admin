@@ -526,7 +526,7 @@ paths:
           required: true
           schema:
             type: integer
-            format: int32
+            format: int64
           description: 이벤트 ID
       responses:
         '200':

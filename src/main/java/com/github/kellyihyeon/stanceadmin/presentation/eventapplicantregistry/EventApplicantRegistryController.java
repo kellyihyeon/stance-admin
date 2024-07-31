@@ -19,8 +19,9 @@ public class EventApplicantRegistryController implements EventApplicantApi {
     private final EventApplicantRegistryService eventApplicantRegistryService;
 
     @Override
-    public ResponseEntity<List<EventApplicantResponse>> getApplicantsForEvent(Integer eventId) {
-        return null;
+    public ResponseEntity<List<EventApplicantResponse>> getApplicantsForEvent(Long eventId) {
+        List<EventApplicantResponse> result = eventApplicantRegistryService.getApplicantsForEvent(eventId);
+        return ResponseEntity.ok(result);
     }
 
     @Override
