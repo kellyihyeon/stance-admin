@@ -16,7 +16,7 @@ public class EventApplicantRegistryRepositoryImpl implements EventApplicantRegis
     private final EventApplicantRegistryMapper mapper;
 
     @Override
-    public void createEventApplicant(EventApplicantRegistry eventApplicantRegistry) {
+    public void saveEventApplicant(EventApplicantRegistry eventApplicantRegistry) {
         EventApplicantRegistryEntity entity = mapper.toEntity(eventApplicantRegistry);
         jpaRepository.save(entity);
     }

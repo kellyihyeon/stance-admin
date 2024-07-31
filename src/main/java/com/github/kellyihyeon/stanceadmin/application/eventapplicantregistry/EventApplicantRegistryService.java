@@ -30,7 +30,7 @@ public class EventApplicantRegistryService {
         Long loggedInId = 999L;
 
         for (EventApplicantRegistry eventApplicantRegistry : eventApplicantRegistries) {
-            eventApplicantRegistryRepository.createEventApplicant(
+            eventApplicantRegistryRepository.saveEventApplicant(
                     new EventApplicantRegistry(
                             eventApplicantRegistry.getEventId(),
                             eventApplicantRegistry.getApplicantId(),

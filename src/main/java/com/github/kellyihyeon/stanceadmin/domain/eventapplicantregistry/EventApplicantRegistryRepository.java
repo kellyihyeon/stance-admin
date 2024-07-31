@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface EventApplicantRegistryRepository {
 
-    void createEventApplicant(EventApplicantRegistry eventApplicantRegistry);
+    void saveEventApplicant(EventApplicantRegistry eventApplicantRegistry);
 
     List<EventApplicantRegistry> getRegistriesByEventIdAndDepositorIds(Long eventId, List<Long> depositorIds);
 
