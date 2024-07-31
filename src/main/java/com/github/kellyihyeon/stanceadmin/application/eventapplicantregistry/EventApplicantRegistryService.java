@@ -45,9 +45,11 @@ public class EventApplicantRegistryService {
 
     public void processDepositCompletion(Long eventId, List<Long> depositorIds) {
         List<EventApplicantRegistry> eventApplicantRegistries = eventApplicantRegistryRepository.getRegistriesByEventIdAndDepositorIds(eventId, depositorIds);
+        Long loggedInId = 999L;
+        LocalDateTime updatedAt = LocalDateTime.now();
 
         for (EventApplicantRegistry registry : eventApplicantRegistries) {
-            registry.markAsPaid();
+            registry.updateDepositStatus(loggedInId, updatedAt);
         }
 
         eventApplicantRegistryRepository.saveAll(eventApplicantRegistries);

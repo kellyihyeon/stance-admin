@@ -63,4 +63,11 @@ public class EventApplicantRegistry {
         }
         this.depositStatus = DepositStatus.NOT_COMPLETED;
     }
+
+    public void updateDepositStatus(Long updaterId, LocalDateTime updatedAt) {
+        markAsPaid();
+
+        this.updaterId = updaterId;
+        this.updatedAt = updatedAt;
+    }
 }
