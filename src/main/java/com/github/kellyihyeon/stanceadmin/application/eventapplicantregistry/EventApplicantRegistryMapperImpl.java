@@ -43,7 +43,8 @@ public class EventApplicantRegistryMapperImpl implements EventApplicantRegistryM
         List<EventApplicantRegistry> result = new ArrayList<>();
 
         for (EventApplicantRegistryEntity entity : entities) {
-            result.add(EventApplicantRegistry.create(
+            result.add(EventApplicantRegistry.createWithId(
+                    entity.getId(),
                     entity.getEventId(),
                     entity.getApplicantId(),
                     entity.getDescription()
