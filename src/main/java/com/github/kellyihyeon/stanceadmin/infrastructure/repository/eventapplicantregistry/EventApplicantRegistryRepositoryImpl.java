@@ -6,6 +6,8 @@ import com.github.kellyihyeon.stanceadmin.domain.eventapplicantregistry.EventApp
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 @RequiredArgsConstructor
 public class EventApplicantRegistryRepositoryImpl implements EventApplicantRegistryRepository {
@@ -17,4 +19,12 @@ public class EventApplicantRegistryRepositoryImpl implements EventApplicantRegis
         EventApplicantRegistryEntity entity = EventApplicantRegistryMapper.toEntity(eventApplicantRegistry);
         jpaRepository.save(entity);
     }
+
+    @Override
+    public List<EventApplicantRegistry> getRegistriesByEventIdAndDepositorIds(Long eventId, List<Long> depositorIds) {
+        List<EventApplicantRegistryEntity> entities = jpaRepository.findByEventIdAndApplicantIdIn(eventId, depositorIds);
+
+        return null;
+    }
+
 }
