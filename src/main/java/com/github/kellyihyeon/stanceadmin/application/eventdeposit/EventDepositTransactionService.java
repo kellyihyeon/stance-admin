@@ -20,9 +20,11 @@ import java.util.List;
 public class EventDepositTransactionService {
 
     private final EventDepositTransactionRepository repository;
-    private final AccountTransactionService accountTransactionService;
+    private final EventDepositTransactionMapper mapper;
 
+    private final AccountTransactionService accountTransactionService;
     private final EventService eventService;
+
 
 
     @Transactional
@@ -33,7 +35,7 @@ public class EventDepositTransactionService {
 
         Long loggedInId = 999L;
         LocalDateTime now = LocalDateTime.now();
-        List<EventDepositTransaction> transactions = serviceDto.toDomains(loggedInId, now);
+        List<EventDepositTransaction> transactions = mapper.toDomains(serviceDto, loggedInId, now);
 
         for (EventDepositTransaction eventDepositTransaction : transactions) {
             Long transactionId = repository.saveEventDepositTransaction(

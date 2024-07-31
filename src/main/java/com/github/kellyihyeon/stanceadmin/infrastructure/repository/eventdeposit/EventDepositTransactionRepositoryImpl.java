@@ -11,10 +11,11 @@ import org.springframework.stereotype.Repository;
 public class EventDepositTransactionRepositoryImpl implements EventDepositTransactionRepository {
 
     private final JpaEventDepositTransactionEntityRepository jpaRepository;
+    private final EventDepositTransactionMapper mapper;
 
     @Override
     public Long saveEventDepositTransaction(EventDepositTransaction domain) {
-        EventDepositTransactionEntity entity = EventDepositTransactionMapper.toEntity(domain);
+        EventDepositTransactionEntity entity = mapper.toEntity(domain);
         return jpaRepository.save(entity).getId();
     }
 }
