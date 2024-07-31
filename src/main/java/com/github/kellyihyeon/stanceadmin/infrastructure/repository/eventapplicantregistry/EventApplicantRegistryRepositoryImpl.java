@@ -29,7 +29,7 @@ public class EventApplicantRegistryRepositoryImpl implements EventApplicantRegis
     }
 
     @Override
-    public void saveAll(List<EventApplicantRegistry> eventApplicantRegistries) {
+    public void updateAll(List<EventApplicantRegistry> eventApplicantRegistries) {
 
     }
 

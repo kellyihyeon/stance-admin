@@ -52,6 +52,6 @@ public class EventApplicantRegistryService {
             registry.updateDepositStatus(loggedInId, updatedAt);
         }
 
-        eventApplicantRegistryRepository.saveAll(eventApplicantRegistries);
+        eventApplicantRegistryRepository.updateAll(eventApplicantRegistries);
     }
 }
