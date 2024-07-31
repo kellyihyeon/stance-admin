@@ -4,10 +4,10 @@ import java.util.List;
 
 public interface EventApplicantRegistryRepository {
 
-    void createEventApplicant(EventApplicantRegistry eventApplicantRegistry);
+    void saveEventApplicant(EventApplicantRegistry eventApplicantRegistry);
 
     List<EventApplicantRegistry> getRegistriesByEventIdAndDepositorIds(Long eventId, List<Long> depositorIds);
 
-    void saveAll(List<EventApplicantRegistry> eventApplicantRegistries);
+    void updateAll(List<EventApplicantRegistry> eventApplicantRegistries);
 
 }

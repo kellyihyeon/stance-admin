@@ -13,10 +13,11 @@ import java.util.List;
 public class EventApplicantRegistryRepositoryImpl implements EventApplicantRegistryRepository {
 
     private final JpaEventApplicantRegistryEntityRepository jpaRepository;
+    private final EventApplicantRegistryMapper mapper;
 
     @Override
-    public void createEventApplicant(EventApplicantRegistry eventApplicantRegistry) {
-        EventApplicantRegistryEntity entity = EventApplicantRegistryMapper.toEntity(eventApplicantRegistry);
+    public void saveEventApplicant(EventApplicantRegistry eventApplicantRegistry) {
+        EventApplicantRegistryEntity entity = mapper.toEntity(eventApplicantRegistry);
         jpaRepository.save(entity);
     }
 
@@ -24,12 +25,13 @@ public class EventApplicantRegistryRepositoryImpl implements EventApplicantRegis
     public List<EventApplicantRegistry> getRegistriesByEventIdAndDepositorIds(Long eventId, List<Long> depositorIds) {
         List<EventApplicantRegistryEntity> entities = jpaRepository.findByEventIdAndApplicantIdIn(eventId, depositorIds);
 
-        return null;
+        return mapper.toDomains(entities);
     }
 
     @Override
-    public void saveAll(List<EventApplicantRegistry> eventApplicantRegistries) {
-
+    public void updateAll(List<EventApplicantRegistry> domains) {
+        List<EventApplicantRegistryEntity> entities = mapper.toEntities(domains);
+        jpaRepository.saveAll(entities);
     }
 
 }

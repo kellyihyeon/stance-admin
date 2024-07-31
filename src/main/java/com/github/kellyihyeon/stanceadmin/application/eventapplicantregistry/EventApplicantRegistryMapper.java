@@ -4,34 +4,16 @@ import com.github.kellyihyeon.stanceadmin.application.eventapplicantregistry.dto
 import com.github.kellyihyeon.stanceadmin.domain.eventapplicantregistry.EventApplicantRegistry;
 import com.github.kellyihyeon.stanceadmin.infrastructure.repository.eventapplicantregistry.EventApplicantRegistryEntity;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class EventApplicantRegistryMapper {
+public interface EventApplicantRegistryMapper {
 
-    public static List<EventApplicantRegistry> toDomains(EventApplicantRegistryCreation eventApplicantRegistryCreation) {
-        List<EventApplicantRegistry> eventApplicantRegistries = new ArrayList<>();
+    List<EventApplicantRegistry> toDomains(EventApplicantRegistryCreation eventApplicantRegistryCreation);
 
-        for (Long applicantId : eventApplicantRegistryCreation.applicantIds()) {
-            eventApplicantRegistries.add(EventApplicantRegistry.create(
-                    null,
-                    eventApplicantRegistryCreation.eventId(),
-                    applicantId,
-                    eventApplicantRegistryCreation.description()
-            ));
+    EventApplicantRegistryEntity toEntity(EventApplicantRegistry domain);
 
-        }
-        return eventApplicantRegistries;
-    }
+    List<EventApplicantRegistry> toDomains(List<EventApplicantRegistryEntity> entities);
 
-    public static EventApplicantRegistryEntity toEntity(EventApplicantRegistry eventApplicantRegistry) {
-        return new EventApplicantRegistryEntity(
-                eventApplicantRegistry.getEventId(),
-                eventApplicantRegistry.getApplicantId(),
-                eventApplicantRegistry.getDescription(),
-                eventApplicantRegistry.getDepositStatus(),
-                eventApplicantRegistry.getCreatedAt(),
-                eventApplicantRegistry.getCreatorId()
-        );
-    }
+    List<EventApplicantRegistryEntity> toEntities(List<EventApplicantRegistry> domains);
+
 }

@@ -17,20 +17,21 @@ public class EventApplicantRegistryService {
     private final EventApplicantRegistryRepository eventApplicantRegistryRepository;
     private final EventService eventService;
 
+    private final EventApplicantRegistryMapper mapper;
+
     public void createEventApplicant(EventApplicantRegistryCreation eventApplicantRegistryCreation) {
         if (!eventService.existsActiveEvent(eventApplicantRegistryCreation.eventId())) {
             throw new IllegalArgumentException("존재하지 않는 이벤트예요.");
         }
 
-        List<EventApplicantRegistry> eventApplicantRegistries = EventApplicantRegistryMapper.toDomains(eventApplicantRegistryCreation);
+        List<EventApplicantRegistry> eventApplicantRegistries = mapper.toDomains(eventApplicantRegistryCreation);
 
         LocalDateTime now = LocalDateTime.now();
         Long loggedInId = 999L;
 
         for (EventApplicantRegistry eventApplicantRegistry : eventApplicantRegistries) {
-            eventApplicantRegistryRepository.createEventApplicant(
+            eventApplicantRegistryRepository.saveEventApplicant(
                     new EventApplicantRegistry(
-                            eventApplicantRegistry.getId(),
                             eventApplicantRegistry.getEventId(),
                             eventApplicantRegistry.getApplicantId(),
                             eventApplicantRegistry.getDescription(),
@@ -44,11 +45,13 @@ public class EventApplicantRegistryService {
 
     public void processDepositCompletion(Long eventId, List<Long> depositorIds) {
         List<EventApplicantRegistry> eventApplicantRegistries = eventApplicantRegistryRepository.getRegistriesByEventIdAndDepositorIds(eventId, depositorIds);
+        Long loggedInId = 999L;
+        LocalDateTime updatedAt = LocalDateTime.now();
 
         for (EventApplicantRegistry registry : eventApplicantRegistries) {
-            registry.markAsPaid();
+            registry.updateDepositStatus(loggedInId, updatedAt);
         }
 
-        eventApplicantRegistryRepository.saveAll(eventApplicantRegistries);
+        eventApplicantRegistryRepository.updateAll(eventApplicantRegistries);
     }
 }

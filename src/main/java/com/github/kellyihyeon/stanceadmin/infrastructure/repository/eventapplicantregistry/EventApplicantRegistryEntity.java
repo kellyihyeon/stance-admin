@@ -3,11 +3,15 @@ package com.github.kellyihyeon.stanceadmin.infrastructure.repository.eventapplic
 import com.github.kellyihyeon.stanceadmin.domain.eventapplicantregistry.DepositStatus;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.time.LocalDateTime;
 
 @Entity
+@Getter
+@ToString
 @Table(name = "event_applicant_registry")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class EventApplicantRegistryEntity {
@@ -49,6 +53,31 @@ public class EventApplicantRegistryEntity {
         this.depositStatus = depositStatus;
         this.createdAt = createdAt;
         this.creatorId = creatorId;
+    }
+    private EventApplicantRegistryEntity(Long id, Long eventId, Long applicantId, String description, DepositStatus depositStatus, LocalDateTime createdAt, Long creatorId, LocalDateTime updatedAt, Long updaterId) {
+        this.id = id;
+        this.eventId = eventId;
+        this.applicantId = applicantId;
+        this.description = description;
+        this.depositStatus = depositStatus;
+        this.createdAt = createdAt;
+        this.creatorId = creatorId;
+        this.updatedAt = updatedAt;
+        this.updaterId = updaterId;
+    }
+
+    public static EventApplicantRegistryEntity createWithAllFields(Long id, Long eventId, Long applicantId, String description, DepositStatus depositStatus, LocalDateTime createdAt, Long creatorId, LocalDateTime updatedAt, Long updaterId) {
+        return new EventApplicantRegistryEntity(
+                id,
+                eventId,
+                applicantId,
+                description,
+                depositStatus,
+                createdAt,
+                creatorId,
+                updatedAt,
+                updaterId
+        );
     }
 }
 
