@@ -39,8 +39,7 @@ public class EventDepositTransactionService {
 
         for (EventDepositTransaction eventDepositTransaction : transactions) {
             Long transactionId = repository.saveEventDepositTransaction(
-                    new EventDepositTransaction(
-                            eventDepositTransaction.getId(),
+                    EventDepositTransaction.createWithoutId(
                             eventDepositTransaction.getEventId(),
                             eventDepositTransaction.getApplicantId(),
                             eventDepositTransaction.getAmount(),

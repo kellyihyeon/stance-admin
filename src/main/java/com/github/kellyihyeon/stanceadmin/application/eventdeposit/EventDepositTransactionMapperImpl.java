@@ -30,8 +30,7 @@ public class EventDepositTransactionMapperImpl implements EventDepositTransactio
         List<EventDepositTransaction> result = new ArrayList<>();
 
         for (Long depositorId : serviceDto.getDepositorIds()) {
-            result.add(EventDepositTransaction.create(
-                    null,
+            result.add(EventDepositTransaction.createWithoutId(
                     serviceDto.getEventId(),
                     depositorId,
                     serviceDto.getAmount(),
