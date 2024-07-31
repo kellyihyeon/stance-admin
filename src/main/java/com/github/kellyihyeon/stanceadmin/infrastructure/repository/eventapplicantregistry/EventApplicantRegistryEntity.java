@@ -52,5 +52,30 @@ public class EventApplicantRegistryEntity {
         this.createdAt = createdAt;
         this.creatorId = creatorId;
     }
+    private EventApplicantRegistryEntity(Long id, Long eventId, Long applicantId, String description, DepositStatus depositStatus, LocalDateTime createdAt, Long creatorId, LocalDateTime updatedAt, Long updaterId) {
+        this.id = id;
+        this.eventId = eventId;
+        this.applicantId = applicantId;
+        this.description = description;
+        this.depositStatus = depositStatus;
+        this.createdAt = createdAt;
+        this.creatorId = creatorId;
+        this.updatedAt = updatedAt;
+        this.updaterId = updaterId;
+    }
+
+    public static EventApplicantRegistryEntity createWithAllFields(Long id, Long eventId, Long applicantId, String description, DepositStatus depositStatus, LocalDateTime createdAt, Long creatorId, LocalDateTime updatedAt, Long updaterId) {
+        return new EventApplicantRegistryEntity(
+                id,
+                eventId,
+                applicantId,
+                description,
+                depositStatus,
+                createdAt,
+                creatorId,
+                updatedAt,
+                updaterId
+        );
+    }
 }
 

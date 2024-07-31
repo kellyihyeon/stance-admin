@@ -54,4 +54,25 @@ public class EventApplicantRegistryMapperImpl implements EventApplicantRegistryM
         return result;
     }
 
+    @Override
+    public List<EventApplicantRegistryEntity> toEntities(List<EventApplicantRegistry> domains) {
+        List<EventApplicantRegistryEntity> result = new ArrayList<>();
+
+        for (EventApplicantRegistry domain : domains) {
+            result.add(EventApplicantRegistryEntity.createWithAllFields(
+                    domain.getId(),
+                    domain.getEventId(),
+                    domain.getApplicantId(),
+                    domain.getDescription(),
+                    domain.getDepositStatus(),
+                    domain.getCreatedAt(),
+                    domain.getCreatorId(),
+                    domain.getUpdatedAt(),
+                    domain.getUpdaterId()
+            ));
+        }
+
+        return result;
+    }
+
 }
