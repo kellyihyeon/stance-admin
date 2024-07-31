@@ -5,11 +5,13 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
+@ToString
 @Table(name = "event_applicant_registry")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class EventApplicantRegistryEntity {

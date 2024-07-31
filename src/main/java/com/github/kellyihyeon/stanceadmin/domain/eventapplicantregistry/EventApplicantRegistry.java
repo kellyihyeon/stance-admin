@@ -47,12 +47,14 @@ public class EventApplicantRegistry {
         this.depositStatus = depositStatus;
     }
 
-    private EventApplicantRegistry(Long id, Long eventId, Long applicantId, String description, DepositStatus depositStatus) {
+    private EventApplicantRegistry(Long id, Long eventId, Long applicantId, String description, DepositStatus depositStatus, LocalDateTime createdAt, Long creatorId) {
         this.id = id;
         this.eventId = eventId;
         this.applicantId = applicantId;
         this.description = description;
         this.depositStatus = depositStatus;
+        this.createdAt = createdAt;
+        this.creatorId = creatorId;
     }
 
     public static EventApplicantRegistry create(Long eventId, Long applicantId, String description) {
@@ -63,12 +65,14 @@ public class EventApplicantRegistry {
 
     }
 
-    public static EventApplicantRegistry createWithId(Long id, Long eventId, Long applicantId, String description) {
+    public static EventApplicantRegistry createWithId(Long id, Long eventId, Long applicantId, String description, LocalDateTime createdAt, Long creatorId) {
         Objects.requireNonNull(id, "id 가 null 이어서는 안됩니다.");
         Objects.requireNonNull(eventId, "eventId 는 null 이어서는 안됩니다.");
         Objects.requireNonNull(applicantId, "applicantId 는 null 이어서는 안됩니다.");
+        Objects.requireNonNull(createdAt, "createdAt 은 null 이어서는 안됩니다.");
+        Objects.requireNonNull(creatorId, "creatorId 는 null 이어서는 안됩니다.");
 
-        return new EventApplicantRegistry(id, eventId, applicantId, description, DepositStatus.NOT_COMPLETED);
+        return new EventApplicantRegistry(id, eventId, applicantId, description, DepositStatus.NOT_COMPLETED, createdAt, creatorId);
     }
 
     public void markAsPaid() {

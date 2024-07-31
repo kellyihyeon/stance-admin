@@ -47,7 +47,9 @@ public class EventApplicantRegistryMapperImpl implements EventApplicantRegistryM
                     entity.getId(),
                     entity.getEventId(),
                     entity.getApplicantId(),
-                    entity.getDescription()
+                    entity.getDescription(),
+                    entity.getCreatedAt(),
+                    entity.getCreatorId()
             ));
         }
 
