@@ -27,15 +27,30 @@ public class EventApplicantRegistryMapperImpl implements EventApplicantRegistryM
     }
 
     @Override
-    public EventApplicantRegistryEntity toEntity(EventApplicantRegistry eventApplicantRegistry) {
+    public EventApplicantRegistryEntity toEntity(EventApplicantRegistry domain) {
         return new EventApplicantRegistryEntity(
-                eventApplicantRegistry.getEventId(),
-                eventApplicantRegistry.getApplicantId(),
-                eventApplicantRegistry.getDescription(),
-                eventApplicantRegistry.getDepositStatus(),
-                eventApplicantRegistry.getCreatedAt(),
-                eventApplicantRegistry.getCreatorId()
+                domain.getEventId(),
+                domain.getApplicantId(),
+                domain.getDescription(),
+                domain.getDepositStatus(),
+                domain.getCreatedAt(),
+                domain.getCreatorId()
         );
+    }
+
+    @Override
+    public List<EventApplicantRegistry> toDomains(List<EventApplicantRegistryEntity> entities) {
+        List<EventApplicantRegistry> result = new ArrayList<>();
+
+        for (EventApplicantRegistryEntity entity : entities) {
+            result.add(EventApplicantRegistry.create(
+                    entity.getEventId(),
+                    entity.getApplicantId(),
+                    entity.getDescription()
+            ));
+        }
+
+        return result;
     }
 
 }

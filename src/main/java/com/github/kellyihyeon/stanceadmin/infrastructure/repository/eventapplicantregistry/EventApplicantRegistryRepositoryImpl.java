@@ -25,7 +25,7 @@ public class EventApplicantRegistryRepositoryImpl implements EventApplicantRegis
     public List<EventApplicantRegistry> getRegistriesByEventIdAndDepositorIds(Long eventId, List<Long> depositorIds) {
         List<EventApplicantRegistryEntity> entities = jpaRepository.findByEventIdAndApplicantIdIn(eventId, depositorIds);
 
-        return null;
+        return mapper.toDomains(entities);
     }
 
     @Override

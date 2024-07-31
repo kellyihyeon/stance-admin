@@ -3,11 +3,13 @@ package com.github.kellyihyeon.stanceadmin.infrastructure.repository.eventapplic
 import com.github.kellyihyeon.stanceadmin.domain.eventapplicantregistry.DepositStatus;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Entity
+@Getter
 @Table(name = "event_applicant_registry")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class EventApplicantRegistryEntity {

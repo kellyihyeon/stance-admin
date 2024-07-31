@@ -10,5 +10,8 @@ public interface EventApplicantRegistryMapper {
 
     List<EventApplicantRegistry> toDomains(EventApplicantRegistryCreation eventApplicantRegistryCreation);
 
-    EventApplicantRegistryEntity toEntity(EventApplicantRegistry eventApplicantRegistry);
+    EventApplicantRegistryEntity toEntity(EventApplicantRegistry domain);
+
+    List<EventApplicantRegistry> toDomains(List<EventApplicantRegistryEntity> entities);
+
 }
