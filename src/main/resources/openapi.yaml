@@ -557,7 +557,7 @@ components:
           description: 금액
         depositStatus:
           type: string
-        depositDate:
+        dueDate:
           type: string
           description: 입금 일자 (YYYY-MM-DD 형식)
       required:
@@ -565,7 +565,7 @@ components:
         - memberName
         - amount
         - depositStatus
-        - depositDate
+        - dueDate
 
     MonthlySummary:
       type: object
