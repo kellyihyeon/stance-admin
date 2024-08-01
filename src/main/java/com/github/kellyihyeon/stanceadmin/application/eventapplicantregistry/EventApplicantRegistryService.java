@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -63,6 +64,17 @@ public class EventApplicantRegistryService {
         }
 
         List<EventApplicantDepositRegistry> registries = eventApplicantRegistryRepository.getEventApplicantRegistriesByEventId(eventId);
-        return null;
+
+        return registries.stream()
+                .map(
+                        registry -> new EventApplicantResponse(
+                                registry.getEventDescription(),
+                                registry.getMemberName(),
+                                registry.getAmount(),
+                                registry.getDepositStatus().getDisplayName(),
+                                registry.getDueDate().toString()
+                        )
+                )
+                .collect(Collectors.toList());
     }
 }
