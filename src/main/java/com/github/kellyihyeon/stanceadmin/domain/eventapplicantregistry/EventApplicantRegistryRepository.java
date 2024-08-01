@@ -10,4 +10,6 @@ public interface EventApplicantRegistryRepository {
 
     void updateAll(List<EventApplicantRegistry> eventApplicantRegistries);
 
+    List<EventApplicantDepositRegistry> getEventApplicantRegistriesByEventId(Long eventId);
+
 }

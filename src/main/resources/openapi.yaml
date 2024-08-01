@@ -514,26 +514,20 @@ paths:
         '500':
           description: Internal server error
 
-  /event-applicants/{depositStatus}:
     get:
       tags:
         - event-applicant
-      summary: 특정 입금 상태에 따른 이벤트 신청 입금자 목록을 조회합니다.
-      description: |
-        주어진 입금 상태(depositStatus)에 따라 해당 이벤트비를 입금한 회원 목록을 조회합니다.
-        - 'COMPLETED': 이벤트비를 입금한 회원 목록을 반환합니다.
-        - 'NOT_COMPLETED': 이벤트비를 입금하지 않은 회원 목록을 반환합니다.
-      operationId: getEventPayersByDepositStatus
+      summary: 이벤트별 이벤트 신청자 명단을 조회합니다.
+      description: 쿼리 파라미터로 이벤트 ID를 전달합니다.
+      operationId: getApplicantsForEvent
       parameters:
-        - name: depositStatus
-          in: path
+        - name: eventId
+          in: query
           required: true
           schema:
-            type: string
-            enum:
-              - COMPLETED
-              - NOT_COMPLETED
-          description: 조회할 입금 상태
+            type: integer
+            format: int64
+          description: 이벤트 ID
       responses:
         '200':
           description: successful operation
@@ -542,22 +536,15 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/EventPayers'
+                  $ref: '#/components/schemas/EventApplicantResponse'
         '500':
           description: Internal server error
 
 components:
   schemas:
-    EventPayers:
+    EventApplicantResponse:
       type: object
       properties:
-        eventId:
-          type: integer
-          format: int64
-          description: 이벤트 아이디
-        eventName:
-          type: string
-          description: 이벤트명
         eventDescription:
           type: string
           description: 이벤트 설명
@@ -568,21 +555,17 @@ components:
           type: number
           format: double
           description: 금액
-        isDeposited:
-          type: boolean
-          description: |
-            입금 여부 (true: 입금 완료, false: 입금 미완료)
-        depositDate:
+        depositStatus:
           type: string
-          format: date
+        dueDate:
+          type: string
           description: 입금 일자 (YYYY-MM-DD 형식)
       required:
-        - eventId
-        - eventName
         - eventDescription
         - memberName
         - amount
-        - isDeposited
+        - depositStatus
+        - dueDate
 
     MonthlySummary:
       type: object

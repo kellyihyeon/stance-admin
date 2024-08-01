@@ -2,13 +2,16 @@ package com.github.kellyihyeon.stanceadmin.application.eventapplicantregistry;
 
 import com.github.kellyihyeon.stanceadmin.application.event.EventService;
 import com.github.kellyihyeon.stanceadmin.application.eventapplicantregistry.dto.EventApplicantRegistryCreation;
+import com.github.kellyihyeon.stanceadmin.domain.eventapplicantregistry.EventApplicantDepositRegistry;
 import com.github.kellyihyeon.stanceadmin.domain.eventapplicantregistry.EventApplicantRegistry;
 import com.github.kellyihyeon.stanceadmin.domain.eventapplicantregistry.EventApplicantRegistryRepository;
+import com.github.kellyihyeon.stanceadmin.models.EventApplicantResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -53,5 +56,25 @@ public class EventApplicantRegistryService {
         }
 
         eventApplicantRegistryRepository.updateAll(eventApplicantRegistries);
+    }
+
+    public List<EventApplicantResponse> getApplicantsForEvent(Long eventId) {
+        if (!eventService.existsActiveEvent(eventId)) {
+            throw new IllegalArgumentException("존재하지 않는 이벤트예요.");
+        }
+
+        List<EventApplicantDepositRegistry> registries = eventApplicantRegistryRepository.getEventApplicantRegistriesByEventId(eventId);
+
+        return registries.stream()
+                .map(
+                        registry -> new EventApplicantResponse(
+                                registry.getEventDescription(),
+                                registry.getMemberName(),
+                                registry.getAmount(),
+                                registry.getDepositStatus().getDisplayName(),
+                                registry.getDueDate().toString()
+                        )
+                )
+                .collect(Collectors.toList());
     }
 }
