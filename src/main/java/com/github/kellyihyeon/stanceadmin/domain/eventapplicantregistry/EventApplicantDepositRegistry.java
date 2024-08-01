@@ -1,10 +1,12 @@
 package com.github.kellyihyeon.stanceadmin.domain.eventapplicantregistry;
 
 import lombok.Getter;
+import lombok.ToString;
 
 import java.time.LocalDate;
 import java.util.Objects;
 
+@ToString
 @Getter
 public class EventApplicantDepositRegistry {
 

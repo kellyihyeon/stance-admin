@@ -24,6 +24,7 @@ public class EventApplicantRegistryRepositoryImpl implements EventApplicantRegis
     private final EventApplicantRegistryMapper mapper;
 
     private final JPAQueryFactory jpaQueryFactory;
+    private final EventApplicantDepositRegistryMapper depositRegistryMapper;
 
 
     @Override
@@ -63,7 +64,7 @@ public class EventApplicantRegistryRepositoryImpl implements EventApplicantRegis
                 .where(eventApplicantRegistryEntity.eventId.eq(eventId))
                 .fetch();
 
-        return null;
+        return depositRegistryMapper.toDomains(applicantRegistryDataDto);
     }
 
 }
