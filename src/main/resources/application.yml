@@ -1,10 +1,8 @@
 spring:
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: ${DB_HOST}
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
-
+  profiles:
+    active: dev
+---
+spring:
   jpa:
     hibernate:
       ddl-auto: update
@@ -23,3 +21,25 @@ logging:
     org.hibernate.SQL: debug
     org.hibernate.type.descriptor.sql: trace  # 파라미터 값 출력
     org.springframework.test.web.servlet: DEBUG
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${DEV_DB_HOST}
+    username: ${DEV_DB_USERNAME}
+    password: ${DEV_DB_PASSWORD}
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${PROD_DB_HOST}
+    username: ${PROD_DB_USERNAME}
+    password: ${PROD_DB_PASSWORD}
