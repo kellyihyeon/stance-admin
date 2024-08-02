@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>스탠스 어드민</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<div class="container">
+    <div class="sidebar">
+        <h2>대시보드</h2>
+        <ul>
+            <li><a href="#" onclick="loadContent('monthlyFeeRate')">이달의 회비 입금률 보기</a></li>
+            <li><a href="#" onclick="loadContent('feeList')">회비 입금 명단 보기</a></li>
+            <li><a href="#" onclick="loadContent('eventFeeList')">이벤트 입금 명단 보기</a></li>
+            <li><a href="#" onclick="loadContent('accountBalance')">스탠스 통장 잔액 보기</a></li>
+            <li><a href="#" onclick="loadContent('allAccountTransactions')">스탠스 통장 모든 내역 보기</a></li>
+        </ul>
+
+        <h2>시스템</h2>
+        <h3>계좌</h3>
+        <ul>
+            <li><a href="#" onclick="loadContent('registerAccount')">계좌 등록하기</a></li>
+        </ul>
+
+        <h3>입금 내역</h3>
+        <ul>
+            <li><a href="#" onclick="loadContent('registerFeeDeposit')">회비 입금 내역 등록하기</a></li>
+            <li><a href="#" onclick="loadContent('registerFeeDeposit')">이벤트 입금 내역 등록하기</a></li>
+            <li><a href="#" onclick="loadContent('registerFeeDeposit')">은행 입금 내역 등록하기</a></li>
+        </ul>
+
+        <h3>이벤트</h3>
+        <ul>
+            <li><a href="#" onclick="loadContent('registerFeeDeposit')">이벤트 만들기</a></li>
+        </ul>
+
+        <h3>이벤트 신청자 명단</h3>
+        <ul>
+            <li><a href="#" onclick="loadContent('registerFeeDeposit')">신청자 등록하기</a></li>
+        </ul>
+    </div>
+    <div class="content" id="content">
+        <h1>Welcome to the Dashboard</h1>
+        <p>내용을 보려면 왼쪽 메뉴에서 항목을 선택하세요.</p>
+    </div>
+</div>
+<script src="/scripts.js"></script>
+</body>
+</html>
