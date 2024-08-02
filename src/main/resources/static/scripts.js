@@ -1,17 +1,39 @@
+function getCurrentYearMonth() {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = now.getMonth() + 1;
+    return { year, month };
+}
+
 function loadContent(page) {
     let content = document.getElementById('content');
     switch (page) {
         case 'monthlyFeeRate':
-            fetch('/api/monthly-fee-rate')
-                .then(response => response.json())
+            const { year, month } = getCurrentYearMonth();
+            const url = `/membership-fee/deposite-rate?year=${year}&month=${month}`
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
                 .then(data => {
-                    content.innerHTML = `<h1>이달의 회비 입금률 보기</h1><p>${data.rate}%</p>`;
+                    content.innerHTML =
+                        `<h1>이달의 회비 입금률 보기</h1>
+                            <p>${data.year}년</p>
+                            <p>${data.month}월</p>
+                            <p>입금률: ${data.depositRate}%</p>
+                            <p>회원수: ${data.totalMembers}명</p>
+                            <p>입금자: ${data.paidMembers}명</p>`;
+
                 })
                 .catch(error => {
                     console.error('Error fetching monthly fee rate:', error);
                     content.innerHTML = '<h1>Error</h1><p>Failed to load monthly fee rate.</p>';
                 });
             break;
+
         case 'feeList':
             fetch('/api/fee-list')
                 .then(response => response.json())
