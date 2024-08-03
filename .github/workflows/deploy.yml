@@ -14,6 +14,15 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-     - name: test
-       run: |
-         echo ${{ secrets.SUPERSECRET }}
+      - uses: actions/checkout@v2
+      - name: Run scripts in server
+        uses: appleboy/ssh-action@master
+        with:
+          key: ${{ secrets.SSH_KEY }}
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USER }}
+          script: |
+            cd server
+            git reset --hard
+            git fetch
+            git pull
