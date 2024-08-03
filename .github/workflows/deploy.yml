@@ -27,4 +27,5 @@ jobs:
             git reset --hard
             git fetch
             git pull
-          
+            lsof -i:8080 -t | xargs -r kill
+            ./gradlew bootRun
