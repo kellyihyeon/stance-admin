@@ -20,6 +20,7 @@ class EventApplicantRegistryTest {
         );
     }
 
+
     @Test
     @DisplayName("DepositStatus 가 입금완료에서 미입금 상태로 변경되면 에러가 발생한다.")
     void depositStatus가_입금완료에서_미입금_상태로_변경() {
