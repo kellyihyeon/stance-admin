@@ -16,7 +16,5 @@ jobs:
 
     steps:
      - name: test
-       env:
-         SUPERSECRET: ${{ secrets.SUPERSECRET }}
        run: |
          echo $SUPERSECRET
