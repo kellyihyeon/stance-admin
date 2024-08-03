@@ -15,15 +15,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
-      - name: Run scripts in server
-        uses: appleboy/ssh-action@master
-        with:
-          key: ${{ secrets.SSH_KEY }}
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USER }}
-          script: |
-            cd stance-admin
-            git reset --hard
-            git fetch
-            git pull
+     - shell: bash
+       env:
+         SUPER_SECRET: ${{ secrets.SuperSecret }}
+       run: |
+         example-command "$SUPER_SECRET" 
+      # - uses: actions/checkout@v2
+      # - name: Run scripts in server
+      #   uses: appleboy/ssh-action@master
+      #   with:
+      #     key: ${{ secrets.SSH_KEY }}
+      #     host: ${{ secrets.HOST }}
+      #     username: ${{ secrets.USER }}
+      #     script: |
+      #       cd stance-admin
+      #       git reset --hard
+      #       git fetch
+      #       git pull
