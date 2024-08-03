@@ -15,14 +15,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Run scripts in server
-        uses: appleboy/ssh-action@master
+      - name: executing remote ssh commands using ssh key
+        uses: appleboy/ssh-action@v1.0.3
         with:
-          key: ${{ secrets.SSH_KEY }}
           host: ${{ secrets.HOST }}
-          username: ${{ secrets.USER }}
-          script: |
-            cd server
-            git reset --hard
-            git fetch
-            git pull
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          port: ${{ secrets.PORT }}
+          script: whoami
