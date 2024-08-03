@@ -28,4 +28,4 @@ jobs:
             git fetch
             git pull
             lsof -i:8080 -t | xargs -r kill
-            ./gradlew bootRun
+            ./gradlew bootRun &
