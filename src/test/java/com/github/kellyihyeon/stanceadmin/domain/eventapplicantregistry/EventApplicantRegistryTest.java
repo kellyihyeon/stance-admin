@@ -16,7 +16,6 @@ class EventApplicantRegistryTest {
     void setUp() {
         sut = EventApplicantRegistry.create(1L,
                 1L,
-                3L,
                 "초보자 대회 교류전"
         );
     }
