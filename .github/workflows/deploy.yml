@@ -19,7 +19,7 @@ jobs:
        env:
          SUPER_SECRET: ${{ secrets.SuperSecret }}
        run: |
-         echo "$SUPER_SECRET" 
+         echo $SUPER_SECRET
       # - uses: actions/checkout@v2
       # - name: Run scripts in server
       #   uses: appleboy/ssh-action@master
