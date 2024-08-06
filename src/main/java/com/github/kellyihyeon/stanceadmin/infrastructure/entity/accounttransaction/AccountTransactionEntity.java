@@ -1,4 +1,4 @@
-package com.github.kellyihyeon.stanceadmin.infrastructure.repository.accounttransaction;
+package com.github.kellyihyeon.stanceadmin.infrastructure.entity.accounttransaction;
 
 import com.github.kellyihyeon.stanceadmin.domain.accounttransaction.TransactionSubType;
 import com.github.kellyihyeon.stanceadmin.domain.accounttransaction.TransactionType;

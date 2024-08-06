@@ -3,6 +3,7 @@ package com.github.kellyihyeon.stanceadmin.infrastructure.repository.accounttran
 import com.github.kellyihyeon.stanceadmin.application.accounttransaction.AccountTransactionMapper;
 import com.github.kellyihyeon.stanceadmin.domain.accounttransaction.AccountTransaction;
 import com.github.kellyihyeon.stanceadmin.domain.accounttransaction.AccountTransactionRepository;
+import com.github.kellyihyeon.stanceadmin.infrastructure.entity.accounttransaction.AccountTransactionEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
