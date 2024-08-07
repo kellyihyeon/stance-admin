@@ -78,7 +78,7 @@ public class Account {
 
     public void updateBalance(Long invalidAccountId, double balance) {
         if (!hasMatchingAccountId(invalidAccountId)) {
-
+            throw new IllegalArgumentException("계좌의 ID가 일치하지 않습니다.");
         }
     }
 

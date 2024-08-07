@@ -9,7 +9,7 @@ class AccountTest {
 
     @Test
     @DisplayName("계좌의 id가 일치하지 않으면 IllegalArgumentException 이 발생한다.")
-    void update_balance() {
+    void 유효하지_않은_계좌id로_잔액을_업데이트_하는_경우() {
         Account sut = AccountBuilder.builder()
                 .id(99L)
                 .build();

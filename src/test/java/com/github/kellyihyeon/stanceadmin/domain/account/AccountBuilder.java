@@ -88,7 +88,7 @@ public class AccountBuilder {
 
     public Account build() {
         return new Account(
-                null,
+                id,
                 isDefault,
                 accountNickname,
                 balance,
