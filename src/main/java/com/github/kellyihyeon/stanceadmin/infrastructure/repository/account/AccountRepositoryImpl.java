@@ -14,10 +14,11 @@ import java.util.List;
 public class AccountRepositoryImpl implements AccountRepository {
 
     private final JpaAccountEntityRepository entityRepository;
+    private final AccountMapper mapper;
 
     @Override
     public void saveAccount(Account account) {
-        AccountEntity entity = AccountMapper.toEntity(account);
+        AccountEntity entity = mapper.toEntity(account);
         entityRepository.save(entity);
     }
 
@@ -41,6 +42,6 @@ public class AccountRepositoryImpl implements AccountRepository {
         AccountEntity defaultAccountEntity = entityRepository.findByIsDefault(true)
                 .orElseThrow(() -> new EntityNotFoundException("기본 계좌로 설정된 계좌가 없어요."));
 
-        return AccountMapper.toDomain(defaultAccountEntity);
+        return mapper.toDomain(defaultAccountEntity);
     }
 }
