@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface AccountRepository {
 
-    void createAccount(Account account);
+    void saveAccount(Account account);
 
     List<Account> getAllAccounts();
 

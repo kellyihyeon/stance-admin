@@ -3,9 +3,40 @@ package com.github.kellyihyeon.stanceadmin.domain.account;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class AccountTest {
+
+    @Test
+    void 유효한_계좌ID로_잔액을_업데이트_하는_경우() {
+        Account sut = AccountBuilder.builder()
+                .id(99L)
+                .balance((double) 500)
+                .build();
+
+        Long validAccountId = 99L;
+        double balance = 100000;
+        sut.updateBalance(validAccountId, balance);
+
+        assertEquals(100000, sut.getBalance());
+    }
+
+    @Test
+    @DisplayName("계좌의 id가 일치하지 않으면 IllegalArgumentException 이 발생한다.")
+    void 유효하지_않은_계좌id로_잔액을_업데이트_하는_경우() {
+        Account sut = AccountBuilder.builder()
+                .id(99L)
+                .build();
+
+        Long invalidAccountId = 3L;
+        double balance = 100000;
+
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> sut.updateBalance(invalidAccountId, balance)
+        );
+    }
 
     @Test
     @DisplayName("기본 계좌 여부가 null이면 IllegalArgumentException이 발생한다.")
