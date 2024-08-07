@@ -8,6 +8,22 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class AccountTest {
 
     @Test
+    @DisplayName("계좌의 id가 일치하지 않으면 IllegalArgumentException 이 발생한다.")
+    void update_balance() {
+        Account sut = AccountBuilder.builder()
+                .id(99L)
+                .build();
+
+        Long invalidAccountId = 3L;
+        double balance = 100000;
+
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> sut.updateBalance(invalidAccountId, balance)
+        );
+    }
+
+    @Test
     @DisplayName("기본 계좌 여부가 null이면 IllegalArgumentException이 발생한다.")
     void 기본_계좌_여부가_null인_경우() {
         assertThrows(

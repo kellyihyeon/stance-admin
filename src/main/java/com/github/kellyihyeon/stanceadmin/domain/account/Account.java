@@ -75,4 +75,8 @@ public class Account {
         }
         return obj;
     }
+
+    public void updateBalance(Long invalidAccountId, double balance) {
+
+    }
 }

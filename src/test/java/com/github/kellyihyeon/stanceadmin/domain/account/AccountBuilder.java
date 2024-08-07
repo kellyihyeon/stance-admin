@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 
 public class AccountBuilder {
 
+    private Long id = 1L;
+
     private Boolean isDefault = true;
 
     private String accountNickname = "스탠스 모임통장";
@@ -27,6 +29,11 @@ public class AccountBuilder {
 
     public static AccountBuilder builder() {
         return new AccountBuilder();
+    }
+
+    public AccountBuilder id(Long id) {
+        this.id = id;
+        return this;
     }
 
     public AccountBuilder isDefault(Boolean isDefault) {
