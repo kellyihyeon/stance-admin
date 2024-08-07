@@ -19,8 +19,7 @@ public class AccountService {
         Long loggedInAdminId = 999L;
         Double initialBalance = (double) 0;
 
-        Account account = new Account(
-                null,
+        Account account = Account.createWithoutId(
                 accountCreation.isDefault(),
                 accountCreation.accountNickname(),
                 initialBalance,
