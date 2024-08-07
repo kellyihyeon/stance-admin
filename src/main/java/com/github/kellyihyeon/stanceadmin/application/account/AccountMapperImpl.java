@@ -9,6 +9,7 @@ public class AccountMapperImpl implements AccountMapper {
 
     public AccountEntity toEntity(Account account) {
         return AccountEntity.create(
+                account.getId(),
                 account.getIsDefault(),
                 account.getAccountNickname(),
                 account.getBalance(),

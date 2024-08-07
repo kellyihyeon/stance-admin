@@ -63,7 +63,8 @@ public class AccountEntity {
     @Column(name = "updater_id")
     private Long updaterId;
 
-    private AccountEntity(boolean isDefault, String accountNickname, Double balance, String accountHolder, String accountNumber, Bank bank, LocalDate usageStartDate, AccountStatus accountStatus, LocalDateTime createdAt, Long creatorId) {
+    private AccountEntity(Long id, boolean isDefault, String accountNickname, Double balance, String accountHolder, String accountNumber, Bank bank, LocalDate usageStartDate, AccountStatus accountStatus, LocalDateTime createdAt, Long creatorId) {
+        this.id = id;
         this.isDefault = isDefault;
         this.accountNickname = accountNickname;
         this.balance = balance;
@@ -76,8 +77,9 @@ public class AccountEntity {
         this.creatorId = creatorId;
     }
 
-    public static AccountEntity create(boolean isDefault, String accountNickname, Double balance, String accountHolder, String accountNumber, Bank bank, LocalDate usageStartDate, AccountStatus accountStatus, LocalDateTime createdAt, Long creatorId) {
+    public static AccountEntity create(Long id, boolean isDefault, String accountNickname, Double balance, String accountHolder, String accountNumber, Bank bank, LocalDate usageStartDate, AccountStatus accountStatus, LocalDateTime createdAt, Long creatorId) {
         return new AccountEntity(
+                id,
                 isDefault,
                 accountNickname,
                 balance,
