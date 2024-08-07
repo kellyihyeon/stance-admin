@@ -6,12 +6,14 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
+@ToString
 @Table(name = "accounts")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class AccountEntity {

@@ -33,7 +33,7 @@ public class AccountService {
                 loggedInAdminId
         );
 
-        accountRepository.createAccount(account);
+        accountRepository.saveAccount(account);
     }
 
     public AccountBalance getBalance() {
