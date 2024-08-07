@@ -77,6 +77,13 @@ public class Account {
     }
 
     public void updateBalance(Long invalidAccountId, double balance) {
+        if (!hasMatchingAccountId(invalidAccountId)) {
 
+        }
+    }
+
+    private boolean hasMatchingAccountId(Long invalidAccountId) {
+        Objects.requireNonNull(invalidAccountId, "invalidAccountId가 null 이어서는 안됩니다.");
+        return this.id.equals(invalidAccountId);
     }
 }
