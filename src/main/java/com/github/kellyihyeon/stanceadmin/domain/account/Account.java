@@ -80,6 +80,8 @@ public class Account {
         if (!hasMatchingAccountId(invalidAccountId)) {
             throw new IllegalArgumentException("계좌의 ID가 일치하지 않습니다.");
         }
+
+        this.balance = balance;
     }
 
     private boolean hasMatchingAccountId(Long invalidAccountId) {

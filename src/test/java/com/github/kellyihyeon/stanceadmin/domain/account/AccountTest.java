@@ -19,7 +19,7 @@ class AccountTest {
         double balance = 100000;
         sut.updateBalance(validAccountId, balance);
 
-        assertEquals(100500, sut.getBalance());
+        assertEquals(100000, sut.getBalance());
     }
 
     @Test
