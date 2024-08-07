@@ -24,7 +24,7 @@ public class AccountMapperImpl implements AccountMapper {
     }
 
     public Account toDomain(AccountEntity accountEntity) {
-        return new Account(
+        return Account.createWithId(
                 accountEntity.getId(),
                 accountEntity.getIsDefault(),
                 accountEntity.getAccountNickname(),

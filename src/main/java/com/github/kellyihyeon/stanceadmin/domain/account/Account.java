@@ -42,18 +42,7 @@ public class Account {
 
     private Long updaterId;
 
-    public Account(Long id, Boolean isDefault, String accountNickname, Double balance, String accountHolder, String accountNumber, Bank bank, LocalDate usageStartDate, AccountStatus accountStatus, LocalDateTime createdAt, Long creatorId) {
-        requireNonNull(isDefault, "'기본 계좌 여부' 는 null 이어서는 안됩니다.");
-        requireNonNull(accountNickname, "'계좌 별칭' 은 null 이어서는 안됩니다.");
-        requireNonNull(balance, "'잔액' 은 null 이어서는 안됩니다.");
-        requireNonNull(accountHolder, "'계좌 소유주' 는 null 이어서는 안됩니다.");
-        requireNonNull(accountNumber, "'계좌번호' 는 null 이어서는 안됩니다.");
-        requireNonNull(bank, "'은행명' 은 null 이어서는 안됩니다.");
-        requireNonNull(usageStartDate, "'사용일' 은 null 이어서는 안됩니다.");
-        requireNonNull(accountStatus, "'계좌 상태' 는 null 이어서는 안됩니다.");
-        requireNonNull(createdAt, "'데이터 생성일' 은 null 이어서는 안됩니다.");
-        requireNonNull(creatorId, "'데이터 생성자 ID' 는 null 이어서는 안됩니다.");
-
+    private Account(Long id, Boolean isDefault, String accountNickname, Double balance, String accountHolder, String accountNumber, Bank bank, LocalDate usageStartDate, AccountStatus accountStatus, LocalDateTime createdAt, Long creatorId) {
         this.id = id;
         this.isDefault = isDefault;
         this.accountNickname = accountNickname;
@@ -67,11 +56,32 @@ public class Account {
         this.creatorId = creatorId;
     }
 
-    private <T> T requireNonNull(T obj, String message) {
-        if (Objects.isNull(obj)) {
-            throw new IllegalArgumentException(message);
-        }
-        return obj;
+    public static Account createWithId(Long id, Boolean isDefault, String accountNickname, Double balance, String accountHolder, String accountNumber, Bank bank, LocalDate usageStartDate, AccountStatus accountStatus, LocalDateTime createdAt, Long creatorId) {
+        Objects.requireNonNull(id, "계좌 ID가 null 이어서는 안됩니다.");
+        Objects.requireNonNull(isDefault, "기본 계좌 여부가 null 이어서는 안됩니다.");
+        Objects.requireNonNull(accountNickname, "계좌 별칭이 null 이어서는 안됩니다.");
+        Objects.requireNonNull(balance, "잔액이 null 이어서는 안됩니다.");
+        Objects.requireNonNull(accountHolder, "계좌 소유주가 null 이어서는 안됩니다.");
+        Objects.requireNonNull(accountNumber, "계좌번호가 null 이어서는 안됩니다.");
+        Objects.requireNonNull(bank, "은행명이 null 이어서는 안됩니다.");
+        Objects.requireNonNull(usageStartDate, "사용일이 null 이어서는 안됩니다.");
+        Objects.requireNonNull(accountStatus, "계좌 상태가 null 이어서는 안됩니다.");
+        Objects.requireNonNull(createdAt, "데이터 생성일이 null 이어서는 안됩니다.");
+        Objects.requireNonNull(creatorId, "데이터 생성자 ID가 null 이어서는 안됩니다.");
+
+        return new Account(
+                id,
+                isDefault,
+                accountNickname,
+                balance,
+                accountHolder,
+                accountNumber,
+                bank,
+                usageStartDate,
+                accountStatus,
+                createdAt,
+                creatorId
+        );
     }
 
     private Account(Boolean isDefault, String accountNickname, Double balance, String accountHolder, String accountNumber, Bank bank, LocalDate usageStartDate, AccountStatus accountStatus, LocalDateTime createdAt, Long creatorId) {
