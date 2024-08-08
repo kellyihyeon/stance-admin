@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.AfterDomainEventPublication;
 import org.springframework.data.domain.DomainEvents;
 
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+@Slf4j
 @Entity
 @Getter
 @Table(name = "account_transactions")
@@ -68,6 +70,8 @@ public class AccountTransactionEntity {
     @DomainEvents
     Collection<Object> domainEvents() {
         accountTransactionDomainEvents.add(new AccountTransactionSaved(this.accountId, this.balance));
+        log.debug("The AccountTransactionSaved event has been published." +
+                "[transactionType: {}, transactionSubType: {}, transactionId: {}]", this.transactionType, this.transactionSubType, this.transactionId);
         return accountTransactionDomainEvents;
     }
 
