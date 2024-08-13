@@ -13,4 +13,9 @@ public interface AccountRepository {
     void deleteAccount(Long id);
 
     Account getDefaultAccount();
+
+    Account findById(Long accountId);
+
+    void updateBalance(Account account);
+
 }
