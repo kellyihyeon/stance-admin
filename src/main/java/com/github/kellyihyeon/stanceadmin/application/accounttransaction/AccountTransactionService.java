@@ -3,12 +3,14 @@ package com.github.kellyihyeon.stanceadmin.application.accounttransaction;
 import com.github.kellyihyeon.stanceadmin.application.account.AccountService;
 import com.github.kellyihyeon.stanceadmin.domain.accounttransaction.*;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AccountTransactionService {
@@ -37,8 +39,7 @@ public class AccountTransactionService {
 
         Double balance = accountTransaction.addAmountToBalance(getLatestBalance());
         repository.saveAccountTransaction(accountTransaction);
-
-        accountService.updateBalance(balance);
+        log.debug("AccountTransaction saved successfully. The event will be triggered. [new balance is {}]", balance);
     }
 
     private Double getLatestBalance() {

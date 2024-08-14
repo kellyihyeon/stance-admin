@@ -135,4 +135,8 @@ public class Account {
         Objects.requireNonNull(invalidAccountId, "invalidAccountId가 null 이어서는 안됩니다.");
         return this.id.equals(invalidAccountId);
     }
+
+    public boolean isActive() {
+        return AccountStatus.ACTIVE.equals(this.accountStatus);
+    }
 }

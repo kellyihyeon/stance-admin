@@ -1,5 +1,6 @@
 package com.github.kellyihyeon.stanceadmin.infrastructure.repository.account;
 
+import com.github.kellyihyeon.stanceadmin.domain.account.Account;
 import com.github.kellyihyeon.stanceadmin.domain.account.AccountStatus;
 import com.github.kellyihyeon.stanceadmin.domain.account.Bank;
 import jakarta.persistence.*;
@@ -91,5 +92,11 @@ public class AccountEntity {
                 createdAt,
                 creatorId
         );
+    }
+
+    public void updateBalance(Account account) {
+        this.balance = account.getBalance();
+        this.updatedAt = account.getUpdatedAt();
+        this.updaterId = account.getUpdaterId();
     }
 }

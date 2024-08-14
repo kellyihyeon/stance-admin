@@ -5,10 +5,12 @@ import com.github.kellyihyeon.stanceadmin.domain.account.Account;
 import com.github.kellyihyeon.stanceadmin.domain.account.AccountRepository;
 import com.github.kellyihyeon.stanceadmin.models.AccountBalance;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AccountService {
@@ -44,7 +46,7 @@ public class AccountService {
         return accountRepository.getDefaultAccount();
     }
 
-    public void updateBalance(Double balance) {
+    public void updateBalance(Long accountId, Double balance) {
 
     }
 }
