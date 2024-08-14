@@ -41,8 +41,4 @@ public class AccountTransactionController implements AccountTransactionApi {
         return null;
     }
 
-    @Override
-    public ResponseEntity<Void> saveTransferTransaction(Transfer transfer) {
-        return null;
-    }
 }
