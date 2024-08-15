@@ -7,6 +7,7 @@ import com.github.kellyihyeon.stanceadmin.domain.account.Bank;
 import com.github.kellyihyeon.stanceadmin.domain.transfertransaction.ExpenseCategory;
 import com.github.kellyihyeon.stanceadmin.models.TransferInput;
 import com.github.kellyihyeon.stanceadmin.presentation.TimeConverter;
+import com.github.kellyihyeon.stanceadmin.shared.util.AccountNumberFormatter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,7 +26,7 @@ public class TransferTransactionController implements TrnsferTransactionApi {
                 ExpenseCategory.valueOf(transferInput.getExpenseCategory().getValue()),
                 transferInput.getRecipientName(),
                 Bank.valueOf(transferInput.getBank().getValue()),
-                transferInput.getRecipientAccountNumber(),
+                AccountNumberFormatter.removeHyphens(transferInput.getRecipientAccountNumber()),
                 transferInput.getAmount(),
                 TimeConverter.convertToLocalDate(transferInput.getExpenseDate()),
                 transferInput.getDescription()
