@@ -15,8 +15,8 @@ public class TransferTransactionRepositoryImpl implements TransferTransactionRep
     private final TransferTransactionMapper mapper;
 
     @Override
-    public void save(TransferTransaction transferTransaction) {
-        TransferTransactionEntity entity = mapper.toEntity(transferTransaction);
-        jpaRepository.save(entity);
+    public TransferTransaction save(TransferTransaction transferTransaction) {
+        TransferTransactionEntity entity = jpaRepository.save(mapper.toEntity(transferTransaction));
+        return mapper.toDomain(entity);
     }
 }

@@ -40,4 +40,22 @@ public class TransferTransactionMapperImpl implements TransferTransactionMapper 
         );
     }
 
+    @Override
+    public TransferTransaction toDomain(TransferTransactionEntity entity) {
+        return TransferTransaction.createWithId(
+                entity.getId(),
+                entity.getExpenseCategory(),
+                entity.getRecipientName(),
+                entity.getBank(),
+                entity.getRecipientAccountNumber(),
+                entity.getAmount(),
+                entity.getExpenseDate(),
+                entity.getDescription(),
+                entity.getCreatedAt(),
+                entity.getCreatorId(),
+                entity.getUpdatedAt(),
+                entity.getUpdaterId()
+        );
+    }
+
 }

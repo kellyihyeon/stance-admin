@@ -12,4 +12,5 @@ public interface TransferTransactionMapper {
 
     TransferTransactionEntity toEntity(TransferTransaction transferTransaction);
 
+    TransferTransaction toDomain(TransferTransactionEntity entity);
 }
