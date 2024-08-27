@@ -27,7 +27,17 @@ public class TransferTransactionMapperImpl implements TransferTransactionMapper 
 
     @Override
     public TransferTransactionEntity toEntity(TransferTransaction transferTransaction) {
-        return new TransferTransactionEntity();
+        return TransferTransactionEntity.create(
+                transferTransaction.getExpenseCategory(),
+                transferTransaction.getRecipientName(),
+                transferTransaction.getBank(),
+                transferTransaction.getRecipientAccountNumber(),
+                transferTransaction.getAmount(),
+                transferTransaction.getExpenseDate(),
+                transferTransaction.getDescription(),
+                transferTransaction.getCreatedAt(),
+                transferTransaction.getCreatorId()
+        );
     }
 
 }
