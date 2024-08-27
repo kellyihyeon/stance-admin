@@ -12,7 +12,17 @@ public class TransferTransactionMapperImpl implements TransferTransactionMapper 
 
     @Override
     public TransferTransaction toDomain(TransferCreation serviceDto, Long loggedInId, LocalDateTime now) {
-        return new TransferTransaction();
+        return TransferTransaction.createWithoutId(
+                serviceDto.expenseCategory(),
+                serviceDto.recipientName(),
+                serviceDto.bank(),
+                serviceDto.recipientAccountNumber(),
+                serviceDto.amount(),
+                serviceDto.expenseDate(),
+                serviceDto.description(),
+                loggedInId,
+                now
+        );
     }
 
     @Override
