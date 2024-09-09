@@ -37,4 +37,20 @@ public class CardPaymentTransactionMapperImpl implements CardPaymentTransactionM
                 cardPaymentTransaction.getCreatedAt()
         );
     }
+
+    @Override
+    public CardPaymentTransaction toDomain(CardPaymentTransactionEntity entity) {
+        return CardPaymentTransaction.createWithId(
+                entity.getId(),
+                entity.getCardHolderId(),
+                entity.getExpenseCategory(),
+                entity.getCardUsageLocation(),
+                entity.getAmount(),
+                entity.getExpenseDate(),
+                entity.getDescription(),
+                entity.getCreatorId(),
+                entity.getCreatedAt()
+        );
+    }
+
 }

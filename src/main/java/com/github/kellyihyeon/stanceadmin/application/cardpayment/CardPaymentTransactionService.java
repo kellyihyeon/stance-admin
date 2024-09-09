@@ -30,11 +30,10 @@ public class CardPaymentTransactionService {
         CardPaymentTransaction cardPaymentTransaction = repository.save(mapper.toDomain(serviceDto, loggedInId, now));
 
         TransactionIdentity transactionIdentity = TransactionIdentity.create(
-                1L,
+                cardPaymentTransaction.getId(),
                 TransactionType.WITHDRAW,
                 TransactionSubType.CARD_PAYMENT
         );
-        accountTransactionService.saveAccountTransaction(transactionIdentity, (double) 0);
-
+        accountTransactionService.saveAccountTransaction(transactionIdentity, cardPaymentTransaction.getAmount().doubleValue());
     }
 }

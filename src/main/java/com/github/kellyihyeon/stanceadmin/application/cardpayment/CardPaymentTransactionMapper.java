@@ -11,4 +11,7 @@ public interface CardPaymentTransactionMapper {
     CardPaymentTransaction toDomain(CardPaymentCreation serviceDto, Long loggedInId, LocalDateTime now);
 
     CardPaymentTransactionEntity toEntity(CardPaymentTransaction cardPaymentTransaction);
+
+    CardPaymentTransaction toDomain(CardPaymentTransactionEntity entity);
+
 }

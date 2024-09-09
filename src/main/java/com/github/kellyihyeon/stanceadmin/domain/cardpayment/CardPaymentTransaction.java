@@ -38,7 +38,19 @@ public class CardPaymentTransaction {
 
     private LocalDateTime updatedAt;
 
-    public CardPaymentTransaction(Long cardHolderId, ExpenseCategory expenseCategory, String cardUsageLocation, BigDecimal amount, LocalDate expenseDate, String description, Long creatorId, LocalDateTime createdAt) {
+    private CardPaymentTransaction(Long id, Long cardHolderId, ExpenseCategory expenseCategory, String cardUsageLocation, BigDecimal amount, LocalDate expenseDate, String description, Long creatorId, LocalDateTime createdAt) {
+        this.id = id;
+        this.cardHolderId = cardHolderId;
+        this.expenseCategory = expenseCategory;
+        this.cardUsageLocation = cardUsageLocation;
+        this.amount = amount;
+        this.expenseDate = expenseDate;
+        this.description = description;
+        this.creatorId = creatorId;
+        this.createdAt = createdAt;
+    }
+
+    private CardPaymentTransaction(Long cardHolderId, ExpenseCategory expenseCategory, String cardUsageLocation, BigDecimal amount, LocalDate expenseDate, String description, Long creatorId, LocalDateTime createdAt) {
         this.cardHolderId = cardHolderId;
         this.expenseCategory = expenseCategory;
         this.cardUsageLocation = cardUsageLocation;
@@ -67,6 +79,29 @@ public class CardPaymentTransaction {
                 description,
                 loggedInId,
                 now
+        );
+    }
+
+    public static CardPaymentTransaction createWithId(Long id, Long cardHolderId, ExpenseCategory expenseCategory, String cardUsageLocation, BigDecimal amount, LocalDate expenseDate, String description, Long creatorId, LocalDateTime createdAt) {
+        Objects.requireNonNull(id);
+        Objects.requireNonNull(cardHolderId);
+        Objects.requireNonNull(expenseCategory);
+        Objects.requireNonNull(cardUsageLocation);
+        Objects.requireNonNull(amount);
+        Objects.requireNonNull(expenseDate);
+        Objects.requireNonNull(creatorId);
+        Objects.requireNonNull(createdAt);
+
+        return new CardPaymentTransaction(
+                id,
+                cardHolderId,
+                expenseCategory,
+                cardUsageLocation,
+                amount,
+                expenseDate,
+                description,
+                creatorId,
+                createdAt
         );
     }
 }
