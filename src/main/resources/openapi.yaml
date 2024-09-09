@@ -155,7 +155,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/AccountTransactions'
+                  $ref: '#/components/schemas/AccountTransactionResponse'
         '500':
           description: Internal server error
 
@@ -715,15 +715,12 @@ components:
         - totalMembers
         - paidMembers
 
-    AccountTransactions:
+    AccountTransactionResponse:
       type: object
       properties:
         transactionId:
           type: integer
           format: int64
-        depositDate:
-          type: string
-          format: date-time
         transactionType:
           type: string
           enum:
@@ -731,6 +728,9 @@ components:
             - WITHDRAWAL
         transactionCategory:
           type: string
+        transactionDate:
+          type: string
+          format: date
         transactionParty:
           type: string
         amount:
