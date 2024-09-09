@@ -35,10 +35,4 @@ public class AccountTransactionController implements AccountTransactionApi {
     public ResponseEntity<List<TopExpenses>> getTop3Expenses(Integer year, Integer month) {
         return null;
     }
-
-    @Override
-    public ResponseEntity<Void> saveCardPaymentTransaction(CardPayment cardPayment) {
-        return null;
-    }
-
 }

@@ -24,6 +24,9 @@ tags:
   - name: trnsfer-transaction
     description: 계좌 이체 내역
 
+  - name: card-payment-transaction
+    description: 카드 결제 내역
+
   - name: event
     description: 이벤트
 
@@ -223,14 +226,14 @@ paths:
   /account-transactions/withdrawals/card-payment:
     post:
       tags:
-        - account-transaction
+        - card-payment-transaction
       summary: 카드 결제 내역을 등록합니다.
       operationId: saveCardPaymentTransaction
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CardPayment'
+              $ref: '#/components/schemas/CardPaymentInput'
         required: true
       responses:
         '201':
@@ -832,6 +835,8 @@ components:
             - COMPETITION_PARTICIPATION_FEE
             - UNIFORM_EXPENSE
             - TEAM_PARTY_EXPENSE
+            - FUEL_EXPENSE
+            - PARTY_PREPARATION_EXPENSE
         recipientName:
           type: string
           description: 받는 사람 이름
@@ -858,7 +863,7 @@ components:
         description:
           type: string
 
-    CardPayment:
+    CardPaymentInput:
       type: object
       properties:
         cardHolderId:
@@ -874,15 +879,17 @@ components:
             - COMPETITION_PARTICIPATION_FEE
             - UNIFORM_EXPENSE
             - TEAM_PARTY_EXPENSE
+            - FUEL_EXPENSE
+            - PARTY_PREPARATION_EXPENSE
         cardUsageLocation:
           type: string
           description: 카드 사용처
         amount:
           type: number
-          format: double
+          format: decimal
         expenseDate:
           type: string
-          format: date-time
+          format: date
         description:
           type: string
 
