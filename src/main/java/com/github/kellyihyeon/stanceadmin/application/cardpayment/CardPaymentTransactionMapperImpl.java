@@ -11,6 +11,15 @@ public class CardPaymentTransactionMapperImpl implements CardPaymentTransactionM
 
     @Override
     public CardPaymentTransaction toDomain(CardPaymentCreation serviceDto, Long loggedInId, LocalDateTime now) {
-        return null;
+        return CardPaymentTransaction.create(
+                serviceDto.cardHolderId(),
+                serviceDto.expenseCategory(),
+                serviceDto.cardUsageLocation(),
+                serviceDto.amount(),
+                serviceDto.expenseDate(),
+                serviceDto.description(),
+                loggedInId,
+                now
+        );
     }
 }

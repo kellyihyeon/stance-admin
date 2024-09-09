@@ -10,6 +10,6 @@ public record CardPaymentCreation(
         ExpenseCategory expenseCategory,
         String cardUsageLocation,
         BigDecimal amount,
-        LocalDate localDate,
+        LocalDate expenseDate,
         String description
 ) { }

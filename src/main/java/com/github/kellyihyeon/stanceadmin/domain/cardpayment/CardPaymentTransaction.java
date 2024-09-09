@@ -9,6 +9,7 @@ import lombok.ToString;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Getter
 @ToString
@@ -37,4 +38,35 @@ public class CardPaymentTransaction {
 
     private LocalDateTime updatedAt;
 
+    public CardPaymentTransaction(Long cardHolderId, ExpenseCategory expenseCategory, String cardUsageLocation, BigDecimal amount, LocalDate expenseDate, String description, Long creatorId, LocalDateTime createdAt) {
+        this.cardHolderId = cardHolderId;
+        this.expenseCategory = expenseCategory;
+        this.cardUsageLocation = cardUsageLocation;
+        this.amount = amount;
+        this.expenseDate = expenseDate;
+        this.description = description;
+        this.creatorId = creatorId;
+        this.createdAt = createdAt;
+    }
+
+    public static CardPaymentTransaction create(Long cardHolderId, ExpenseCategory expenseCategory, String cardUsageLocation, BigDecimal amount, LocalDate expenseDate, String description, Long loggedInId, LocalDateTime now) {
+        Objects.requireNonNull(cardHolderId);
+        Objects.requireNonNull(expenseCategory);
+        Objects.requireNonNull(cardUsageLocation);
+        Objects.requireNonNull(amount);
+        Objects.requireNonNull(expenseDate);
+        Objects.requireNonNull(loggedInId);
+        Objects.requireNonNull(now);
+
+        return new CardPaymentTransaction(
+                cardHolderId,
+                expenseCategory,
+                cardUsageLocation,
+                amount,
+                expenseDate,
+                description,
+                loggedInId,
+                now
+        );
+    }
 }

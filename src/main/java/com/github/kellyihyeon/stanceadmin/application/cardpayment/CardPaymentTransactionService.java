@@ -9,6 +9,7 @@ import com.github.kellyihyeon.stanceadmin.domain.cardpayment.CardPaymentTransact
 import com.github.kellyihyeon.stanceadmin.domain.cardpayment.CardPaymentTransactionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
@@ -21,6 +22,7 @@ public class CardPaymentTransactionService {
 
     private final AccountTransactionService accountTransactionService;
 
+    @Transactional
     public void saveCardPaymentTransaction(CardPaymentCreation serviceDto) {
         Long loggedInId = 999L;
         LocalDateTime now = LocalDateTime.now();
@@ -28,7 +30,7 @@ public class CardPaymentTransactionService {
         CardPaymentTransaction cardPaymentTransaction = repository.save(mapper.toDomain(serviceDto, loggedInId, now));
 
         TransactionIdentity transactionIdentity = TransactionIdentity.create(
-                cardPaymentTransaction.getId(),
+                1L,
                 TransactionType.WITHDRAW,
                 TransactionSubType.CARD_PAYMENT
         );
