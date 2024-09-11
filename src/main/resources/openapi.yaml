@@ -149,28 +149,22 @@ paths:
       operationId: getAllAccountTransactions
       parameters:
         - in: query
-          name: limit
+          name: page
           schema:
             type: integer
-            default: 20
-            minimum: 1
-          required: false
+            default: 1
         - in: query
-          name: offset
+          name: size
           schema:
             type: integer
-            default: 0
-            minimum: 0
-          required: false
+            default: 10
       responses:
         '200':
           description: successful operation
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/AccountTransactionResponse'
+                $ref: '#/components/schemas/PagedAccountTransactionResponse'
         '500':
           description: Internal server error
 
@@ -568,6 +562,36 @@ paths:
 
 components:
   schemas:
+    PagingMetadata:
+      type: object
+      properties:
+        pageNumber:
+          type: integer
+        itemsPerPage:
+          type: integer
+        totalElements:
+          type: integer
+        totalPages:
+          type: integer
+      required:
+        - pageNumber
+        - itemsPerPage
+        - totalElements
+        - totalPages
+
+    PagedAccountTransactionResponse:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccountTransactionResponse'
+        paging:
+          $ref: '#/components/schemas/PagingMetadata'
+      required:
+        - content
+        - paging
+
     EventApplicantResponse:
       type: object
       properties:
