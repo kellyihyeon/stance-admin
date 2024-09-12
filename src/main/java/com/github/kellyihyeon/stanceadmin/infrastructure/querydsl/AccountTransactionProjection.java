@@ -1,26 +1,29 @@
 package com.github.kellyihyeon.stanceadmin.infrastructure.querydsl;
 
 import com.github.kellyihyeon.stanceadmin.domain.accounttransaction.TransactionType;
+import lombok.Getter;
+import lombok.ToString;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public interface AccountTransactionProjection {
+@Getter
+@ToString
+public class AccountTransactionProjection {
 
-    Long getId();
+    private Long id;
 
-    LocalDate getTransactionDate();
+    private LocalDate transactionDate;
 
-    Long getTransactionId();
+    private Long transactionId;
 
-    TransactionType getTransactionType();
+    private TransactionType transactionType;
 
-    String getCategory();
+    private String category;
 
-    String getTransactionParty();
+    private String transactionParty;
 
-    BigDecimal getAmount();
+    private Double amount;
 
-    BigDecimal getBalance();
+    private Double balance;
 
 }

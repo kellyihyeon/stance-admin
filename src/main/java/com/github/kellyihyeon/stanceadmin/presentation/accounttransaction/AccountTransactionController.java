@@ -21,7 +21,7 @@ public class AccountTransactionController implements AccountTransactionApi {
 
     @Override
     public ResponseEntity<PagedAccountTransactionResponse> getAllAccountTransactions(Integer page, Integer size) {
-        PageRequest pageable = PageRequest.of(page, size);
+        PageRequest pageable = PageRequest.of(page - 1, size);
         PagedAccountTransactionResponse response = queryService.getAllAccountTransactions(pageable);
 
         return ResponseEntity.ok(response);
