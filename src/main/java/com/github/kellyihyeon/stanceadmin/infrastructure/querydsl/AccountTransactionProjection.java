@@ -18,7 +18,7 @@ public class AccountTransactionProjection {
 
     private TransactionType transactionType;
 
-    private String category;
+    private String detailType;
 
     private String transactionParty;
 

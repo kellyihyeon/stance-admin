@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import static com.github.kellyihyeon.stanceadmin.infrastructure.entity.accounttransaction.QAccountTransactionEntity.accountTransactionEntity;
@@ -19,6 +20,7 @@ import static com.github.kellyihyeon.stanceadmin.infrastructure.entity.member.QM
 import static com.github.kellyihyeon.stanceadmin.infrastructure.entity.membershipfeedeposit.QMemberShipFeeDepositTransactionEntity.memberShipFeeDepositTransactionEntity;
 import static com.github.kellyihyeon.stanceadmin.infrastructure.entity.trasfertransaction.QTransferTransactionEntity.transferTransactionEntity;
 import static com.github.kellyihyeon.stanceadmin.infrastructure.repository.bankdeposit.QBankDepositTransactionEntity.bankDepositTransactionEntity;
+import static com.github.kellyihyeon.stanceadmin.infrastructure.repository.event.QEventEntity.eventEntity;
 import static com.github.kellyihyeon.stanceadmin.infrastructure.repository.eventdeposit.QEventDepositTransactionEntity.eventDepositTransactionEntity;
 
 @Repository
@@ -52,7 +54,25 @@ public class AccountTransactionQueryRepositoryImpl implements AccountTransaction
                                                 .when(accountTransactionEntity.transactionSubType.eq(TransactionSubType.TRANSFER))
                                                 .then(transferTransactionEntity.recipientName)
                                                 .otherwise(Expressions.constant("없음"))
-                                                .as("transactionParty")
+                                                .as("transactionParty"),
+                                        new CaseBuilder()
+                                                .when(accountTransactionEntity.transactionSubType.eq(TransactionSubType.MEMBERSHIP_FEE))
+                                                .then(memberShipFeeDepositTransactionEntity.depositDate)
+                                                .when(accountTransactionEntity.transactionSubType.eq(TransactionSubType.BANK))
+                                                .then(bankDepositTransactionEntity.depositDate)
+                                                .when(accountTransactionEntity.transactionSubType.eq(TransactionSubType.EVENT))
+                                                .then(eventDepositTransactionEntity.depositDate)
+                                                .when(accountTransactionEntity.transactionSubType.eq(TransactionSubType.CARD_PAYMENT))
+                                                .then(cardPaymentTransactionEntity.expenseDate)
+                                                .when(accountTransactionEntity.transactionSubType.eq(TransactionSubType.TRANSFER))
+                                                .then(transferTransactionEntity.expenseDate)
+                                                .otherwise(LocalDate.of(1900,1,1))
+                                                .as("transactionDate"),
+                                        new CaseBuilder()
+                                                .when(accountTransactionEntity.transactionSubType.eq(TransactionSubType.EVENT))
+                                                .then(eventEntity.eventItem.stringValue())
+                                                .otherwise(accountTransactionEntity.transactionSubType.stringValue())
+                                                .as("detailType")
                                 )
 
                         );
@@ -80,7 +100,10 @@ public class AccountTransactionQueryRepositoryImpl implements AccountTransaction
                                 .and(memberShipFeeDepositTransactionEntity.depositorId.eq(memberEntity.id)))
                                 .or(accountTransactionEntity.transactionSubType.eq(TransactionSubType.EVENT)
                                         .and(eventDepositTransactionEntity.applicantId.eq(memberEntity.id))
-                                ));
+                                ))
+                .leftJoin(eventEntity)
+                .on(accountTransactionEntity.transactionSubType.eq(TransactionSubType.EVENT)
+                        .and(eventEntity.id.eq(eventDepositTransactionEntity.eventId)));
 
         query
                 .offset(pageable.getOffset())
