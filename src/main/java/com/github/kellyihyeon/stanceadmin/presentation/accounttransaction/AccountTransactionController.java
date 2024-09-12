@@ -1,7 +1,7 @@
 package com.github.kellyihyeon.stanceadmin.presentation.accounttransaction;
 
 import com.github.kellyihyeon.stanceadmin.apis.AccountTransactionApi;
-import com.github.kellyihyeon.stanceadmin.application.accounttransaction.AccountTransactionService;
+import com.github.kellyihyeon.stanceadmin.application.accounttransaction.AccountTransactionQueryService;
 import com.github.kellyihyeon.stanceadmin.models.MonthlySummary;
 import com.github.kellyihyeon.stanceadmin.models.PagedAccountTransactionResponse;
 import com.github.kellyihyeon.stanceadmin.models.TopDeposits;
@@ -17,13 +17,14 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AccountTransactionController implements AccountTransactionApi {
 
-    private final AccountTransactionService service;
+    private final AccountTransactionQueryService queryService;
 
     @Override
     public ResponseEntity<PagedAccountTransactionResponse> getAllAccountTransactions(Integer page, Integer size) {
         PageRequest pageable = PageRequest.of(page, size);
+        PagedAccountTransactionResponse response = queryService.getAllAccountTransactions(pageable);
 
-        return ResponseEntity.ok(null);
+        return ResponseEntity.ok(response);
     };
 
     @Override
