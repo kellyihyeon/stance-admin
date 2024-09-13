@@ -147,15 +147,24 @@ paths:
         - account-transaction
       summary: 모임 통장 입출금 내역을 조회합니다.
       operationId: getAllAccountTransactions
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            default: 1
+        - in: query
+          name: size
+          schema:
+            type: integer
+            default: 10
       responses:
         '200':
           description: successful operation
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/AccountTransactions'
+                $ref: '#/components/schemas/PagedAccountTransactionResponse'
         '500':
           description: Internal server error
 
@@ -553,6 +562,37 @@ paths:
 
 components:
   schemas:
+    PagingMetadata:
+      type: object
+      properties:
+        pageNumber:
+          type: integer
+        itemsPerPage:
+          type: integer
+        totalElements:
+          type: integer
+          format: int64
+        totalPages:
+          type: integer
+      required:
+        - pageNumber
+        - itemsPerPage
+        - totalElements
+        - totalPages
+
+    PagedAccountTransactionResponse:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccountTransactionResponse'
+        paging:
+          $ref: '#/components/schemas/PagingMetadata'
+      required:
+        - content
+        - paging
+
     EventApplicantResponse:
       type: object
       properties:
@@ -715,21 +755,20 @@ components:
         - totalMembers
         - paidMembers
 
-    AccountTransactions:
+    AccountTransactionResponse:
       type: object
       properties:
+        id:
+          type: integer
+          format: int64
         transactionId:
           type: integer
           format: int64
-        depositDate:
-          type: string
-          format: date-time
         transactionType:
           type: string
-          enum:
-            - DEPOSIT
-            - WITHDRAWAL
-        transactionCategory:
+        detailType:
+          type: string
+        transactionDate:
           type: string
         transactionParty:
           type: string
