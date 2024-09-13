@@ -770,7 +770,6 @@ components:
           type: string
         transactionDate:
           type: string
-          format: date
         transactionParty:
           type: string
         amount:

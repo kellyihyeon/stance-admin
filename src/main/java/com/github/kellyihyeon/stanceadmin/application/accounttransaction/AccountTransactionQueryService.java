@@ -1,5 +1,7 @@
 package com.github.kellyihyeon.stanceadmin.application.accounttransaction;
 
+import com.github.kellyihyeon.stanceadmin.domain.accounttransaction.TransactionSubType;
+import com.github.kellyihyeon.stanceadmin.domain.event.EventItem;
 import com.github.kellyihyeon.stanceadmin.infrastructure.querydsl.AccountTransactionProjection;
 import com.github.kellyihyeon.stanceadmin.infrastructure.repository.accounttransaction.AccountTransactionQueryRepository;
 import com.github.kellyihyeon.stanceadmin.models.AccountTransactionResponse;
@@ -11,6 +13,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,9 +29,10 @@ public class AccountTransactionQueryService {
                 .map(projection -> {
                     AccountTransactionResponse response = new AccountTransactionResponse();
                     response.id(projection.getId());
+                    response.transactionDate(projection.getTransactionDate().toString());
                     response.transactionId(projection.getTransactionId());
-                    response.transactionType(projection.getTransactionType().name());
-                    response.detailType(projection.getDetailType());
+                    response.transactionType(projection.getTransactionType().getDisplayName());
+                    response.detailType(convertDetailType(projection.getDetailType()));
                     response.transactionParty(projection.getTransactionParty());
                     response.amount(projection.getAmount());
                     response.balance(projection.getBalance());
@@ -47,5 +51,21 @@ public class AccountTransactionQueryService {
         );
 
         return new PagedAccountTransactionResponse(allAccountTransactions, pagingMetadata);
+    }
+
+    private String convertDetailType(String name) {
+        final String NONE = "NONE";
+
+        String displayName = EventItem.toDisplayName(name);
+        if (Objects.nonNull(displayName)) {
+            return displayName;
+        }
+
+        displayName = TransactionSubType.toDisplayName(name);
+        if (Objects.nonNull(displayName)) {
+            return displayName;
+        }
+
+        return NONE;
     }
 }
