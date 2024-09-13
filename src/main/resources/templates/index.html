@@ -2,49 +2,170 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>스탠스 어드민</title>
-    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="https://bootswatch.com/4/litera/bootstrap.min.css"> <!-- Litera 테마의 외부 CSS 파일 -->
+    <style>
+        /* Custom Styles */
+        body {
+            background-color: #f8f9fa;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .sidebar {
+            height: 100vh;
+            width: 250px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #ffffff;
+            padding: 1rem;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            overflow-y: auto;
+        }
+        .sidebar h4 {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        .sidebar .nav-link {
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            padding: 0.5rem 1rem;
+            text-decoration: none;
+            color: #333;
+            border-radius: 0.25rem;
+        }
+        .sidebar .nav-link .icon {
+            margin-right: 10px;
+        }
+        .sidebar .nav-link.active {
+            background-color: #e9ecef;
+        }
+        .nav-item {
+            position: relative;
+        }
+        .nav-item .nav-link {
+            padding-left: 1.5rem; /* 기본 들여쓰기 */
+        }
+        .nav-item .nav-item .nav-link {
+            padding-left: 2.5rem; /* 하위 메뉴의 추가 들여쓰기 */
+        }
+        .collapse {
+            display: block; /* 항상 보이도록 설정 */
+        }
+        .content {
+            margin-left: 250px;
+            padding: 2rem;
+        }
+        .card {
+            margin-bottom: 1rem;
+        }
+    </style>
 </head>
 <body>
-<div class="container">
-    <div class="sidebar">
-        <h2>대시보드</h2>
-        <ul>
-            <li><a href="#" onclick="loadContent('monthlyFeeRate')">이달의 회비 입금률 보기</a></li>
-            <li><a href="#" onclick="loadContent('feeList')">회비 입금 명단 보기</a></li>
-            <li><a href="#" onclick="loadContent('eventFeeList')">이벤트 입금 명단 보기</a></li>
-            <li><a href="#" onclick="loadContent('accountBalance')">스탠스 통장 잔액 보기</a></li>
-            <li><a href="#" onclick="loadContent('allAccountTransactions')">스탠스 통장 모든 내역 보기</a></li>
-        </ul>
+<!-- 사이드바 -->
+<div class="sidebar">
+    <h4 class="text-center">스탠스</h4>
+    <ul class="nav flex-column">
+        <li class="nav-item">
+            <a class="nav-link" href="#" id="dashboardMenu">
+                <span class="icon">&#9776;</span> <!-- Hamburger icon -->
+                Dashboards
+            </a>
+            <ul class="nav flex-column" id="dashboardSubmenu">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">모임통장</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">CRM</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">회원</a>
+                </li>
+            </ul>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">System</a>
+        </li>
+    </ul>
+</div>
 
-        <h2>시스템</h2>
-        <h3>계좌</h3>
-        <ul>
-            <li><a href="#" onclick="loadContent('registerAccount')">계좌 등록하기</a></li>
-        </ul>
+<!-- 메인 콘텐츠 -->
+<div class="content">
+    <h1>메인 콘텐츠</h1>
+    <p>this is main contents page!</p>
 
-        <h3>입금 내역</h3>
-        <ul>
-            <li><a href="#" onclick="loadContent('registerFeeDeposit')">회비 입금 내역 등록하기</a></li>
-            <li><a href="#" onclick="loadContent('registerFeeDeposit')">이벤트 입금 내역 등록하기</a></li>
-            <li><a href="#" onclick="loadContent('registerFeeDeposit')">은행 입금 내역 등록하기</a></li>
-        </ul>
-
-        <h3>이벤트</h3>
-        <ul>
-            <li><a href="#" onclick="loadContent('registerFeeDeposit')">이벤트 만들기</a></li>
-        </ul>
-
-        <h3>이벤트 신청자 명단</h3>
-        <ul>
-            <li><a href="#" onclick="loadContent('registerFeeDeposit')">신청자 등록하기</a></li>
-        </ul>
+    <!-- 카드 1 -->
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Total Sales</h5>
+            <p class="card-text">This is a brief overview of the total sales.</p>
+            <div class="chart-container">
+                <!-- Placeholder for Chart.js or other chart libraries -->
+                <canvas id="salesChart"></canvas>
+            </div>
+        </div>
     </div>
-    <div class="content" id="content">
-        <h1>Welcome</h1>
-        <p>내용을 보려면 왼쪽 메뉴에서 항목을 선택하세요.</p>
+
+    <!-- 카드 2 -->
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Recent Activities</h5>
+            <p class="card-text">This is a brief overview of recent activities.</p>
+            <!-- List of recent activities -->
+            <ul class="list-group">
+                <li class="list-group-item">Activity 1</li>
+                <li class="list-group-item">Activity 2</li>
+                <li class="list-group-item">Activity 3</li>
+            </ul>
+        </div>
     </div>
 </div>
-<script src="/scripts.js"></script>
+
+<!-- Chart.js Library -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // JavaScript to handle toggle
+    document.addEventListener('DOMContentLoaded', function () {
+        const dashboardMenu = document.getElementById('dashboardMenu');
+        const dashboardSubmenu = document.getElementById('dashboardSubmenu');
+
+        dashboardMenu.addEventListener('click', function () {
+            if (dashboardSubmenu.style.display === 'block') {
+                dashboardSubmenu.style.display = 'none';
+            } else {
+                dashboardSubmenu.style.display = 'block';
+            }
+        });
+
+        // Example chart setup with Chart.js
+        var ctx = document.getElementById('salesChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['January', 'February', 'March', 'April'],
+                datasets: [{
+                    label: 'Sales',
+                    data: [12, 19, 3, 5],
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        beginAtZero: true
+                    },
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    });
+</script>
 </body>
 </html>
