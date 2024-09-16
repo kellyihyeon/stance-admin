@@ -18,6 +18,10 @@ logging:
     org.hibernate.type.descriptor.sql: trace  # 파라미터 값 출력
     org.springframework.test.web.servlet: DEBUG
 
+server:
+  servlet:
+    encoding:
+      force-response: true
 ---
 spring:
   config:

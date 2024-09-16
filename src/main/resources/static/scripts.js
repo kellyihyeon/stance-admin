@@ -1,10 +1,22 @@
 document.addEventListener('DOMContentLoaded', function () {
+
     const dashboardMenu = document.getElementById('dashboardMenu');
     const dashboardSubmenu = document.getElementById('dashboardSubmenu');
 
     dashboardMenu.addEventListener('click', function () {
         dashboardSubmenu.style.display = dashboardSubmenu.style.display === 'block' ? 'none' : 'block';
     });
+
+    fetch('/accounts/balance')
+        .then(response => response.json())
+        .then(data => {
+            // 카드 1에 데이터 삽입
+            document.querySelector('#balance').textContent = ` ₩ ${data.balance}원`;
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+            document.querySelector('#balance').textContent = '데이터를 불러오는 데 실패했습니다.';
+        });
 
     var ctx = document.getElementById('salesChart').getContext('2d');
     new Chart(ctx, {

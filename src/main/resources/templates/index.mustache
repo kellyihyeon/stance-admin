@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>스탠스 어드민</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<div class="wrapper">
+    <!-- 사이드바 -->
+    <div class="sidebar">
+        <h4 class="text-center">스탠스</h4>
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link" href="#" id="dashboardMenu">
+                    <span class="icon">&#9776;</span>
+                    Dashboards
+                </a>
+                <ul class="nav flex-column" id="dashboardSubmenu">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">모임통장</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">이벤트 신청자</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">회원</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">System</a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- 메인 콘텐츠 -->
+    <div class="content">
+        <div class="container">
+            <!-- 전체 화면을 2x2 그리드로 구역 나누기 -->
+            <div class="row">
+                <!-- 구역 1 (4분할 구조) -->
+                <div class="col-md-6">
+                    <div class="row">
+                        <!-- 카드 1 -->
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">잔액</h5>
+                                    <p id="balance">불러오고 있어요!</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 카드 2 -->
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title" id="title">카드 2</h5>
+                                    <p class="card-text" id="details">내용</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <!-- 카드 4 -->
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">카드 4</h5>
+                                    <div class="chart-container" style="width: 50%; height: 50%; margin: 0 auto;">
+                                        <canvas id="donutChart1"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 카드 5 -->
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">카드 5</h5>
+                                    <div class="chart-container" style="width: 50%; height: 50%; margin: 0 auto;">
+                                        <canvas id="donutChart2"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 구역 2 (카드 3) -->
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">카드 3</h5>
+                            <div class="chart-container" style="width: 50%; height: 50%; margin: 0 auto;">
+                                <canvas id="salesChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-4">
+                <!-- 구역 3 (카드 6) -->
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">카드 6</h5>
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>항목</th>
+                                    <th>값</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>항목 1</td>
+                                    <td>100</td>
+                                </tr>
+                                <tr>
+                                    <td>항목 2</td>
+                                    <td>200</td>
+                                </tr>
+                                <tr>
+                                    <td>항목 3</td>
+                                    <td>300</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 구역 4 (카드 7) -->
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">카드 7</h5>
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>항목</th>
+                                    <th>값</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>항목 A</td>
+                                    <td>50</td>
+                                </tr>
+                                <tr>
+                                    <td>항목 B</td>
+                                    <td>150</td>
+                                </tr>
+                                <tr>
+                                    <td>항목 C</td>
+                                    <td>250</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="/scripts.js"></script>
+</body>
+</html>
