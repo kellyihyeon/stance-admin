@@ -1,87 +1,62 @@
-function getCurrentYearMonth() {
-    const now = new Date();
-    const year = now.getFullYear();
-    const month = now.getMonth() + 1;
-    return { year, month };
-}
+document.addEventListener('DOMContentLoaded', function () {
+    const dashboardMenu = document.getElementById('dashboardMenu');
+    const dashboardSubmenu = document.getElementById('dashboardSubmenu');
 
-function loadContent(page) {
-    let content = document.getElementById('content');
-    switch (page) {
-        case 'monthlyFeeRate':
-            const { year, month } = getCurrentYearMonth();
-            const url = `/membership-fee/deposite-rate?year=${year}&month=${month}`
-            fetch(url)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    content.innerHTML =
-                        `<h1>이달의 회비 입금률 보기</h1>
-                            <p>${data.year}년</p>
-                            <p>${data.month}월</p>
-                            <p>입금률: ${data.depositRate}%</p>
-                            <p>회원수: ${data.totalMembers}명</p>
-                            <p>입금자: ${data.paidMembers}명</p>`;
+    dashboardMenu.addEventListener('click', function () {
+        dashboardSubmenu.style.display = dashboardSubmenu.style.display === 'block' ? 'none' : 'block';
+    });
 
-                })
-                .catch(error => {
-                    console.error('Error fetching monthly fee rate:', error);
-                    content.innerHTML = '<h1>Error</h1><p>Failed to load monthly fee rate.</p>';
-                });
-            break;
+    var ctx = document.getElementById('salesChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['January', 'February', 'March', 'April'],
+            datasets: [{
+                label: 'Sales',
+                data: [12, 19, 3, 5],
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                x: { beginAtZero: true },
+                y: { beginAtZero: true }
+            }
+        }
+    });
 
-        case 'feeList':
-            fetch('/api/fee-list')
-                .then(response => response.json())
-                .then(data => {
-                    content.innerHTML = '<h1>회비 입금 명단 보기</h1>';
-                    let list = '<ul>';
-                    data.fees.forEach(fee => {
-                        list += `<li>${fee.name} - ${fee.amount}</li>`;
-                    });
-                    list += '</ul>';
-                    content.innerHTML += list;
-                })
-                .catch(error => {
-                    console.error('Error fetching fee list:', error);
-                    content.innerHTML = '<h1>Error</h1><p>Failed to load fee list.</p>';
-                });
-            break;
-        case 'registerAccount':
-            content.innerHTML = `
-                <h1>계좌 등록하기</h1>
-                <form id="registerAccountForm">
-                    <label for="accountName">Account Name:</label>
-                    <input type="text" id="accountName" name="accountName" required>
-                    <button type="submit">Register</button>
-                </form>
-            `;
-            document.getElementById('registerAccountForm').addEventListener('submit', function(event) {
-                event.preventDefault();
-                const accountName = document.getElementById('accountName').value;
-                fetch('/api/register-account', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ name: accountName }),
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        content.innerHTML = `<h1>계좌 등록 완료</h1><p>Account ID: ${data.id}</p>`;
-                    })
-                    .catch(error => {
-                        console.error('Error registering account:', error);
-                        content.innerHTML = '<h1>Error</h1><p>Failed to register account.</p>';
-                    });
-            });
-            break;
+    var ctx1 = document.getElementById('donutChart1').getContext('2d');
+    new Chart(ctx1, {
+        type: 'doughnut',
+        data: {
+            labels: ['Category A', 'Category B', 'Category C'],
+            datasets: [{
+                label: 'Categories',
+                data: [300, 50, 100],
+                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
+            }]
+        },
+        options: {
+            responsive: true,
+        }
+    });
 
-        default:
-            content.innerHTML = '<h1>Welcome to the Dashboard</h1><p>내용을 보려면 왼쪽 메뉴에서 항목을 선택하세요.</p>';
-    }
-}
+    var ctx2 = document.getElementById('donutChart2').getContext('2d');
+    new Chart(ctx2, {
+        type: 'doughnut',
+        data: {
+            labels: ['Category X', 'Category Y', 'Category Z'],
+            datasets: [{
+                label: 'Categories',
+                data: [120, 150, 200],
+                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
+            }]
+        },
+        options: {
+            responsive: true,
+        }
+    });
+});
