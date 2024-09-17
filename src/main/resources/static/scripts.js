@@ -1,3 +1,22 @@
+function getCurrentYearMonth() {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = now.getMonth() + 1;
+    return { year, month };
+}
+
+function fetchDepositStatus() {
+    const { year, month } = getCurrentYearMonth();
+    const url = `/membership-fee/deposite-rate?year=${year}&month=${month}`
+
+    return fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data)
+            return data;
+        });
+}
+
 document.addEventListener('DOMContentLoaded', function () {
 
     const dashboardMenu = document.getElementById('dashboardMenu');
@@ -17,6 +36,22 @@ document.addEventListener('DOMContentLoaded', function () {
             console.error('Error fetching data:', error);
             document.querySelector('#balance').textContent = '데이터를 불러오는 데 실패했습니다.';
         });
+
+    fetchDepositStatus().then(data => {
+        const dateElement = document.getElementById('date');
+        dateElement.textContent = `${data.year}년 ${data.month}월`;
+
+        const paidMembersElement = document.getElementById('paidMembers');
+        paidMembersElement.textContent = `${data.paidMembers}명 / ${data.totalMembers}명`;
+
+        const progressBar = document.getElementById('progress-bar');
+        const progressLabel = document.getElementById('progress-label');
+
+        progressBar.style.width = `${data.depositRate}%`;
+        progressLabel.textContent = `${data.depositRate}%`;
+    })
+        .catch(error => console.error('Error fetching deposit status:', error));
+
 
     var ctx = document.getElementById('salesChart').getContext('2d');
     new Chart(ctx, {

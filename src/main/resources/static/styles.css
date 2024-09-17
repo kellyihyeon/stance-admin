@@ -61,3 +61,52 @@ body {
 .card {
     margin-bottom: 1rem;
 }
+
+.card-body {
+    padding: 20px;
+}
+
+/* 카드 제목과 텍스트 스타일 */
+.card-title {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #646E78
+}
+
+.card-text {
+    font-size: 1rem;
+    margin-bottom: 5px;
+}
+
+/* 프로그레스 바 및 레이블 스타일 */
+.progress-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-top: 0;
+}
+
+.progress-bar-background {
+    background-color: #e4e6e8; /* 기본 바 배경색 */
+    height: 10px;
+    width: 80%;
+    position: relative;
+    border-radius: 0.6rem; /* 바의 모서리 둥글게 */
+    margin-right: 10px; /* 레이블과 바 사이의 간격 */
+}
+
+.progress-bar {
+    background-color: #03c3ec; /* 실제 진행 바 색상 */
+    height: 100%;
+    width: 0%; /* 초기 너비 */
+    transition: width 0.5s ease;
+}
+
+#progress-label {
+    color: #646E78; /* 진회색으로 표시 */
+}
+
+#paidMembers {
+    font-size: 0.8rem;
+    margin-bottom: 0;
+}
