@@ -69,7 +69,7 @@ body {
 /* 카드 제목과 텍스트 스타일 */
 .card-title {
     font-size: 1.5rem;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     color: #646E78
 }
 
@@ -109,4 +109,68 @@ body {
 #paidMembers {
     font-size: 0.8rem;
     margin-bottom: 0;
+}
+
+.table {
+    margin-top: 10px; /* 테이블 위 여백 */
+    margin-bottom: 20px; /* 테이블 아래 여백 */
+    border-spacing: 0 10px;
+}
+
+.table th {
+    text-transform: uppercase;
+    font-size: .8125rem;
+    letter-spacing: .2px;
+    color: #384551;
+}
+
+.table tbody tr td{
+    color: #646e78;
+    font-size: .85rem;
+}
+
+.table td, .table th {
+    padding: 12px; /* 내부 여백 추가 */
+}
+
+.transaction-type.deposit {
+    background-color: #d7f5fc;
+    color: #03c3ec;
+    padding: 5px 10px;
+    font-size: 12px;
+    border-radius: 5px;
+}
+
+.transaction-type.withdrawal {
+    background-color: #ffe0db;
+    color: #ff3e1d;
+    padding: 5px 10px;
+    font-size: 12px;
+    border-radius: 5px;
+}
+
+.amount.deposit {
+    color: #03c3ec;
+    font-weight: bold;
+}
+
+.amount.withdrawal {
+    color: #ff3e1d;
+    font-weight: bold;
+}
+
+#view-all-button {
+    color: #696cff;
+    background: #e7e7ff;
+    border: none;
+    border-radius: 4px;
+    height: 30px;
+    line-height: 30px;
+    padding: 0 15px;
+    font-size: 0.9rem;
+    text-align: center;
+    display: inline-block;
+    vertical-align: middle;
+    margin-top: 30px;
+    margin-bottom: 10px;;
 }
