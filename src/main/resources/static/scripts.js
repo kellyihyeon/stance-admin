@@ -40,6 +40,14 @@ document.addEventListener('DOMContentLoaded', function () {
             return `/membership-fee/NOT_COMPLETED?year=${year}&month=${month}`
         }
 
+        function convertDepositStatus(depositStatus) {
+            return depositStatus === '미입금' ? "unpaid" : "paid";
+        }
+
+        function convertMemberStatus(memberStatus) {
+            return memberStatus === '정기 회원' ? "active" : 'dormant';
+        }
+
         function getMembershipFeeReport(url) {
             return fetch(url)
                 .then(response => response.json())
@@ -48,12 +56,14 @@ document.addEventListener('DOMContentLoaded', function () {
                     checker.innerHTML = '';
 
                     data.forEach(members => {
+                        let depositStatus = convertDepositStatus(members.depositStatus);
+                        let memberStatus = convertMemberStatus(members.memberStatus);
                         const row = `
                 <tr>
                     <td>${members.memberName}</td>
-                    <td>${members.amount}</td>
-                    <td>${members.memberStatus}</td>
-                    <td>${members.depositStatus}</td>
+                    <td><span class="amount">${members.amount}원</span></td>
+                    <td><span class="member-status ${memberStatus}">${members.memberStatus}</span></td>
+                    <td><span class="deposit-status ${depositStatus}">${members.depositStatus}</span></td>
                     <td>${members.depositDate}</td>
                 </tr>
                 `;
@@ -231,6 +241,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     document.getElementById('view-all-button').addEventListener('click', function () {
-        window.location.href = '/path-to-all-account-transactions';
+        window.location.href = '';
     });
 });

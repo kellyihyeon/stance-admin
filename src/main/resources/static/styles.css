@@ -133,30 +133,32 @@ body {
     padding: 12px; /* 내부 여백 추가 */
 }
 
-.transaction-type.deposit {
-    background-color: #d7f5fc;
-    color: #03c3ec;
+.deposit-status, .member-status, .transaction-type {
     padding: 5px 10px;
     font-size: 12px;
     border-radius: 5px;
+}
+
+.transaction-type.deposit {
+    background-color: #d7f5fc;
+    color: #03c3ec;
 }
 
 .transaction-type.withdrawal {
     background-color: #ffe0db;
     color: #ff3e1d;
-    padding: 5px 10px;
-    font-size: 12px;
-    border-radius: 5px;
+}
+
+.amount {
+    font-weight: bold;
 }
 
 .amount.deposit {
     color: #03c3ec;
-    font-weight: bold;
 }
 
 .amount.withdrawal {
     color: #ff3e1d;
-    font-weight: bold;
 }
 
 .btn {
@@ -190,4 +192,23 @@ body {
 .button-group .btn:hover {
     background-color: #e1e2ff;
     color: #696cff;
+}
+
+.deposit-status.paid {
+    background-color: #e8fadf;
+    color: #71dd37;
+}
+
+.deposit-status.unpaid {
+    background-color: #ffe0db;
+    color: #ff3e1d;
+}
+
+.member-status.active {
+    background-color: #d7f5fc;
+    color: #03c3ec;
+}
+.member-status.dormant {
+    background-color: #fff2d6;
+    color: #ffab00;
 }
