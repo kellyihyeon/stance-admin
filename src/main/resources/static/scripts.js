@@ -1,38 +1,115 @@
-function getCurrentYearMonth() {
-    const now = new Date();
-    const year = now.getFullYear();
-    const month = now.getMonth() + 1;
-    return { year, month };
-}
-
-function fetchDepositStatus() {
-    const { year, month } = getCurrentYearMonth();
-    const url = `/membership-fee/deposite-rate?year=${year}&month=${month}`
-
-    return fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            console.log(data)
-            return data;
-        });
-}
-
-function getAllAccountTransactions() {
-    const url = `/account-transactions`;
-
-    return fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            console.log(data)
-            return data;
-        })
-}
-
-function getTransactionType(type) {
-    return type === "입금" ? "deposit" : "withdrawal";
-}
-
 document.addEventListener('DOMContentLoaded', function () {
+
+    function getCurrentYearMonth() {
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = now.getMonth() + 1;
+        return { year, month };
+    }
+
+    function fetchDepositStatus() {
+        const { year, month } = getCurrentYearMonth();
+        const url = `/membership-fee/deposite-rate?year=${year}&month=${month}`
+
+        return fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                return data;
+            });
+    }
+
+    function getAllAccountTransactions() {
+        const url = `/account-transactions`;
+
+        return fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                return data;
+            })
+    }
+
+    function setupMembershipFeeReport() {
+
+        function generatePaidMembersUrl() {
+            const {year, month} = getCurrentYearMonth();
+            return `/membership-fee/COMPLETED?year=${year}&month=${month}`
+        }
+
+        function generateUnPaidMembersUrl() {
+            const {year, month} = getCurrentYearMonth();
+            return `/membership-fee/NOT_COMPLETED?year=${year}&month=${month}`
+        }
+
+        function getMembershipFeeReport(url) {
+            return fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    const checker = document.getElementById('membership-fee-report');
+                    checker.innerHTML = '';
+
+                    data.forEach(members => {
+                        const row = `
+                <tr>
+                    <td>${members.memberName}</td>
+                    <td>${members.amount}</td>
+                    <td>${members.memberStatus}</td>
+                    <td>${members.depositStatus}</td>
+                    <td>${members.depositDate}</td>
+                </tr>
+                `;
+                        checker.innerHTML += row;
+                    })
+                })
+                .catch(error => {
+                    console.error("Error in getMembershipFeeReport during API call: ", error);
+                });
+        }
+
+        getMembershipFeeReport(generatePaidMembersUrl())
+            .then(() => {
+                console.log("getMembershipFeeReport loaded successfully.");
+            })
+            .catch(error => {
+                console.error("Error loading getMembershipFeeReport:", error);
+            });
+
+        function updateButtonState(activeButton) {
+            const buttons = [document.getElementById('paid-btn'), document.getElementById('unpaid-btn')];
+            buttons.forEach(button => {
+                if (button === activeButton) {
+                    button.classList.add('active');
+                } else {
+                    button.classList.remove('active');
+                }
+            });
+        }
+
+        const paidButton = document.getElementById('paid-btn');
+        const unpaidButton = document.getElementById('unpaid-btn');
+
+        updateButtonState(paidButton);
+
+        paidButton.addEventListener('click', () => {
+            updateButtonState(paidButton);
+            getMembershipFeeReport(generatePaidMembersUrl())
+                .then(() => { console.log("getMembershipFeeReport loaded successfully as paid-button clicked.");})
+                .catch(error => { console.error("Error loading getMembershipFeeReport as paid-button clicked:", error);});
+        });
+
+        unpaidButton.addEventListener('click', () => {
+            updateButtonState(unpaidButton);
+            getMembershipFeeReport(generateUnPaidMembersUrl())
+                .then(() => { console.log("getMembershipFeeReport loaded successfully as unpaid-button clicked.");})
+                .catch(error => { console.error("Error loading getMembershipFeeReport as unpaid-button clicked:", error);});
+        });
+    }
+
+    setupMembershipFeeReport();
+
+
+    function getTransactionType(type) {
+        return type === "입금" ? "deposit" : "withdrawal";
+    }
 
     const dashboardMenu = document.getElementById('dashboardMenu');
     const dashboardSubmenu = document.getElementById('dashboardSubmenu');
@@ -52,22 +129,24 @@ document.addEventListener('DOMContentLoaded', function () {
             document.querySelector('#balance').textContent = '데이터를 불러오는 데 실패했습니다.';
         });
 
-    fetchDepositStatus().then(data => {
-        const dateElement = document.getElementById('date');
-        dateElement.textContent = `${data.year}년 ${data.month}월`;
+    fetchDepositStatus()
+        .then(data => {
+            const dateElement = document.getElementById('date');
+            dateElement.textContent = `${data.year}년 ${data.month}월`;
 
-        const paidMembersElement = document.getElementById('paidMembers');
-        paidMembersElement.textContent = `${data.paidMembers}명 / ${data.totalMembers}명`;
+            const paidMembersElement = document.getElementById('paidMembers');
+            paidMembersElement.textContent = `${data.paidMembers}명 / ${data.totalMembers}명`;
 
-        const progressBar = document.getElementById('progress-bar');
-        const progressLabel = document.getElementById('progress-label');
+            const progressBar = document.getElementById('progress-bar');
+            const progressLabel = document.getElementById('progress-label');
 
-        progressBar.style.width = `${data.depositRate}%`;
-        progressLabel.textContent = `${data.depositRate}%`;
-    })
+            progressBar.style.width = `${data.depositRate}%`;
+            progressLabel.textContent = `${data.depositRate}%`;
+        })
         .catch(error => console.error('Error fetching deposit status:', error));
 
-    getAllAccountTransactions().then(data => {
+    getAllAccountTransactions()
+        .then(data => {
         try {
             const tableBody = document.getElementById('transaction-table-body');
             const transactions = data.content.slice(0, 7);
@@ -93,7 +172,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 tableBody.innerHTML += row;
             });
         } catch (error) {
-                console.error('API 데이터를 불러오는 중 오류가 발생했습니다:', error);
+            console.error('API 데이터를 불러오는 중 오류가 발생했습니다:', error);
         }
     });
 
@@ -150,8 +229,8 @@ document.addEventListener('DOMContentLoaded', function () {
             responsive: true,
         }
     });
-});
 
-document.getElementById('view-all-button').addEventListener('click', function () {
-    window.location.href = '/path-to-all-account-transactions';
+    document.getElementById('view-all-button').addEventListener('click', function () {
+        window.location.href = '/path-to-all-account-transactions';
+    });
 });

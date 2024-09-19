@@ -141,27 +141,23 @@
                 <div class="col-md-6">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">카드 7</h5>
+                            <h5 class="card-title">회비 입금 명단</h5>
+                            <div class="button-group mb-3">
+                                <button id="paid-btn" class="btn btn-primary">입금자</button>
+                                <button id="unpaid-btn" class="btn btn-secondary">미입금자</button>
+                            </div>
                             <table class="table">
                                 <thead>
                                 <tr>
-                                    <th>항목</th>
-                                    <th>값</th>
+                                    <th>이름</th>
+                                    <th>금액</th>
+                                    <th>멤버쉽 유형</th>
+                                    <th>입금 여부</th>
+                                    <th>입금일</th>
                                 </tr>
                                 </thead>
-                                <tbody>
-                                <tr>
-                                    <td>항목 A</td>
-                                    <td>50</td>
-                                </tr>
-                                <tr>
-                                    <td>항목 B</td>
-                                    <td>150</td>
-                                </tr>
-                                <tr>
-                                    <td>항목 C</td>
-                                    <td>250</td>
-                                </tr>
+                                <tbody id="membership-fee-report">
+
                                 </tbody>
                             </table>
                         </div>

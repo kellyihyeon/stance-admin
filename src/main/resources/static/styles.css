@@ -159,9 +159,7 @@ body {
     font-weight: bold;
 }
 
-#view-all-button {
-    color: #696cff;
-    background: #e7e7ff;
+.btn {
     border: none;
     border-radius: 4px;
     height: 30px;
@@ -171,6 +169,25 @@ body {
     text-align: center;
     display: inline-block;
     vertical-align: middle;
+}
+#view-all-button {
+    color: #696cff;
+    background: #e7e7ff;
     margin-top: 30px;
     margin-bottom: 10px;;
+}
+
+.button-group .btn.active {
+    background-color: #696cff;
+    color: #fff;
+}
+
+.button-group .btn {
+    background: none;
+    color: #384551;
+}
+
+.button-group .btn:hover {
+    background-color: #e1e2ff;
+    color: #696cff;
 }
