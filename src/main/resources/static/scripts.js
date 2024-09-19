@@ -208,38 +208,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    var ctx1 = document.getElementById('donutChart1').getContext('2d');
-    new Chart(ctx1, {
-        type: 'doughnut',
-        data: {
-            labels: ['Category A', 'Category B', 'Category C'],
-            datasets: [{
-                label: 'Categories',
-                data: [300, 50, 100],
-                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
-            }]
-        },
-        options: {
-            responsive: true,
-        }
-    });
-
-    var ctx2 = document.getElementById('donutChart2').getContext('2d');
-    new Chart(ctx2, {
-        type: 'doughnut',
-        data: {
-            labels: ['Category X', 'Category Y', 'Category Z'],
-            datasets: [{
-                label: 'Categories',
-                data: [120, 150, 200],
-                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
-            }]
-        },
-        options: {
-            responsive: true,
-        }
-    });
-
     document.getElementById('view-all-button').addEventListener('click', function () {
         window.location.href = '';
     });

@@ -10,4 +10,9 @@ public class WebController {
     public String index() {
         return "index";
     }
+
+    @GetMapping("/event-applicant")
+    public String eventApplicant() {
+        return "eventApplicant";
+    }
 }
