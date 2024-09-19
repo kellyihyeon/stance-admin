@@ -1,53 +1,214 @@
+/* Custom Styles */
 body {
-    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
     margin: 0;
-    padding: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
 }
 
-.container {
+.wrapper {
     display: flex;
-    height: 100vh;
+    flex: 1;
 }
 
 .sidebar {
-    background-color: #f0f0f0;
-    padding: 15px;
-    width: 250px;
-    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+    height: 100vh;
+    min-width: 250px;
+    background-color: #ffffff;
+    padding: 1rem;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
     overflow-y: auto;
 }
 
-.sidebar h2, .sidebar h3 {
-    margin-top: 0;
+.sidebar h4 {
+    text-align: center;
+    margin-bottom: 1rem;
 }
 
-.sidebar ul {
-    list-style-type: none;
-    padding-left: 20px; /* 들여쓰기 효과를 위한 패딩 */
-}
-
-.sidebar ul ul {
-    padding-left: 20px; /* 하위 항목의 들여쓰기 추가 */
-}
-
-.sidebar li {
-    margin-bottom: 10px;
-}
-
-.sidebar a {
-    color: #333;
+.sidebar .nav-link {
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
     text-decoration: none;
+    color: #333;
+    border-radius: 0.25rem;
 }
 
-.sidebar a:hover {
-    text-decoration: underline;
+.sidebar .nav-link .icon {
+    margin-right: 10px;
+}
+
+.sidebar .nav-link.active {
+    background-color: #e9ecef;
+}
+
+.nav-item .nav-link {
+    padding-left: 1.5rem;
+}
+
+.nav-item .nav-item .nav-link {
+    padding-left: 2.5rem;
 }
 
 .content {
     flex: 1;
+    padding: 2rem;
+}
+
+.card {
+    margin-bottom: 1rem;
+}
+
+.card-body {
     padding: 20px;
 }
 
-.content h1 {
+/* 카드 제목과 텍스트 스타일 */
+.card-title {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    color: #646E78
+}
+
+.card-text {
+    font-size: 1rem;
+    margin-bottom: 5px;
+}
+
+/* 프로그레스 바 및 레이블 스타일 */
+.progress-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
     margin-top: 0;
+}
+
+.progress-bar-background {
+    background-color: #e4e6e8; /* 기본 바 배경색 */
+    height: 10px;
+    width: 80%;
+    position: relative;
+    border-radius: 0.6rem; /* 바의 모서리 둥글게 */
+    margin-right: 10px; /* 레이블과 바 사이의 간격 */
+}
+
+.progress-bar {
+    background-color: #03c3ec; /* 실제 진행 바 색상 */
+    height: 100%;
+    width: 0%; /* 초기 너비 */
+    transition: width 0.5s ease;
+}
+
+#progress-label {
+    color: #646E78; /* 진회색으로 표시 */
+}
+
+#paidMembers {
+    font-size: 0.8rem;
+    margin-bottom: 0;
+}
+
+.table {
+    margin-top: 10px; /* 테이블 위 여백 */
+    margin-bottom: 20px; /* 테이블 아래 여백 */
+    border-spacing: 0 10px;
+}
+
+.table th {
+    text-transform: uppercase;
+    font-size: .8125rem;
+    letter-spacing: .2px;
+    color: #384551;
+}
+
+.table tbody tr td{
+    color: #646e78;
+    font-size: .85rem;
+}
+
+.table td, .table th {
+    padding: 12px; /* 내부 여백 추가 */
+}
+
+.deposit-status, .member-status, .transaction-type {
+    padding: 5px 10px;
+    font-size: 12px;
+    border-radius: 5px;
+}
+
+.transaction-type.deposit {
+    background-color: #d7f5fc;
+    color: #03c3ec;
+}
+
+.transaction-type.withdrawal {
+    background-color: #ffe0db;
+    color: #ff3e1d;
+}
+
+.amount {
+    font-weight: bold;
+}
+
+.amount.deposit {
+    color: #03c3ec;
+}
+
+.amount.withdrawal {
+    color: #ff3e1d;
+}
+
+.btn {
+    border: none;
+    border-radius: 4px;
+    height: 30px;
+    line-height: 30px;
+    padding: 0 15px;
+    font-size: 0.9rem;
+    text-align: center;
+    display: inline-block;
+    vertical-align: middle;
+}
+#view-all-button {
+    color: #696cff;
+    background: #e7e7ff;
+    margin-top: 30px;
+    margin-bottom: 10px;;
+}
+
+.button-group .btn.active {
+    background-color: #696cff;
+    color: #fff;
+}
+
+.button-group .btn {
+    background: none;
+    color: #384551;
+}
+
+.button-group .btn:hover {
+    background-color: #e1e2ff;
+    color: #696cff;
+}
+
+.deposit-status.paid {
+    background-color: #e8fadf;
+    color: #71dd37;
+}
+
+.deposit-status.unpaid {
+    background-color: #ffe0db;
+    color: #ff3e1d;
+}
+
+.member-status.active {
+    background-color: #d7f5fc;
+    color: #03c3ec;
+}
+.member-status.dormant {
+    background-color: #fff2d6;
+    color: #ffab00;
 }
