@@ -8,6 +8,7 @@ import com.github.kellyihyeon.stanceadmin.models.EventSummaryResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -15,9 +16,13 @@ import java.util.List;
 public class EventService {
 
     private final EventRepository repository;
+    private final EventMapper mapper;
 
-    public void createEvent(EventCreation eventCreation) {
-        Event event = EventMapper.toDomain(eventCreation);
+    public void createEvent(EventCreation serviceDto) {
+        LocalDateTime now = LocalDateTime.now();
+        Long loggedInId = 999L;
+
+        Event event = mapper.toDomain(serviceDto, now, loggedInId);
         repository.createEvent(event);
     }
 

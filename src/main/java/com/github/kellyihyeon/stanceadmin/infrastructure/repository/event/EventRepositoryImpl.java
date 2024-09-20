@@ -4,6 +4,7 @@ import com.github.kellyihyeon.stanceadmin.application.event.EventMapper;
 import com.github.kellyihyeon.stanceadmin.domain.event.Event;
 import com.github.kellyihyeon.stanceadmin.domain.event.EventRepository;
 import com.github.kellyihyeon.stanceadmin.domain.event.EventStatus;
+import com.github.kellyihyeon.stanceadmin.infrastructure.entity.event.EventEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -14,10 +15,11 @@ import java.util.List;
 public class EventRepositoryImpl implements EventRepository {
 
     private final JpaEventRepository jpaRepository;
+    private final EventMapper mapper;
 
     @Override
     public void createEvent(Event event) {
-        EventEntity entity = EventMapper.toEntity(event);
+        EventEntity entity = mapper.toEntity(event);
         jpaRepository.save(entity);
     }
 
@@ -28,11 +30,8 @@ public class EventRepositoryImpl implements EventRepository {
 
     @Override
     public List<Event> getEventsByStatus(EventStatus eventStatus) {
-        List<EventEntity> result = jpaRepository.findByStatus(eventStatus);
-
-        // convert entities to domains using mapper !
-
-        return null;
+        List<EventEntity> entities = jpaRepository.findByStatus(eventStatus);
+        return mapper.toDomains(entities);
     }
 
 }

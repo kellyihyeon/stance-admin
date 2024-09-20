@@ -16,11 +16,11 @@ import java.util.List;
 
 import static com.github.kellyihyeon.stanceadmin.infrastructure.entity.accounttransaction.QAccountTransactionEntity.accountTransactionEntity;
 import static com.github.kellyihyeon.stanceadmin.infrastructure.entity.cardpayment.QCardPaymentTransactionEntity.cardPaymentTransactionEntity;
+import static com.github.kellyihyeon.stanceadmin.infrastructure.entity.event.QEventEntity.eventEntity;
 import static com.github.kellyihyeon.stanceadmin.infrastructure.entity.member.QMemberEntity.memberEntity;
 import static com.github.kellyihyeon.stanceadmin.infrastructure.entity.membershipfeedeposit.QMemberShipFeeDepositTransactionEntity.memberShipFeeDepositTransactionEntity;
 import static com.github.kellyihyeon.stanceadmin.infrastructure.entity.trasfertransaction.QTransferTransactionEntity.transferTransactionEntity;
 import static com.github.kellyihyeon.stanceadmin.infrastructure.repository.bankdeposit.QBankDepositTransactionEntity.bankDepositTransactionEntity;
-import static com.github.kellyihyeon.stanceadmin.infrastructure.repository.event.QEventEntity.eventEntity;
 import static com.github.kellyihyeon.stanceadmin.infrastructure.repository.eventdeposit.QEventDepositTransactionEntity.eventDepositTransactionEntity;
 
 @Repository

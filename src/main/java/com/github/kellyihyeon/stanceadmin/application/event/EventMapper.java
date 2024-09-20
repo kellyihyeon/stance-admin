@@ -2,39 +2,19 @@ package com.github.kellyihyeon.stanceadmin.application.event;
 
 import com.github.kellyihyeon.stanceadmin.application.event.dto.EventCreation;
 import com.github.kellyihyeon.stanceadmin.domain.event.Event;
-import com.github.kellyihyeon.stanceadmin.infrastructure.repository.event.EventEntity;
+import com.github.kellyihyeon.stanceadmin.infrastructure.entity.event.EventEntity;
 
-public class EventMapper {
+import java.time.LocalDateTime;
+import java.util.List;
 
-    public static Event toDomain(EventCreation eventCreation) {
-        return Event.create(
-                null,
-                eventCreation.eventItem(),
-                eventCreation.amount(),
-                eventCreation.dueDate(),
-                eventCreation.description(),
-                eventCreation.status()
-        );
-    }
+public interface EventMapper {
 
-    public static EventEntity toEntity(Event event) {
-        return new EventEntity(
-                event.getEventItem(),
-                event.getAmount(),
-                event.getDueDate(),
-                event.getDescription(),
-                event.getStatus()
-        );
-    }
+    Event toDomain(EventCreation serviceDto, LocalDateTime now, Long loggedInId);
 
-    public static Event toDomain(EventEntity eventEntity) {
-        return Event.create(
-                eventEntity.getId(),
-                eventEntity.getEventItem(),
-                eventEntity.getAmount(),
-                eventEntity.getDueDate(),
-                eventEntity.getDescription(),
-                eventEntity.getStatus()
-        );
-    }
+    EventEntity toEntity(Event event);
+
+    Event toDomain(EventEntity entity);
+
+    List<Event> toDomains(List<EventEntity> entities);
+
 }

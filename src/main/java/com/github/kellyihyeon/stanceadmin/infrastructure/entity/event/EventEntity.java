@@ -1,4 +1,4 @@
-package com.github.kellyihyeon.stanceadmin.infrastructure.repository.event;
+package com.github.kellyihyeon.stanceadmin.infrastructure.entity.event;
 
 import com.github.kellyihyeon.stanceadmin.domain.event.EventItem;
 import com.github.kellyihyeon.stanceadmin.domain.event.EventStatus;
@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -36,11 +37,19 @@ public class EventEntity {
     @Column(name = "status", nullable = false)
     private EventStatus status;
 
-    public EventEntity(EventItem eventItem, Double amount, LocalDate dueDate, String description, EventStatus status) {
+    @Column(name = "created_at", nullable = false)
+    private LocalDateTime createdAt;
+
+    @Column(name = "creator_id", nullable = false)
+    private Long creatorId;
+
+    public EventEntity(EventItem eventItem, Double amount, LocalDate dueDate, String description, EventStatus status, LocalDateTime createdAt, Long creatorId) {
         this.eventItem = eventItem;
         this.amount = amount;
         this.dueDate = dueDate;
         this.description = description;
         this.status = status;
+        this.createdAt = createdAt;
+        this.creatorId = creatorId;
     }
 }
