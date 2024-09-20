@@ -484,6 +484,7 @@ paths:
           description: Invalid input
         '500':
           description: Internal server error
+
   /events/{status}:
     get:
       tags:
@@ -496,11 +497,7 @@ paths:
           in: path
           required: true
           schema:
-            type: string
-            enum:
-              - ACTIVE
-              - INACTIVE
-          description: 업데이트 할 계좌의 새로운 상태
+            $ref: '#/components/schemas/EventStatusEnum'
       responses:
         '200':
           description: successful operation
@@ -509,7 +506,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/EventName'
+                  $ref: '#/components/schemas/EventSummaryResponse'
         '500':
           description: Internal server error
 
@@ -779,7 +776,7 @@ components:
           type: number
           format: double
 
-    EventName:
+    EventSummaryResponse:
       type: object
       properties:
         eventId:
@@ -789,9 +786,13 @@ components:
         eventName:
           type: string
           description: 이벤트 이름
+        eventDescription:
+          type: string
+          description: 이벤트 설명
       required:
         - eventId
         - eventName
+        - eventDescription
 
     EventApplicantInput:
       type: object
@@ -860,6 +861,12 @@ components:
         - amount
         - dueDate
         - status
+
+    EventStatusEnum:
+      type: string
+      enum:
+        - ACTIVE
+        - INACTIVE
 
     TransferInput:
       type: object

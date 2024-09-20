@@ -6,7 +6,8 @@ import com.github.kellyihyeon.stanceadmin.application.event.dto.EventCreation;
 import com.github.kellyihyeon.stanceadmin.domain.event.EventItem;
 import com.github.kellyihyeon.stanceadmin.domain.event.EventStatus;
 import com.github.kellyihyeon.stanceadmin.models.EventInput;
-import com.github.kellyihyeon.stanceadmin.models.EventName;
+import com.github.kellyihyeon.stanceadmin.models.EventStatusEnum;
+import com.github.kellyihyeon.stanceadmin.models.EventSummaryResponse;
 import com.github.kellyihyeon.stanceadmin.models.Events;
 import com.github.kellyihyeon.stanceadmin.presentation.TimeConverter;
 import lombok.RequiredArgsConstructor;
@@ -43,7 +44,10 @@ public class EventController implements EventApi {
     }
 
     @Override
-    public ResponseEntity<List<EventName>> getEventsByStatus(String status) {
-        return null;
+    public ResponseEntity<List<EventSummaryResponse>> getEventsByStatus(EventStatusEnum status) {
+        EventStatus eventStatus = EventStatus.valueOf(status.getValue());
+        List<EventSummaryResponse> result = eventService.getEventsByStatus(eventStatus);
+
+        return ResponseEntity.ok(result);
     }
 }

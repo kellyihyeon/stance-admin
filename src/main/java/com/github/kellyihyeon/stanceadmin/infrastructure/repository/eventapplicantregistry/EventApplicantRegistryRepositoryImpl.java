@@ -12,8 +12,8 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+import static com.github.kellyihyeon.stanceadmin.infrastructure.entity.event.QEventEntity.eventEntity;
 import static com.github.kellyihyeon.stanceadmin.infrastructure.entity.member.QMemberEntity.memberEntity;
-import static com.github.kellyihyeon.stanceadmin.infrastructure.repository.event.QEventEntity.eventEntity;
 import static com.github.kellyihyeon.stanceadmin.infrastructure.repository.eventapplicantregistry.QEventApplicantRegistryEntity.eventApplicantRegistryEntity;
 
 @Repository
