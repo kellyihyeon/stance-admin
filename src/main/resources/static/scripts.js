@@ -202,8 +202,50 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     if (path === '/event-applicant') {
-        const eventAreaContainer = document.getElementById('eventAreas');
         const eventRegisterModal = new bootstrap.Modal(document.getElementById('eventRegisterModal'));
+
+        function getActiveEvents() {
+            const url = `/events/ACTIVE`
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    const eventAreas = document.getElementById('eventAreas');
+                    eventAreas.innerHTML = '';
+
+                    data.forEach(event => {
+                        const eventArea = document.createElement('div');
+                        eventArea.className = 'event-area';
+                        eventArea.innerHTML = `
+                            <div class="event-icon">
+                                <span class="material-symbols-outlined event-symbols">local-activity</span> <!-- 이벤트 아이콘 -->
+                            </div>
+                            <div class="event-name">${event.eventName}</div>
+                        `;
+                        const descriptionArea = document.createElement('p');
+                        descriptionArea.className = 'event-description';
+                        descriptionArea.innerHTML = `
+                            <p class="event-description">${event.description}</p>
+                        `;
+                        eventAreas.appendChild(eventArea);
+                        eventAreas.appendChild(descriptionArea);
+                    });
+
+                    const addEventArea = document.createElement('div');
+                    addEventArea.className = 'event-area add-event';
+                    addEventArea.id = 'addEventArea';
+                    addEventArea.innerHTML = `
+                        <div class="event-icon">
+                            <span class="material-symbols-outlined event-symbols">add</span> <!-- + 아이콘 -->
+                        </div>
+                        <div class="event-name">등록</div>
+                    `;
+                    eventAreas.appendChild(addEventArea);
+                })
+                .catch(error => {
+                    console.error('이벤트 목록을 가져오는 중 오류 발생:', error);
+                });
+        }
+        getActiveEvents();
 
         // "이벤트 등록" 버튼을 클릭했을 때 모달 띄우기
         document.getElementById('addEventArea').addEventListener('click', function () {
