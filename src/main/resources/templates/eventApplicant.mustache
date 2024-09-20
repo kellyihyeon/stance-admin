@@ -8,6 +8,7 @@
                     <div class="card-body">
                         <h5 class="card-title">이벤트 신청자 입금 현황</h5>
                         <div class="event-areas" id="eventAreas">
+                            <!-- 동적으로 추가되는 이벤트 영역 -->
                             <div class="event-area add-event" id="addEventArea">
                                 <div class="event-icon">
                                     <span class="material-symbols-outlined event-symbols">add</span> <!-- + 아이콘 -->
@@ -32,6 +33,15 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+
+<!-- 여기 모달을 추가 -->
+<div id="eventRegisterModal" class="modal fade" tabindex="-1" aria-labelledby="eventRegisterLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            {{> eventRegistrationForm }} <!-- eventRegistration.mustache 내용을 여기에 포함 -->
         </div>
     </div>
 </div>

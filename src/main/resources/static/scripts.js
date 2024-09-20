@@ -202,6 +202,45 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     if (path === '/event-applicant') {
+        const eventAreaContainer = document.getElementById('eventAreas');
+        const eventRegisterModal = new bootstrap.Modal(document.getElementById('eventRegisterModal'));
+
+        // "이벤트 등록" 버튼을 클릭했을 때 모달 띄우기
+        document.getElementById('addEventArea').addEventListener('click', function () {
+            eventRegisterModal.show();
+        });
+        // 이벤트를 제출할 때 필수값 검사하기
+        document.getElementById('eventForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const eventRegistrationData = {
+                eventItem: document.getElementById('name').value,
+                amount: document.getElementById('amount').value,
+                dueDate: document.getElementById('dueDate').value,
+                status: document.getElementById('status').checked === true ? 'ACTIVE' : 'INACTIVE',
+                description: document.getElementById('description').value
+            };
+
+            fetch('/events', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(eventRegistrationData),
+            })
+                .then(response => {
+                    if (response.status === 201) {
+                        alert('이벤트가 등록되었습니다');
+                        eventRegisterModal.hide();
+                        window.location.href = '/event-applicant';
+                    }
+                })
+                .catch(error => {
+                    console.error('이벤트 등록 중 오류 발생:', error);
+                });
+        });
+
+
 
     }
 });
