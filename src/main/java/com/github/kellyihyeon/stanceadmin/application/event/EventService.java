@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -34,7 +35,18 @@ public class EventService {
         List<Event> events = repository.getEventsByStatus(eventStatus);
 
         // convert domain to response dto !
+        List<EventSummaryResponse> result = new ArrayList<>();
+        events.forEach(event -> {
+            result.add(
+                    new EventSummaryResponse(
+                            event.getId(),
+                            event.getEventItem().getDisplayName(),
+                            event.getDescription()
+                    )
+            );
+                }
+        );
 
-        return null;
+        return result;
     }
 }
