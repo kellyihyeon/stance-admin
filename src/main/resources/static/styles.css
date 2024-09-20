@@ -216,3 +216,31 @@ body {
     background-color: #fff2d6;
     color: #ffab00;
 }
+
+.event-area {
+    padding: 10px;
+    margin: 10px 0;
+    width: 70px;
+    height: 70px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    cursor: pointer;
+}
+
+.add-event {
+    background-color: #f0f0f0;
+}
+
+.event-icon .event-symbols {
+    margin: 10px 0 0 0;
+    font-size: 24px;
+}
+
+.event-name {
+    font-size: 11px;
+}

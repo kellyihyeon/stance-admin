@@ -3,13 +3,19 @@
 <div class="content">
     <div class="container">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <div class="card">
                     <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <h5 class="card-title">이벤트 입금 명단</h5>
-                            <button id="view-all-button" class="btn btn-primary">전체보기</button>
+                        <h5 class="card-title">이벤트 신청자 입금 현황</h5>
+                        <div class="event-areas" id="eventAreas">
+                            <div class="event-area add-event" id="addEventArea">
+                                <div class="event-icon">
+                                    <span class="material-symbols-outlined event-symbols">add</span> <!-- + 아이콘 -->
+                                </div>
+                                <div class="event-name">등록</div>
+                            </div>
                         </div>
+                        <p>설명 text~~~~~</p>
                         <table class="table">
                             <thead>
                             <tr>
@@ -19,14 +25,13 @@
                                 <th>입금일</th>
                             </tr>
                             </thead>
-                            <tbody id="transaction-table-body">
+                            <tbody id="event-applicant-report">
 
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </div>
