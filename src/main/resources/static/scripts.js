@@ -201,6 +201,7 @@ document.addEventListener('DOMContentLoaded', function () {
         setupMembershipFeeReport();
     }
 
+    // Dashboards - 이벤트 신청자
     if (path === '/event-applicant') {
         const eventRegisterModal = new bootstrap.Modal(document.getElementById('eventRegisterModal'));
 
@@ -217,14 +218,14 @@ document.addEventListener('DOMContentLoaded', function () {
                         eventArea.className = 'event-area';
                         eventArea.innerHTML = `
                             <div class="event-icon">
-                                <span class="material-symbols-outlined event-symbols">local-activity</span> <!-- 이벤트 아이콘 -->
+                                <span class="material-symbols-outlined event-symbols">celebration</span>
                             </div>
                             <div class="event-name">${event.eventName}</div>
                         `;
                         const descriptionArea = document.createElement('p');
                         descriptionArea.className = 'event-description';
                         descriptionArea.innerHTML = `
-                            <p class="event-description">${event.description}</p>
+                            <p class="event-description">${event.eventDescription}</p>
                         `;
                         eventAreas.appendChild(eventArea);
                         eventAreas.appendChild(descriptionArea);
@@ -235,7 +236,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     addEventArea.id = 'addEventArea';
                     addEventArea.innerHTML = `
                         <div class="event-icon">
-                            <span class="material-symbols-outlined event-symbols">add</span> <!-- + 아이콘 -->
+                            <span class="material-symbols-outlined event-symbols">add</span>
                         </div>
                         <div class="event-name">등록</div>
                     `;
@@ -247,10 +248,13 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         getActiveEvents();
 
-        // "이벤트 등록" 버튼을 클릭했을 때 모달 띄우기
-        document.getElementById('addEventArea').addEventListener('click', function () {
-            eventRegisterModal.show();
+        // 이벤트 위임을 통해 동적으로 추가된 요소에도 클릭 이벤트 바인딩
+        document.getElementById('eventAreas').addEventListener('click', function (event) {
+            if (event.target.closest('#addEventArea')) {
+                eventRegisterModal.show();
+            }
         });
+
         // 이벤트를 제출할 때 필수값 검사하기
         document.getElementById('eventForm').addEventListener('submit', function (event) {
             event.preventDefault();
