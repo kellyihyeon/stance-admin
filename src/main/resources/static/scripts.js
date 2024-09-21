@@ -293,15 +293,27 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
 
+        const statusCheckbox = document.getElementById('status');
+        const statusLabel = document.getElementById('statusLabel');
+
+        statusCheckbox.addEventListener('change', function () {
+            if (statusCheckbox.checked) {
+                statusLabel.textContent = 'on';
+            } else {
+                statusLabel.textContent = 'off';
+            }
+        });
+
         // 이벤트를 제출할 때 필수값 검사하기
         document.getElementById('eventForm').addEventListener('submit', function (event) {
             event.preventDefault();
+            const status = !!statusCheckbox.checked;
 
             const eventRegistrationData = {
                 eventItem: document.getElementById('name').value,
                 amount: document.getElementById('amount').value,
                 dueDate: document.getElementById('dueDate').value,
-                status: document.getElementById('status').checked === true ? 'ACTIVE' : 'INACTIVE',
+                status: status === true ? 'ACTIVE' : 'INACTIVE',
                 description: document.getElementById('description').value
             };
 
