@@ -1,4 +1,21 @@
-/* Custom Styles */
+.logo-container {
+    display: flex;
+    align-items: center;
+    margin: 0 0 20px 12px;
+}
+
+.logo {
+    width: 33px;
+    height: auto;
+}
+
+.brand-text {
+    color: #384551;
+    font-size: 1.5rem;
+    letter-spacing: -0.5px;
+    margin-top: 10px;
+}
+
 .material-symbols-outlined {
     margin-right: 8px;
 }
@@ -18,17 +35,13 @@ body {
 }
 
 .sidebar {
+    align-items: center;
     height: 100vh;
     min-width: 250px;
     background-color: #ffffff;
     padding: 1rem;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
     overflow-y: auto;
-}
-
-.sidebar h4 {
-    text-align: center;
-    margin-bottom: 1rem;
 }
 
 .sidebar .nav-link {
