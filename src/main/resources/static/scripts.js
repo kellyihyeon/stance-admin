@@ -125,10 +125,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 return `/membership-fee/NOT_COMPLETED?year=${year}&month=${month}`
             }
 
-            function convertDepositStatus(depositStatus) {
-                return depositStatus === '미입금' ? "unpaid" : "paid";
-            }
-
             function convertMemberStatus(memberStatus) {
                 return memberStatus === '정기 회원' ? "active" : 'dormant';
             }
@@ -205,6 +201,30 @@ document.addEventListener('DOMContentLoaded', function () {
     if (path === '/event-applicant') {
         const eventRegisterModal = new bootstrap.Modal(document.getElementById('eventRegisterModal'));
 
+        function getEventApplicantReport(event) {
+            const url = `/event-applicants?eventId=${event.eventId}`;
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    const eventApplicantReport = document.getElementById('eventApplicantReport');
+                    eventApplicantReport.innerHTML = '';
+
+                    data.forEach(report => {
+                        let depositStatus = convertDepositStatus(report.depositStatus);
+
+                        const row = `
+                            <tr>
+                                <td>${report.memberName}</td>
+                                <td><span class="amount">${report.amount}원</span></td>
+                                <td><span class="deposit-status ${depositStatus}">${report.depositStatus}</span></td>
+                                <td>${report.dueDate}</td>
+                            </tr>
+                        `;
+                        eventApplicantReport.innerHTML += row;
+                    });
+                });
+        }
+
         function getActiveEvents() {
             const url = `/events/ACTIVE`
             fetch(url)
@@ -213,30 +233,48 @@ document.addEventListener('DOMContentLoaded', function () {
                     const eventAreas = document.getElementById('eventAreas');
                     eventAreas.innerHTML = '';
 
+                    let firstEvent = true;
+                    const description = document.getElementById('eventDescription');
+
                     data.forEach(event => {
                         const eventArea = document.createElement('div');
                         eventArea.className = 'event-area';
+                        eventArea.setAttribute('data-event-id', event.eventId);
+
+                        if (firstEvent) {
+                            eventArea.classList.add('active');
+                            getEventApplicantReport(event);
+                            description.innerHTML = `<span style="box-shadow: inset 0 -8px 0 #ffffbb;">${event.eventDescription}</span>`;
+                            firstEvent = false;
+                        }
+
                         eventArea.innerHTML = `
                             <div class="event-icon">
                                 <span class="material-symbols-outlined event-symbols">celebration</span>
                             </div>
                             <div class="event-name">${event.eventName}</div>
                         `;
-                        const descriptionArea = document.createElement('p');
-                        descriptionArea.className = 'event-description';
-                        descriptionArea.innerHTML = `
-                            <p class="event-description">${event.eventDescription}</p>
-                        `;
+
+                        // 이벤트 클릭 시 active 처리
+                        eventArea.addEventListener('click', () => {
+                            // 모든 이벤트 영역에 active 제거
+                            document.querySelectorAll('.event-area').forEach(area => area.classList.remove('active'));
+                            // 클릭한 이벤트에 active 추가
+                            eventArea.classList.add('active');
+                            description.innerHTML = `<span style="box-shadow: inset 0 -8px 0 #ffffbb;">${event.eventDescription}</span>`;
+                            getEventApplicantReport(event);
+                        });
+
                         eventAreas.appendChild(eventArea);
-                        eventAreas.appendChild(descriptionArea);
                     });
 
+                    // 이벤트 등록 버튼
                     const addEventArea = document.createElement('div');
                     addEventArea.className = 'event-area add-event';
                     addEventArea.id = 'addEventArea';
                     addEventArea.innerHTML = `
                         <div class="event-icon">
-                            <span class="material-symbols-outlined event-symbols">add</span>
+                            <span class="material-symbols-outlined event-symbols">add_box</span>
                         </div>
                         <div class="event-name">등록</div>
                     `;
@@ -306,4 +344,8 @@ function getAllAccountTransactions() {
         .then(data => {
             return data;
         })
+}
+
+function convertDepositStatus(depositStatus) {
+    return depositStatus === '미입금' ? "unpaid" : "paid";
 }

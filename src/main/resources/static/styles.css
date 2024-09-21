@@ -217,6 +217,13 @@ body {
     color: #ffab00;
 }
 
+#eventAreas {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-start;
+    margin-bottom: 8px;
+}
+
 .event-area {
     padding: 10px;
     margin: 10px 0;
@@ -230,6 +237,19 @@ body {
     justify-content: center;
     text-align: center;
     cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.event-area.active {
+    border-color: #007bff;
+    background-color: #e7f1ff;
+}
+
+.event-description {
+    margin: 10px 0 0 8px;
+    font-size: 14px;
+    color: #43484d;
+    font-family: Arial, sans-serif;
 }
 
 .add-event {
