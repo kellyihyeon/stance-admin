@@ -1,13 +1,16 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const dashboardMenu = document.getElementById('dashboardMenu');
-    const dashboardSubmenu = document.getElementById('dashboardSubmenu');
-
-    dashboardMenu.addEventListener('click', function () {
-        dashboardSubmenu.style.display = dashboardSubmenu.style.display === 'block' ? 'none' : 'block';
-    });
-
     let path = window.location.pathname;
     console.log(path);
+
+    document.querySelectorAll('.nav-item').forEach(item => {
+        const link = item.querySelector('.nav-link');
+
+        if (link && link.getAttribute('href') === path) {
+            item.classList.add('active');
+        } else {
+            item.classList.remove('active');
+        }
+    });
 
     if (path === '/') {
         // 잔액 조회
