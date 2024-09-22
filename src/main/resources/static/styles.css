@@ -1,4 +1,25 @@
-/* Custom Styles */
+.logo-container {
+    display: flex;
+    align-items: center;
+    margin: 0 0 20px 12px;
+}
+
+.logo {
+    width: 33px;
+    height: auto;
+}
+
+.brand-text {
+    color: #384551;
+    font-size: 1.5rem;
+    letter-spacing: -0.5px;
+    margin-top: 10px;
+}
+
+.material-symbols-outlined {
+    margin-right: 8px;
+}
+
 body {
     background-color: #f8f9fa;
     margin: 0;
@@ -14,6 +35,7 @@ body {
 }
 
 .sidebar {
+    align-items: center;
     height: 100vh;
     min-width: 250px;
     background-color: #ffffff;
@@ -22,19 +44,32 @@ body {
     overflow-y: auto;
 }
 
-.sidebar h4 {
-    text-align: center;
-    margin-bottom: 1rem;
-}
-
 .sidebar .nav-link {
-    font-size: 1.1rem;
+    font-size: 1.08rem;
     display: flex;
     align-items: center;
     padding: 0.5rem 1rem;
     text-decoration: none;
-    color: #333;
+    color: #384551;
     border-radius: 0.25rem;
+}
+.system-item {
+    margin-top: 0.7rem;
+}
+
+.menu-toggle::after {
+    color: #384551;
+    content: "⌄";
+    position: absolute;
+    font-family: "boxicons", sans-serif;
+    font-size: 1.375rem;
+    margin: 0 0 0.5rem 11.3rem;
+    font-weight: bold;
+}
+
+.nav-item.active .nav-link {
+    background-color: #f2f3f3;
+    color: #646e78;
 }
 
 .sidebar .nav-link .icon {
@@ -45,17 +80,27 @@ body {
     background-color: #e9ecef;
 }
 
-.nav-item .nav-link {
-    padding-left: 1.5rem;
+#dashboardSubmenu .nav-item>.nav-link::before {
+    background-color: #a7acb2 !important;
+    content: "";
+    position: absolute;
+    left: 2.5rem;
+    width: .375rem;
+    height: .375rem;
+    border-radius: 50%;
 }
 
-.nav-item .nav-item .nav-link {
-    padding-left: 2.5rem;
+#dashboardSubmenu .nav-item>.nav-link {
+    padding-left: 3rem;
 }
 
 .content {
     flex: 1;
     padding: 2rem;
+}
+
+::placeholder {
+    font-size: 14px;
 }
 
 .card {
@@ -172,6 +217,14 @@ body {
     display: inline-block;
     vertical-align: middle;
 }
+
+.btn-primary {
+    color: #fff;;
+    background-color: #696cff;
+    border-color: #696cff;
+    box-shadow: 0 .125rem .25rem 0 rgba(105,108,255,.4);
+}
+
 #view-all-button {
     color: #696cff;
     background: #e7e7ff;
@@ -194,6 +247,10 @@ body {
     color: #696cff;
 }
 
+#registerEventButton {
+    width: 500px;
+}
+
 .deposit-status.paid {
     background-color: #e8fadf;
     color: #71dd37;
@@ -211,4 +268,85 @@ body {
 .member-status.dormant {
     background-color: #fff2d6;
     color: #ffab00;
+}
+
+#eventAreas {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-start;
+    margin-bottom: 8px;
+}
+
+.event-area {
+    padding: 10px;
+    margin: 10px 0;
+    width: 70px;
+    height: 70px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.event-area.active {
+    border-color: #007bff;
+    background-color: #e7f1ff;
+}
+
+.event-description {
+    margin: 10px 0 0 8px;
+    font-size: 14px;
+    color: #43484d;
+    font-family: Arial, sans-serif;
+}
+
+.add-event {
+    background-color: #f0f0f0;
+}
+
+.event-icon .event-symbols {
+    margin: 10px 0 0 0;
+    font-size: 24px;
+}
+
+.event-name {
+    font-size: 11px;
+}
+
+.popup {
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.popup-content {
+    background-color: #fefefe;
+    margin: 10% auto;
+    padding: 20px;
+    border-radius: 10px;
+    width: 50%;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+    cursor: pointer;
+}
+
+.required-true {
+    color: red;
 }

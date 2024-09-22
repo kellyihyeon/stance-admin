@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>스탠스 어드민</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined" rel="stylesheet">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="icon" href="/images/favicon.png" type="image/png">
+</head>
+<body>
+<div class="wrapper">
+    <!-- 사이드바 -->
+    <div class="sidebar">
+
+        <div class="logo-container d-flex align-items-center">
+            <img src="/images/logo.png" alt="로고" class="logo" />
+            <h4 class="text-center ms-2 brand-text">STANCE</h4>
+        </div>
+
+        <ul class="nav flex-column">
+            <li class="nav-item menu-link">
+                <a class="nav-link menu-toggle" href="#" id="dashboardMenu">
+                    <span class="material-symbols-outlined">home</span>
+                    Dashboards
+                </a>
+                <ul class="nav flex-column" id="dashboardSubmenu">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/">모임통장</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/event-applicant">이벤트 신청자</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">회원</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item menu-link system-item">
+                <a class="nav-link menu-toggle" href="#" id="dashboardMenu">
+                    <span class="material-symbols-outlined">settings</span>
+                    System
+                </a>
+            </li>
+        </ul>
+    </div>
