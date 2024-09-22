@@ -1,0 +1,114 @@
+{{>layout/header}}
+
+<div class="content">
+    <div class="container mt-5">
+        <h3 class="mb-4">😎 입금 내역을 기록할 거예요!</h3>
+
+        <div class="row text-center mb-4">
+            <div class="col-md-4">
+                <div class="card budget-book-cards">
+                    <div class="card-body">
+                        <span class="material-symbols-outlined">sports_basketball</span>
+                        <h5 class="card-title mt-3">회비</h5>
+                        <p class="card-text">
+                            회원들이 회비를 입금했어요!
+                            입금 내용을 기록해볼까요? 아래의 '쓰기' 버튼을 눌러주세요!
+                        </p>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#membershipFeeRegisterModal">
+                            쓰기
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card budget-book-cards">
+                    <div class="card-body">
+                        <span class="material-symbols-outlined">hotel_class</span>
+                        <h5 class="card-title mt-3">이벤트</h5>
+                        <p class="card-text">카드 2 설명</p>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            쓰기
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card budget-book-cards">
+                    <div class="card-body">
+                        <span class="material-symbols-outlined">account_balance</span>
+                        <h5 class="card-title mt-3">은행</h5>
+                        <p class="card-text">카드 3 설명</p>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            쓰기
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h3 class="mb-4">👊🏼 출금 내역을 기록할 거예요!</h3>
+        <div class="row text-center mb-4">
+            <div class="col-md-4">
+                <div class="card budget-book-cards">
+                    <div class="card-body">
+                        <span class="material-symbols-outlined">credit_card</span>
+                        <h5 class="card-title mt-3">카드</h5>
+                        <p class="card-text">카드 4 설명</p>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            쓰기
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card budget-book-cards">
+                    <div class="card-body">
+                        <span class="material-symbols-outlined">currency_exchange</span>
+                        <h5 class="card-title mt-3">계좌이체</h5>
+                        <p class="card-text">카드 5 설명</p>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            쓰기
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 모달 창 -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">등록 폼</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="exampleInputText1" class="form-label">이름</label>
+                        <input type="text" class="form-control" id="exampleInputText1">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">이메일</label>
+                        <input type="email" class="form-control" id="exampleInputEmail1">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label">비밀번호</label>
+                        <input type="password" class="form-control" id="exampleInputPassword1">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                <button type="button" class="btn btn-primary">등록</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{>layout/footer}}

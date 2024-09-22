@@ -146,6 +146,16 @@ body {
     font-size: 1rem;
     margin-bottom: 5px;
 }
+.budget-book-cards {
+    height: 280px;
+}
+
+.budget-book-cards .card-text {
+    margin-bottom: 20px;
+}
+.budget-book-cards .material-symbols-outlined {
+    font-size: 35px;
+}
 
 /* 프로그레스 바 및 레이블 스타일 */
 .progress-container {
