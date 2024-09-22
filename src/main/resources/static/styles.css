@@ -67,6 +67,16 @@ body {
     font-weight: bold;
 }
 
+.sub-menu .menu-toggle::after {
+    color: #384551;
+    content: "⌄";
+    position: absolute;
+    font-family: "boxicons", sans-serif;
+    font-size: 1.375rem;
+    margin: 0 0 0.5rem 9.3rem;
+    font-weight: bold;
+}
+
 .nav-item.active .nav-link {
     background-color: #f2f3f3;
     color: #646e78;
@@ -80,7 +90,7 @@ body {
     background-color: #e9ecef;
 }
 
-#dashboardSubmenu .nav-item>.nav-link::before {
+.sub-menu .nav-item>.nav-link::before {
     background-color: #a7acb2 !important;
     content: "";
     position: absolute;
@@ -90,8 +100,22 @@ body {
     border-radius: 50%;
 }
 
-#dashboardSubmenu .nav-item>.nav-link {
+.sub-menu .nav-item>.nav-link {
     padding-left: 3rem;
+}
+
+.third-level-menu .nav-item>.nav-link::before {
+    background-color: #a7acb2 !important;
+    content: "";
+    position: absolute;
+    left: 4.5rem;
+    width: .375rem;
+    height: .375rem;
+    border-radius: 50%;
+}
+
+.third-level-menu .nav-item>.nav-link {
+    padding-left: 5rem;
 }
 
 .content {

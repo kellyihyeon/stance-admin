@@ -2,16 +2,6 @@ document.addEventListener('DOMContentLoaded', function () {
     let path = window.location.pathname;
     console.log(path);
 
-    document.querySelectorAll('.nav-item').forEach(item => {
-        const link = item.querySelector('.nav-link');
-
-        if (link && link.getAttribute('href') === path) {
-            item.classList.add('active');
-        } else {
-            item.classList.remove('active');
-        }
-    });
-
     if (path === '/') {
         // 잔액 조회
         function getBalance(url) {
