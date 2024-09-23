@@ -15,11 +15,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 // 상위 메뉴 찾기
                 let parentMenu = item.closest('.nav-item.menu-link');
-                console.log('parentMenu found:', parentMenu)
                 // 상위 메뉴의 토글 열기
                 if (parentMenu) {
                     const grandParentToggle = parentMenu.querySelector('.menu-toggle');
-                    console.log('grandParentToggle found:', grandParentToggle);
 
                     if (grandParentToggle) {
                         grandParentToggle.classList.add('show');

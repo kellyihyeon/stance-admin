@@ -14,7 +14,7 @@
                             회원들이 회비를 입금했어요!
                             입금 내용을 기록해볼까요? 아래의 '쓰기' 버튼을 눌러주세요!
                         </p>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#membershipFeeRegisterModal">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#membershipFeeRegistrationModal">
                             쓰기
                         </button>
                     </div>
@@ -79,34 +79,12 @@
     </div>
 </div>
 
-<!-- 모달 창 -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+
+<div id="membershipFeeRegistrationModal" class="modal fade" tabindex="-1" aria-labelledby="membershipFeeRegistrationLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">등록 폼</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="mb-3">
-                        <label for="exampleInputText1" class="form-label">이름</label>
-                        <input type="text" class="form-control" id="exampleInputText1">
-                    </div>
-                    <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label">이메일</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1">
-                    </div>
-                    <div class="mb-3">
-                        <label for="exampleInputPassword1" class="form-label">비밀번호</label>
-                        <input type="password" class="form-control" id="exampleInputPassword1">
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                <button type="button" class="btn btn-primary">등록</button>
-            </div>
+            {{> membershipFeeRegistrationForm }}
         </div>
     </div>
 </div>
