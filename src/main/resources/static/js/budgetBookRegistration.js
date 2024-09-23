@@ -24,6 +24,46 @@ document.addEventListener('DOMContentLoaded', function () {
                 })
                 .catch(error => console.error('/members/current 호출 중 에러 발생:', error));
         });
+
+        document.getElementById('membershipFeeForm').addEventListener('submit', function (event) {
+            const membershipFeeRegistrationModal = new bootstrap.Modal(document.getElementById('membershipFeeRegistrationModal'));
+            event.preventDefault();
+
+            const selectedDepositors = [];
+            const checkedBoxes = document.querySelectorAll('#depositorContainer input[type="checkbox"]:checked');
+
+            checkedBoxes.forEach(checkedBox => {
+                selectedDepositors.push(checkedBox.value)
+            });
+
+            const bodyData = {
+                depositorIds: selectedDepositors,
+                depositDate: document.getElementById('dueDate').value,
+                amount: document.getElementById('amount').value,
+                dueDate: document.getElementById('dueDate').value,
+                memberType: document.getElementById('membershipType').value,
+                description: document.getElementById('description').value
+            }
+
+            const url = '/account-transactions/deposits/membership-fee';
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(bodyData),
+            })
+                .then(response => {
+                    if (response.status === 201) {
+                        alert('회비내역이 등록되었습니다');
+                        membershipFeeRegistrationModal.hide();
+                        window.location.href = '/budget-book-registration';
+                    }
+                })
+                .catch(error => {
+                    console.error('회비내역 등록 중 오류 발생:', error);
+                });
+        });
     }
 
 });

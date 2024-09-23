@@ -30,9 +30,9 @@
         <div class="form-group mb-3">
             <label for="membershipType" class="form-label">멤버쉽 유형<span class="required-true">*</span></label>
             <select class="form-select" id="membershipType" required>
-                <option value="option1" selected>정기회원</option>
-                <option value="option2">휴면회원</option>
-                <option value="option3">게스트</option>
+                <option value="ACTIVE" selected>정기회원</option>
+                <option value="DORMANT">휴면회원</option>
+                <option value="GUEST">게스트</option>
             </select>
         </div>
 
@@ -43,7 +43,7 @@
 
         <div class="d-flex justify-content-center">
             <button type="button" class="btn btn-secondary mt-3" data-bs-dismiss="modal">취소</button>
-            <button type="submit" class="btn btn-primary mt-3" id="registerEventButton">등록</button>
+            <button type="submit" class="btn btn-primary mt-3" id="registerMembershipFeeButton">등록</button>
         </div>
     </form>
 </div>
