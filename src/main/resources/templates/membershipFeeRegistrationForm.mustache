@@ -1,0 +1,49 @@
+<div class="modal-header">
+    <h5 class="modal-title" id="membershipFeeRegistrationLabel">회비 기록하기</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+
+<div class="modal-body">
+    <form id="membershipFeeForm">
+        <div class="form-group mb-3">
+            <label for="depositor" class="form-label">입금자<span class="required-true">*</span></label>
+            <div id="depositorContainer">
+
+            </div>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="depositDate" class="form-label">입금일<span class="required-true">*</span></label>
+            <input type="date" class="form-control" id="depositDate" required>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="dueDate" class="form-label">만료일<span class="required-true">*</span></label>
+            <input type="date" class="form-control" id="dueDate" required>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="amount" class="form-label">금액<span class="required-true">*</span></label>
+            <input type="number" class="form-control" id="amount" placeholder="얼마예요?" required>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="membershipType" class="form-label">멤버쉽 유형<span class="required-true">*</span></label>
+            <select class="form-select" id="membershipType" required>
+                <option value="ACTIVE" selected>정기회원</option>
+                <option value="DORMANT">휴면회원</option>
+                <option value="GUEST">게스트</option>
+            </select>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="description" class="form-label">메모<span class="required-false"></span></label>
+            <textarea class="form-control form-control-lg" id="description" rows="5" placeholder="설명이 필요하다면 적어주세요!"></textarea>
+        </div>
+
+        <div class="d-flex justify-content-center cancel-register-button">
+            <button type="button" class="btn btn-secondary mt-3" data-bs-dismiss="modal">취소</button>
+            <button type="submit" class="btn btn-primary mt-3" id="registerMembershipFeeButton">등록</button>
+        </div>
+    </form>
+</div>
