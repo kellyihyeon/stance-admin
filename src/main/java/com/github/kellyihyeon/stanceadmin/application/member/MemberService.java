@@ -1,10 +1,7 @@
 package com.github.kellyihyeon.stanceadmin.application.member;
 
 import com.github.kellyihyeon.stanceadmin.application.member.dto.MemberSummaryResponse;
-import com.github.kellyihyeon.stanceadmin.domain.member.Member;
-import com.github.kellyihyeon.stanceadmin.domain.member.MemberRepository;
-import com.github.kellyihyeon.stanceadmin.domain.member.MemberRole;
-import com.github.kellyihyeon.stanceadmin.domain.member.MemberStatus;
+import com.github.kellyihyeon.stanceadmin.domain.member.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +17,8 @@ public class MemberService {
     public List<MemberSummaryResponse> getParticipatingMembers() {
         List<Member> participatingMembers = memberRepository.findParticipatingMembers(
                 MemberRole.MEMBER,
-                List.of(MemberStatus.ACTIVE, MemberStatus.DORMANT)
+                List.of(MemberStatus.ACTIVE, MemberStatus.DORMANT),
+                RegistrationStatus.REGISTERED
         );
 
         List<MemberSummaryResponse> result = new ArrayList<>();
