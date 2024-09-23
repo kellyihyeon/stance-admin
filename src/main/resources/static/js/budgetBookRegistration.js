@@ -25,6 +25,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 .catch(error => console.error('/members/current 호출 중 에러 발생:', error));
         });
 
+        // 회비 만료일의 디폴트 설정
+        const { year, month } = getCurrentYearMonth();
+        const fixedDueDate = '25';
+        const paddedMonth = month.toString().padStart(2, '0');
+        document.getElementById('dueDate').value = `${year}-${paddedMonth}-${fixedDueDate}`;
+
         document.getElementById('membershipFeeForm').addEventListener('submit', function (event) {
             const membershipFeeRegistrationModal = new bootstrap.Modal(document.getElementById('membershipFeeRegistrationModal'));
             event.preventDefault();
@@ -38,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const bodyData = {
                 depositorIds: selectedDepositors,
-                depositDate: document.getElementById('dueDate').value,
+                depositDate: document.getElementById('depositDate').value,
                 amount: document.getElementById('amount').value,
                 dueDate: document.getElementById('dueDate').value,
                 memberType: document.getElementById('membershipType').value,
@@ -67,3 +73,10 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
 });
+
+function getCurrentYearMonth() {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = now.getMonth() + 1;
+    return { year, month };
+}

@@ -146,13 +146,15 @@ body {
     font-size: 1rem;
     margin-bottom: 5px;
 }
+
 .budget-book-cards {
-    height: 280px;
+    height: 250px;
 }
 
 .budget-book-cards .card-text {
     margin-bottom: 20px;
 }
+
 .budget-book-cards .material-symbols-outlined {
     font-size: 35px;
 }
@@ -283,6 +285,14 @@ body {
 
 #registerEventButton {
     width: 500px;
+}
+
+.cancel-register-button {
+    gap: 10px;
+}
+
+.cancel-register-button .btn {
+    width: 230px;
 }
 
 .deposit-status.paid {
