@@ -33,8 +33,28 @@ tags:
   - name: event-applicant
     description: 이벤트 신청자
 
+  - name: member
+    description: 회원
+
 # 계좌
 paths:
+  /members/current:
+    get:
+      tags:
+        - member
+      summary: 활동 중인 회원을 조회합니다.
+      operationId: getCurrentMembers
+
+      responses:
+        '200':
+          description: 성공
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CurrentMemberResponse'
+
   /accounts/balance:
     get:
       tags:
@@ -1095,6 +1115,18 @@ components:
         balance:
           format: decimal
           description: balance의 타입은 BigDecimal 입니다.
+
+    CurrentMemberResponse:
+      type: object
+      properties:
+        memberId:
+          type: integer
+          format: int64
+        memberName:
+          type: string
+      required:
+        - memberId
+        - memberName
 
     ApiResponse:
       type: object

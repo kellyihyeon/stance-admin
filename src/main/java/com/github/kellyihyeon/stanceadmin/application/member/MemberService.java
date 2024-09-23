@@ -2,6 +2,7 @@ package com.github.kellyihyeon.stanceadmin.application.member;
 
 import com.github.kellyihyeon.stanceadmin.application.member.dto.MemberSummaryResponse;
 import com.github.kellyihyeon.stanceadmin.domain.member.*;
+import com.github.kellyihyeon.stanceadmin.models.CurrentMemberResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -31,4 +32,15 @@ public class MemberService {
         return result;
     }
 
+    public List<CurrentMemberResponse> getCurrentMembers() {
+        List<MemberSummaryResponse> members = this.getParticipatingMembers();
+
+        List<CurrentMemberResponse> currentMembers = new ArrayList<>();
+        members
+                .forEach(member ->{
+                    currentMembers.add(new CurrentMemberResponse(member.id(), member.name()));
+                });
+
+        return currentMembers;
+    }
 }
