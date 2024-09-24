@@ -10,7 +10,7 @@ import com.github.kellyihyeon.stanceadmin.domain.accounttransaction.TransactionT
 import com.github.kellyihyeon.stanceadmin.domain.eventapplicantregistry.EventApplicantDepositRegistry;
 import com.github.kellyihyeon.stanceadmin.domain.eventdeposit.EventDepositTransaction;
 import com.github.kellyihyeon.stanceadmin.domain.eventdeposit.EventFeeDepositTransactionRepository;
-import com.github.kellyihyeon.stanceadmin.models.EventApplicantResponse;
+import com.github.kellyihyeon.stanceadmin.models.EventFeeDepositResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -65,7 +65,7 @@ public class EventFeeDepositTransactionService {
         }
     }
 
-    public List<EventApplicantResponse> getApplicantsForEvent(Long eventId) {
+    public List<EventFeeDepositResponse> getEventFeeDepositStatus(Long eventId) {
         if (!eventService.existsActiveEvent(eventId)) {
             throw new IllegalArgumentException("존재하지 않는 이벤트예요.");
         }
@@ -74,7 +74,7 @@ public class EventFeeDepositTransactionService {
 
         return registries.stream()
                 .map(
-                        registry -> new EventApplicantResponse(
+                        registry -> new EventFeeDepositResponse(
                                 registry.getEventDescription(),
                                 registry.getMemberName(),
                                 registry.getAmount(),

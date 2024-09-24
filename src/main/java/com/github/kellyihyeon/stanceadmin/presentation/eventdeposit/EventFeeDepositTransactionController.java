@@ -3,8 +3,8 @@ package com.github.kellyihyeon.stanceadmin.presentation.eventdeposit;
 import com.github.kellyihyeon.stanceadmin.apis.EventFeeDepositTransactionApi;
 import com.github.kellyihyeon.stanceadmin.application.eventdeposit.EventFeeDepositTransactionService;
 import com.github.kellyihyeon.stanceadmin.application.eventdeposit.dto.EventDepositCreation;
-import com.github.kellyihyeon.stanceadmin.models.EventApplicantResponse;
 import com.github.kellyihyeon.stanceadmin.models.EventFeeDepositInput;
+import com.github.kellyihyeon.stanceadmin.models.EventFeeDepositResponse;
 import com.github.kellyihyeon.stanceadmin.presentation.TimeConverter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,8 +20,8 @@ public class EventFeeDepositTransactionController implements EventFeeDepositTran
     private final EventFeeDepositTransactionService service;
 
     @Override
-    public ResponseEntity<List<EventApplicantResponse>> getEventFeeDepositStatus(Long eventId) {
-        List<EventApplicantResponse> result = service.getApplicantsForEvent(eventId);
+    public ResponseEntity<List<EventFeeDepositResponse>> getEventFeeDepositStatus(Long eventId) {
+        List<EventFeeDepositResponse> result = service.getEventFeeDepositStatus(eventId);
         return ResponseEntity.ok(result);
     }
 
