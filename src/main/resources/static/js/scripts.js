@@ -194,13 +194,13 @@ document.addEventListener('DOMContentLoaded', function () {
     if (path === '/event-fee-deposit-tracker') {
         const eventRegisterModal = new bootstrap.Modal(document.getElementById('eventRegisterModal'));
 
-        function getEventApplicantReport(event) {
+        function getEventFeeDepositTrackerReport(event) {
             const url = `/event-applicants?eventId=${event.eventId}`;
             fetch(url)
                 .then(response => response.json())
                 .then(data => {
-                    const eventApplicantReport = document.getElementById('eventApplicantReport');
-                    eventApplicantReport.innerHTML = '';
+                    const eventFeeDepositTrackerReport = document.getElementById('eventFeeDepositTrackerReport');
+                    eventFeeDepositTrackerReport.innerHTML = '';
 
                     data.forEach(report => {
                         let depositStatus = convertDepositStatus(report.depositStatus);
@@ -213,7 +213,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                 <td>${report.dueDate}</td>
                             </tr>
                         `;
-                        eventApplicantReport.innerHTML += row;
+                        eventFeeDepositTrackerReport.innerHTML += row;
                     });
                 });
         }
@@ -236,7 +236,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                         if (firstEvent) {
                             eventArea.classList.add('active');
-                            getEventApplicantReport(event);
+                            getEventFeeDepositTrackerReport(event);
                             description.innerHTML = `<span style="box-shadow: inset 0 -8px 0 #ffffbb;">${event.eventDescription}</span>`;
                             firstEvent = false;
                         }
@@ -255,7 +255,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             // 클릭한 이벤트에 active 추가
                             eventArea.classList.add('active');
                             description.innerHTML = `<span style="box-shadow: inset 0 -8px 0 #ffffbb;">${event.eventDescription}</span>`;
-                            getEventApplicantReport(event);
+                            getEventFeeDepositTrackerReport(event);
                         });
 
                         eventAreas.appendChild(eventArea);

@@ -6,26 +6,25 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">이벤트비 입금 현황</h5>
-                        <div class="event-areas" id="eventAreas">
-                            <!-- 동적으로 추가되는 이벤트 영역 -->
-                            <div class="event-area add-event" id="addEventArea">
-                                <div class="event-icon">
-                                    <span class="material-symbols-outlined event-symbols">add_box</span>
-                                </div>
-                                <div class="event-name">등록</div>
-                            </div>
+                        <h5 class="card-title">이벤트</h5>
+                        <div class="d-flex align-items-center mb-3">
+                            <select class="form-select" id="eventSelect" aria-label="이벤트 선택">
+                                <!-- 이벤트 동적 데이터 -->
+                            </select>
+                            <button type="button" class="btn btn-primary ms-3" id="addEventButton">+</button>
                         </div>
 
-                        <p class="event-description" id="eventDescription"><span>이벤트 설명</span></p>
+                        <div class="d-flex justify-content-between mb-3">
+                            <h5>이벤트 신청자 명단</h5>
+                            <button type="button" class="btn btn-success" id="addDataButton">신청자 추가</button>
+                        </div>
 
                         <table class="table">
                             <thead>
                             <tr>
                                 <th>이름</th>
-                                <th>금액</th>
-                                <th>입금여부</th>
-                                <th>입금일</th>
+                                <th>만료일</th>
+                                <th>메모</th>
                             </tr>
                             </thead>
                             <tbody id="eventApplicantReport">

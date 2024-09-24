@@ -20,4 +20,9 @@ public class WebController {
     public String budgetBookRegistration() {
         return "budgetBookRegistration";
     }
+
+    @GetMapping("/event-applicant")
+    public String manageEventApplicant() {
+        return "eventApplicant";
+    }
 }
