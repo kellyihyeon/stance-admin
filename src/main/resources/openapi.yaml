@@ -193,7 +193,7 @@ paths:
     post:
       tags:
         - event-fee-deposit-transaction
-      summary: 이벤트 입금 내역을 등록합니다.
+      summary: 이벤트비 입금 내역을 등록합니다.
       operationId: saveEventFeeDepositTransaction
       requestBody:
         content:
@@ -206,6 +206,30 @@ paths:
           description: Account successfully created
         '400':
           description: Invalid input
+        '500':
+          description: Internal server error
+
+    get:
+      tags:
+        - event-fee-deposit-transaction
+      summary: 이벤트비 입금 내역 현황을 조회합니다.
+      operationId: getEventFeeDepositStatus
+      parameters:
+        - in: query
+          name: eventId
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EventApplicantResponse'
         '500':
           description: Internal server error
 
