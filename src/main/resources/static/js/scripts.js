@@ -204,13 +204,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
                     data.forEach(report => {
                         let depositStatus = convertDepositStatus(report.depositStatus);
+                        const depositDate = report.depositDate ? report.depositDate : '';
 
                         const row = `
                             <tr>
                                 <td>${report.memberName}</td>
                                 <td><span class="amount">${report.amount}원</span></td>
                                 <td><span class="deposit-status ${depositStatus}">${report.depositStatus}</span></td>
-                                <td>${report.depositDate}</td>
+                                <td>${depositDate}</td>
                                 <td>${report.dueDate}</td>
                             </tr>
                         `;
