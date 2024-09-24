@@ -190,8 +190,8 @@ document.addEventListener('DOMContentLoaded', function () {
         setupMembershipFeeReport();
     }
 
-    // Dashboards - 이벤트 신청자
-    if (path === '/event-applicant') {
+    // Dashboards - 이벤트비
+    if (path === '/event-fee-deposit-tracker') {
         const eventRegisterModal = new bootstrap.Modal(document.getElementById('eventRegisterModal'));
 
         function getEventApplicantReport(event) {

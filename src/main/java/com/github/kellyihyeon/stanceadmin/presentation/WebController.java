@@ -11,9 +11,9 @@ public class WebController {
         return "index";
     }
 
-    @GetMapping("/event-applicant")
+    @GetMapping("/event-fee-deposit-tracker")
     public String eventApplicant() {
-        return "eventApplicant";
+        return "eventFeeDepositTracker";
     }
 
     @GetMapping("/budget-book-registration")
