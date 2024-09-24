@@ -22,8 +22,8 @@ public class EventApplicantQueryService {
         }
 
         List<EventApplicantProjection> projections = queryRepository.findApplicantsByEventId(eventId);
-
         // convert projection to response dto!
+
         return null;
     }
 }

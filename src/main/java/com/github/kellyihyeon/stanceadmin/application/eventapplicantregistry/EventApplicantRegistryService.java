@@ -4,7 +4,6 @@ import com.github.kellyihyeon.stanceadmin.application.event.EventService;
 import com.github.kellyihyeon.stanceadmin.application.eventapplicantregistry.dto.EventApplicantRegistryCreation;
 import com.github.kellyihyeon.stanceadmin.domain.eventapplicantregistry.EventApplicantRegistry;
 import com.github.kellyihyeon.stanceadmin.domain.eventapplicantregistry.EventApplicantRegistryRepository;
-import com.github.kellyihyeon.stanceadmin.models.EventApplicantResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -54,15 +53,5 @@ public class EventApplicantRegistryService {
         }
 
         repository.updateAll(eventApplicantRegistries);
-    }
-
-    public List<EventApplicantResponse> getApplicantsForEvent(Long eventId) {
-        if (!eventService.existsActiveEvent(eventId)) {
-            throw new IllegalArgumentException("존재하지 않는 이벤트예요.");
-        }
-        // 멤버아이디, 이름, 메모
-
-
-        return null;
     }
 }
