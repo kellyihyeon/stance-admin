@@ -354,3 +354,20 @@ function getAllAccountTransactions() {
 function convertDepositStatus(depositStatus) {
     return depositStatus === '미입금' ? "unpaid" : "paid";
 }
+
+function getEventsByStatus(status) {
+    const url = `/events/${status}`;
+    return fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            return data;
+        });
+}
+
+function getCurrentMembers() {
+    const url = '/members/current';
+    return fetch(url)
+        .then(response => response.json())
+        .then(data => data);
+}
+
