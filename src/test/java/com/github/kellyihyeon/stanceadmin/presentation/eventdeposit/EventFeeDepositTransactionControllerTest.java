@@ -1,7 +1,7 @@
 package com.github.kellyihyeon.stanceadmin.presentation.eventdeposit;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.kellyihyeon.stanceadmin.application.eventdeposit.EventDepositTransactionService;
+import com.github.kellyihyeon.stanceadmin.application.eventdeposit.EventFeeDepositTransactionService;
 import com.github.kellyihyeon.stanceadmin.models.EventDepositInput;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,8 +17,8 @@ import java.util.List;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(EventDepositTransactionController.class)
-class EventDepositTransactionControllerTest {
+@WebMvcTest(EventFeeDepositTransactionController.class)
+class EventFeeDepositTransactionControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -27,7 +27,7 @@ class EventDepositTransactionControllerTest {
     private ObjectMapper objectMapper;
 
     @MockBean
-    private EventDepositTransactionService service;
+    private EventFeeDepositTransactionService service;
 
 
     @Test

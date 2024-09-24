@@ -7,20 +7,23 @@ import com.github.kellyihyeon.stanceadmin.application.eventdeposit.dto.EventDepo
 import com.github.kellyihyeon.stanceadmin.domain.accounttransaction.TransactionIdentity;
 import com.github.kellyihyeon.stanceadmin.domain.accounttransaction.TransactionSubType;
 import com.github.kellyihyeon.stanceadmin.domain.accounttransaction.TransactionType;
+import com.github.kellyihyeon.stanceadmin.domain.eventapplicantregistry.EventApplicantDepositRegistry;
 import com.github.kellyihyeon.stanceadmin.domain.eventdeposit.EventDepositTransaction;
-import com.github.kellyihyeon.stanceadmin.domain.eventdeposit.EventDepositTransactionRepository;
+import com.github.kellyihyeon.stanceadmin.domain.eventdeposit.EventFeeDepositTransactionRepository;
+import com.github.kellyihyeon.stanceadmin.models.EventFeeDepositResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class EventDepositTransactionService {
+public class EventFeeDepositTransactionService {
 
-    private final EventDepositTransactionRepository repository;
+    private final EventFeeDepositTransactionRepository repository;
     private final EventDepositTransactionMapper mapper;
 
     private final AccountTransactionService accountTransactionService;
@@ -60,5 +63,25 @@ public class EventDepositTransactionService {
                     serviceDto.getAmount()
             );
         }
+    }
+
+    public List<EventFeeDepositResponse> getEventFeeDepositStatus(Long eventId) {
+        if (!eventService.existsActiveEvent(eventId)) {
+            throw new IllegalArgumentException("존재하지 않는 이벤트예요.");
+        }
+
+        List<EventApplicantDepositRegistry> registries = repository.getEventApplicantRegistriesByEventId(eventId);
+
+        return registries.stream()
+                .map(
+                        registry -> new EventFeeDepositResponse(
+                                registry.getEventDescription(),
+                                registry.getMemberName(),
+                                registry.getAmount(),
+                                registry.getDepositStatus().getDisplayName(),
+                                registry.getDueDate().toString()
+                        )
+                )
+                .collect(Collectors.toList());
     }
 }

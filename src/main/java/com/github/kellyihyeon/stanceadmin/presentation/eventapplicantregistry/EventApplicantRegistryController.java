@@ -1,6 +1,7 @@
 package com.github.kellyihyeon.stanceadmin.presentation.eventapplicantregistry;
 
 import com.github.kellyihyeon.stanceadmin.apis.EventApplicantApi;
+import com.github.kellyihyeon.stanceadmin.application.eventapplicantregistry.EventApplicantQueryService;
 import com.github.kellyihyeon.stanceadmin.application.eventapplicantregistry.EventApplicantRegistryService;
 import com.github.kellyihyeon.stanceadmin.application.eventapplicantregistry.dto.EventApplicantRegistryCreation;
 import com.github.kellyihyeon.stanceadmin.models.EventApplicantInput;
@@ -17,10 +18,11 @@ import java.util.List;
 public class EventApplicantRegistryController implements EventApplicantApi {
 
     private final EventApplicantRegistryService eventApplicantRegistryService;
+    private final EventApplicantQueryService queryService;
 
     @Override
-    public ResponseEntity<List<EventApplicantResponse>> getApplicantsForEvent(Long eventId) {
-        List<EventApplicantResponse> result = eventApplicantRegistryService.getApplicantsForEvent(eventId);
+    public ResponseEntity<List<EventApplicantResponse>> getEventApplicantsByEventId(Long eventId) {
+        List<EventApplicantResponse> result = queryService.getApplicantsByEventId(eventId);
         return ResponseEntity.ok(result);
     }
 
