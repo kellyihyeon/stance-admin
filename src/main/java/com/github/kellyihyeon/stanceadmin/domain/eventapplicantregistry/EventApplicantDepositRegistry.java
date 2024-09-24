@@ -20,15 +20,18 @@ public class EventApplicantDepositRegistry {
 
     private DepositStatus depositStatus;
 
-    private EventApplicantDepositRegistry(String eventDescription, LocalDate dueDate, String memberName, Double amount, DepositStatus depositStatus) {
+    private LocalDate depositDate;
+
+    private EventApplicantDepositRegistry(String eventDescription, LocalDate dueDate, String memberName, Double amount, DepositStatus depositStatus, LocalDate depositDate) {
         this.eventDescription = eventDescription;
         this.dueDate = dueDate;
         this.memberName = memberName;
         this.amount = amount;
         this.depositStatus = depositStatus;
+        this.depositDate = depositDate;
     }
 
-    public static EventApplicantDepositRegistry create(String eventDescription, LocalDate dueDate, String memberName, Double amount, DepositStatus depositStatus) {
+    public static EventApplicantDepositRegistry create(String eventDescription, LocalDate dueDate, String memberName, Double amount, DepositStatus depositStatus, LocalDate depositDate) {
         Objects.requireNonNull(dueDate);
         Objects.requireNonNull(memberName);
         Objects.requireNonNull(amount);
@@ -39,7 +42,8 @@ public class EventApplicantDepositRegistry {
                 dueDate,
                 memberName,
                 amount,
-                depositStatus
+                depositStatus,
+                depositDate
         );
     }
 }

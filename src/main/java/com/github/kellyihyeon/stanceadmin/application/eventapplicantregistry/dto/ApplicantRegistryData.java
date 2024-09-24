@@ -20,12 +20,15 @@ public class ApplicantRegistryData {
 
     private DepositStatus depositStatus;
 
+    private LocalDate depositDate;
+
     @QueryProjection
-    public ApplicantRegistryData(String eventDescription, LocalDate dueDate, String memberName, Double amount, DepositStatus depositStatus) {
+    public ApplicantRegistryData(String eventDescription, LocalDate dueDate, String memberName, Double amount, DepositStatus depositStatus, LocalDate depositDate) {
         this.eventDescription = eventDescription;
         this.dueDate = dueDate;
         this.memberName = memberName;
         this.amount = amount;
         this.depositStatus = depositStatus;
+        this.depositDate = depositDate;
     }
 }

@@ -651,13 +651,18 @@ components:
           type: string
         dueDate:
           type: string
-          description: 입금 일자 (YYYY-MM-DD 형식)
+          description: 만료일 (YYYY-MM-DD 형식)
+        depositDate:
+          type: string
+          description: 입금일 (YYYY-MM-DD 형식)
+
       required:
         - eventDescription
         - memberName
         - amount
         - depositStatus
         - dueDate
+        - depositDate
 
     EventApplicantResponse:
       type: object

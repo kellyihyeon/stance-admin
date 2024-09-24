@@ -16,6 +16,7 @@ import java.util.List;
 import static com.github.kellyihyeon.stanceadmin.infrastructure.entity.event.QEventEntity.eventEntity;
 import static com.github.kellyihyeon.stanceadmin.infrastructure.entity.member.QMemberEntity.memberEntity;
 import static com.github.kellyihyeon.stanceadmin.infrastructure.repository.eventapplicantregistry.QEventApplicantRegistryEntity.eventApplicantRegistryEntity;
+import static com.github.kellyihyeon.stanceadmin.infrastructure.repository.eventdeposit.QEventDepositTransactionEntity.eventDepositTransactionEntity;
 
 @Repository
 @RequiredArgsConstructor
@@ -41,14 +42,20 @@ public class EventFeeDepositTransactionRepositoryImpl implements EventFeeDeposit
                         eventEntity.dueDate,
                         memberEntity.name,
                         eventEntity.amount,
-                        eventApplicantRegistryEntity.depositStatus
+                        eventApplicantRegistryEntity.depositStatus,
+                        eventDepositTransactionEntity.depositDate
                 ))
                 .from(eventApplicantRegistryEntity)
                 .leftJoin(eventEntity)
-                .on(eventApplicantRegistryEntity.eventId.eq(eventEntity.id))
+                    .on(eventApplicantRegistryEntity.eventId.eq(eventEntity.id))
                 .leftJoin(memberEntity)
-                .on(eventApplicantRegistryEntity.applicantId.eq(memberEntity.id))
+                    .on(eventApplicantRegistryEntity.applicantId.eq(memberEntity.id))
+                .leftJoin(eventDepositTransactionEntity)
+                    .on(eventDepositTransactionEntity.eventId.eq(eventApplicantRegistryEntity.eventId)
+                        .and(eventDepositTransactionEntity.applicantId.eq(eventApplicantRegistryEntity.applicantId))
+                    )
                 .where(eventApplicantRegistryEntity.eventId.eq(eventId))
+                .orderBy(eventDepositTransactionEntity.depositDate.desc())
                 .fetch();
 
         return depositRegistryMapper.toDomains(applicantRegistryDataDto);

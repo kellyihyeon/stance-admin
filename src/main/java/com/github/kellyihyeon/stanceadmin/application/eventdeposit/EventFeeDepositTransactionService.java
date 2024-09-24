@@ -79,7 +79,8 @@ public class EventFeeDepositTransactionService {
                                 registry.getMemberName(),
                                 registry.getAmount(),
                                 registry.getDepositStatus().getDisplayName(),
-                                registry.getDueDate().toString()
+                                registry.getDueDate().toString(),
+                                registry.getDepositDate() != null ? registry.getDepositDate().toString() : null
                         )
                 )
                 .collect(Collectors.toList());
