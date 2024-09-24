@@ -672,10 +672,14 @@ components:
         eventDescription:
           type: string
           description: 메모
+        createdAt:
+          type: string
+          format: date-time
       required:
         - memberId
         - memberName
         - eventDescription
+        - createdAt
 
     MonthlySummary:
       type: object

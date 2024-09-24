@@ -7,7 +7,9 @@ import com.github.kellyihyeon.stanceadmin.models.EventApplicantResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -22,8 +24,15 @@ public class EventApplicantQueryService {
         }
 
         List<EventApplicantProjection> projections = queryRepository.findApplicantsByEventId(eventId);
-        // convert projection to response dto!
 
-        return null;
+        return projections.stream()
+                .map(projection -> new EventApplicantResponse(
+                        projection.getMemberId(),
+                        projection.getMemberName(),
+                        projection.getMemo(),
+                        Timestamp.valueOf(projection.getCreatedAt())
+
+                ))
+                .collect(Collectors.toList());
     }
 }

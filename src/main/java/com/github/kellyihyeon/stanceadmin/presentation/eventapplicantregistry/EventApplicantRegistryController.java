@@ -23,7 +23,6 @@ public class EventApplicantRegistryController implements EventApplicantApi {
     @Override
     public ResponseEntity<List<EventApplicantResponse>> getEventApplicantsByEventId(Long eventId) {
         List<EventApplicantResponse> result = queryService.getApplicantsByEventId(eventId);
-
         return ResponseEntity.ok(result);
     }
 
