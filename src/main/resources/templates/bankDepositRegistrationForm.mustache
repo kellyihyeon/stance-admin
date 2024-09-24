@@ -1,0 +1,36 @@
+<div class="modal-header">
+    <h5 class="modal-title" id="bankDepositRegistrationLabel">은행 입금비 기록하기</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+
+<div class="modal-body">
+    <form id="bankDepositForm">
+        <div class="form-group mb-3">
+            <label for="bankDepositType" class="form-label">입금 유형<span class="required-true">*</span></label>
+            <select class="form-select" id="bankDepositType" required>
+                <option value="CASHBACK" selected>캐시백</option>
+                <option value="INTEREST">이자</option>
+            </select>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="depositSource" class="form-label">입금처<span class="required-true">*</span></label>
+            <input type="text" class="form-control" id="depositSource" placeholder="어디에서 입금을 해준 건가요?" required>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="bankDepositCash" class="form-label">금액<span class="required-true">*</span></label>
+            <input type="number" class="form-control" id="bankDepositCash" placeholder="얼마예요?" required>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="bankDepositDate" class="form-label">입금일<span class="required-true">*</span></label>
+            <input type="date" class="form-control" id="bankDepositDate" required>
+        </div>
+
+        <div class="d-flex justify-content-center cancel-register-button">
+            <button type="button" class="btn btn-secondary mt-3" data-bs-dismiss="modal">취소</button>
+            <button type="submit" class="btn btn-primary mt-3" id="registerBankDepositButton">등록</button>
+        </div>
+    </form>
+</div>
