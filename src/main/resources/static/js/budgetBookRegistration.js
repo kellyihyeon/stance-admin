@@ -71,25 +71,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
         });
 
-        document.getElementById('eventFeeRegistrationModal').addEventListener('shown.bs.modal', function () {
-            const urlForActiveEvents = '/events/ACTIVE';
-            fetch(urlForActiveEvents)
-                .then(response => response.json())
-                .then(data => {
-                    const eventSelectBox = document.getElementById('eventId')
-
-                    data.forEach(event => {
-                            const option = document.createElement('option')
-                            option.value = event.eventId;
-                            option.textContent = `${event.eventName} (${event.eventDescription})`;
-
-                            eventSelectBox.appendChild(option);
-                        }
-                    );
-                })
-                .catch(error => console.error('/events/ACTIVE 호출 중 에러 발생:', error));
-        });
-
     }
 
 });
