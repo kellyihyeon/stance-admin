@@ -14,8 +14,8 @@ document.addEventListener('DOMContentLoaded', function () {
                             const checkbox = document.createElement('div');
                             checkbox.classList.add('form-check');
                             checkbox.innerHTML = `
-                                <input class="form-check-input" type="checkbox" value="${depositor.memberId}" id="depositor${depositor.id}">
-                                <label class="form-check-label" for="depositor${depositor.id}">${depositor.memberName}</label>
+                                <input class="form-check-input" type="checkbox" value="${depositor.memberId}" id="depositor${depositor.memberId}">
+                                <label class="form-check-label" for="depositor${depositor.memberId}">${depositor.memberName}</label>
                              `;
                             depositorContainer.appendChild(checkbox);
                         }
