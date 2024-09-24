@@ -43,8 +43,11 @@
                     <div class="card-body">
                         <span class="material-symbols-outlined">account_balance</span>
                         <h5 class="card-title mt-3">은행</h5>
-                        <p class="card-text">카드 3 설명</p>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        <p class="card-text">
+                            은행에서 이자 또는 캐시백이 입금되었나요?<br>
+                            티끌모아 태산이에요! '쓰기' 버튼을 클릭해서 기록해주세요!
+                        </p>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#bankDepositRegistrationModal">
                             쓰기
                         </button>
                     </div>
@@ -97,6 +100,15 @@
     <div class="modal-dialog">
         <div class="modal-content">
             {{> eventFeeRegistrationForm }}
+        </div>
+    </div>
+</div>
+
+
+<div id="bankDepositRegistrationModal" class="modal fade" tabindex="-1" aria-labelledby="bankDepositRegistrationLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            {{> bankDepositRegistrationForm }}
         </div>
     </div>
 </div>

@@ -32,7 +32,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         document.getElementById('eventFeeForm').addEventListener('submit', function (event) {
-            console.log('event: ', event);
             const eventFeeRegistrationModal = new bootstrap.Modal(document.getElementById('eventFeeRegistrationModal'));
             event.preventDefault();
 
@@ -50,8 +49,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 amount: document.getElementById('eventFee').value,
                 description: document.getElementById('eventFeeMemo').value
             };
-
-            console.log('body data: ', bodyData);
 
             const url = '/account-transactions/deposits/event-fee';
             fetch(url, {
