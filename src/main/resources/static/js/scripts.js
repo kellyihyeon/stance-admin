@@ -195,7 +195,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const eventRegisterModal = new bootstrap.Modal(document.getElementById('eventRegisterModal'));
 
         function getEventFeeDepositTrackerReport(event) {
-            const url = `/event-applicants?eventId=${event.eventId}`;
+            const url = `/account-transactions/deposits/event-fee?eventId=${event.eventId}`;
             fetch(url)
                 .then(response => response.json())
                 .then(data => {
@@ -210,6 +210,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                 <td>${report.memberName}</td>
                                 <td><span class="amount">${report.amount}원</span></td>
                                 <td><span class="deposit-status ${depositStatus}">${report.depositStatus}</span></td>
+                                <td>${report.depositDate}</td>
                                 <td>${report.dueDate}</td>
                             </tr>
                         `;
