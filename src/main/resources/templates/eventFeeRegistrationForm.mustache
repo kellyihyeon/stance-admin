@@ -1,0 +1,43 @@
+<div class="modal-header">
+    <h5 class="modal-title" id="eventFeeRegistrationLabel">이벤트비 기록하기</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+
+<div class="modal-body">
+    <form id="eventFeeForm">
+        <div class="form-group mb-3">
+
+            <label for="eventId" class="form-label">이벤트명<span class="required-true">*</span></label>
+            <select class="form-select" id="eventId" required>
+                <!-- option -->
+            </select>
+        </div>
+
+        <div class="form-group mb-3">
+            <label class="form-label">입금자<span class="required-true">*</span></label>
+            <div id="applicantContainer">
+
+            </div>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="eventFeeDepositDate" class="form-label">입금일<span class="required-true">*</span></label>
+            <input type="date" class="form-control" id="eventFeeDepositDate" required>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="eventFee" class="form-label">금액<span class="required-true">*</span></label>
+            <input type="number" class="form-control" id="eventFee" placeholder="얼마예요?" required>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="eventFeeMemo" class="form-label">메모<span class="required-false"></span></label>
+            <textarea class="form-control form-control-lg" id="eventFeeMemo" rows="5" placeholder="설명이 필요하다면 적어주세요!"></textarea>
+        </div>
+
+        <div class="d-flex justify-content-center cancel-register-button">
+            <button type="button" class="btn btn-secondary mt-3" data-bs-dismiss="modal">취소</button>
+            <button type="submit" class="btn btn-primary mt-3" id="registerEventFeeButton">등록</button>
+        </div>
+    </form>
+</div>

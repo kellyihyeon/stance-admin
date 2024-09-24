@@ -1,0 +1,52 @@
+{{>layout/header}}
+
+<div class="content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">이벤트비 입금 현황</h5>
+                        <div class="event-areas" id="eventAreas">
+                            <!-- 동적으로 추가되는 이벤트 영역 -->
+                            <div class="event-area add-event" id="addEventArea">
+                                <div class="event-icon">
+                                    <span class="material-symbols-outlined event-symbols">add_box</span>
+                                </div>
+                                <div class="event-name">등록</div>
+                            </div>
+                        </div>
+
+                        <p class="event-description" id="eventDescription"><span>이벤트 설명</span></p>
+
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>이름</th>
+                                <th>금액</th>
+                                <th>입금여부</th>
+                                <th>입금일</th>
+                                <th>만료일</th>
+                            </tr>
+                            </thead>
+                            <tbody id="eventFeeDepositTrackerReport">
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="eventRegisterModal" class="modal fade" tabindex="-1" aria-labelledby="eventRegisterLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            {{> eventRegistrationForm }}
+        </div>
+    </div>
+</div>
+
+{{>layout/footer}}

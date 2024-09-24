@@ -190,30 +190,32 @@ document.addEventListener('DOMContentLoaded', function () {
         setupMembershipFeeReport();
     }
 
-    // Dashboards - 이벤트 신청자
-    if (path === '/event-applicant') {
+    // Dashboards - 이벤트비
+    if (path === '/event-fee-deposit-tracker') {
         const eventRegisterModal = new bootstrap.Modal(document.getElementById('eventRegisterModal'));
 
-        function getEventApplicantReport(event) {
-            const url = `/event-applicants?eventId=${event.eventId}`;
+        function getEventFeeDepositTrackerReport(event) {
+            const url = `/account-transactions/deposits/event-fee?eventId=${event.eventId}`;
             fetch(url)
                 .then(response => response.json())
                 .then(data => {
-                    const eventApplicantReport = document.getElementById('eventApplicantReport');
-                    eventApplicantReport.innerHTML = '';
+                    const eventFeeDepositTrackerReport = document.getElementById('eventFeeDepositTrackerReport');
+                    eventFeeDepositTrackerReport.innerHTML = '';
 
                     data.forEach(report => {
                         let depositStatus = convertDepositStatus(report.depositStatus);
+                        const depositDate = report.depositDate ? report.depositDate : '';
 
                         const row = `
                             <tr>
                                 <td>${report.memberName}</td>
                                 <td><span class="amount">${report.amount}원</span></td>
                                 <td><span class="deposit-status ${depositStatus}">${report.depositStatus}</span></td>
+                                <td>${depositDate}</td>
                                 <td>${report.dueDate}</td>
                             </tr>
                         `;
-                        eventApplicantReport.innerHTML += row;
+                        eventFeeDepositTrackerReport.innerHTML += row;
                     });
                 });
         }
@@ -236,7 +238,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                         if (firstEvent) {
                             eventArea.classList.add('active');
-                            getEventApplicantReport(event);
+                            getEventFeeDepositTrackerReport(event);
                             description.innerHTML = `<span style="box-shadow: inset 0 -8px 0 #ffffbb;">${event.eventDescription}</span>`;
                             firstEvent = false;
                         }
@@ -255,7 +257,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             // 클릭한 이벤트에 active 추가
                             eventArea.classList.add('active');
                             description.innerHTML = `<span style="box-shadow: inset 0 -8px 0 #ffffbb;">${event.eventDescription}</span>`;
-                            getEventApplicantReport(event);
+                            getEventFeeDepositTrackerReport(event);
                         });
 
                         eventAreas.appendChild(eventArea);
@@ -354,3 +356,20 @@ function getAllAccountTransactions() {
 function convertDepositStatus(depositStatus) {
     return depositStatus === '미입금' ? "unpaid" : "paid";
 }
+
+function getEventsByStatus(status) {
+    const url = `/events/${status}`;
+    return fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            return data;
+        });
+}
+
+function getCurrentMembers() {
+    const url = '/members/current';
+    return fetch(url)
+        .then(response => response.json())
+        .then(data => data);
+}
+

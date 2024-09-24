@@ -14,8 +14,8 @@ document.addEventListener('DOMContentLoaded', function () {
                             const checkbox = document.createElement('div');
                             checkbox.classList.add('form-check');
                             checkbox.innerHTML = `
-                                <input class="form-check-input" type="checkbox" value="${depositor.memberId}" id="depositor${depositor.id}">
-                                <label class="form-check-label" for="depositor${depositor.id}">${depositor.memberName}</label>
+                                <input class="form-check-input" type="checkbox" value="${depositor.memberId}" id="depositor${depositor.memberId}">
+                                <label class="form-check-label" for="depositor${depositor.memberId}">${depositor.memberName}</label>
                              `;
                             depositorContainer.appendChild(checkbox);
                         }
@@ -23,13 +23,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 })
                 .catch(error => console.error('/members/current 호출 중 에러 발생:', error));
-        });
 
-        // 회비 만료일의 디폴트 설정
-        const { year, month } = getCurrentYearMonth();
-        const fixedDueDate = '25';
-        const paddedMonth = month.toString().padStart(2, '0');
-        document.getElementById('dueDate').value = `${year}-${paddedMonth}-${fixedDueDate}`;
+            // 회비 만료일의 디폴트 설정
+            const {year, month} = getCurrentYearMonth();
+            const fixedDueDate = '25';
+            const paddedMonth = month.toString().padStart(2, '0');
+            document.getElementById('dueDate').value = `${year}-${paddedMonth}-${fixedDueDate}`;
+        });
 
         document.getElementById('membershipFeeForm').addEventListener('submit', function (event) {
             const membershipFeeRegistrationModal = new bootstrap.Modal(document.getElementById('membershipFeeRegistrationModal'));
@@ -70,6 +70,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     console.error('회비내역 등록 중 오류 발생:', error);
                 });
         });
+
     }
 
 });
