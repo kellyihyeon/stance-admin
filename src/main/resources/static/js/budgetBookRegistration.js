@@ -23,13 +23,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 })
                 .catch(error => console.error('/members/current 호출 중 에러 발생:', error));
-        });
 
-        // 회비 만료일의 디폴트 설정
-        const { year, month } = getCurrentYearMonth();
-        const fixedDueDate = '25';
-        const paddedMonth = month.toString().padStart(2, '0');
-        document.getElementById('dueDate').value = `${year}-${paddedMonth}-${fixedDueDate}`;
+            // 회비 만료일의 디폴트 설정
+            const {year, month} = getCurrentYearMonth();
+            const fixedDueDate = '25';
+            const paddedMonth = month.toString().padStart(2, '0');
+            document.getElementById('dueDate').value = `${year}-${paddedMonth}-${fixedDueDate}`;
+        });
 
         document.getElementById('membershipFeeForm').addEventListener('submit', function (event) {
             const membershipFeeRegistrationModal = new bootstrap.Modal(document.getElementById('membershipFeeRegistrationModal'));
@@ -70,6 +70,26 @@ document.addEventListener('DOMContentLoaded', function () {
                     console.error('회비내역 등록 중 오류 발생:', error);
                 });
         });
+
+        document.getElementById('eventFeeRegistrationModal').addEventListener('shown.bs.modal', function () {
+            const urlForActiveEvents = '/events/ACTIVE';
+            fetch(urlForActiveEvents)
+                .then(response => response.json())
+                .then(data => {
+                    const eventSelectBox = document.getElementById('eventId')
+
+                    data.forEach(event => {
+                            const option = document.createElement('option')
+                            option.value = event.eventId;
+                            option.textContent = `${event.eventName} (${event.eventDescription})`;
+
+                            eventSelectBox.appendChild(option);
+                        }
+                    );
+                })
+                .catch(error => console.error('/events/ACTIVE 호출 중 에러 발생:', error));
+        });
+
     }
 
 });
