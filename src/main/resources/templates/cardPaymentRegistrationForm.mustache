@@ -1,0 +1,53 @@
+<div class="modal-header">
+    <h5 class="modal-title" id="cardPaymentRegistrationLabel">카드 지출 기록하기</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+
+<div class="modal-body">
+    <form id="cardPaymentForm">
+        <div class="form-group mb-3">
+            <label for="cardHolderId" class="form-label">카드 소유자<span class="required-true">*</span></label>
+            <select class="form-select" id="cardHolderId" required>
+                <!-- option -->
+            </select>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="expenseCategory" class="form-label">지출 카테고리<span class="required-true">*</span></label>
+            <select class="form-select" id="expenseCategory" required>
+                <option value="BEVERAGE_PURCHASE" selected>음료 구매</option>
+                <option value="RENTAL_FEE">대관비</option>
+                <option value="LESSON_FEE">레슨비</option>
+                <option value="FRIENDLY_GAME_EXPENSE">교류전</option>
+                <option value="COMPETITION_PARTICIPATION_FEE">대회 참가비</option>
+                <option value="UNIFORM_EXPENSE">유니폼 구매</option>
+                <option value="TEAM_PARTY_EXPENSE">회식비</option>
+            </select>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="cardUsageLocation" class="form-label">사용처<span class="required-true">*</span></label>
+            <input type="text" class="form-control" id="cardUsageLocation" placeholder="어디에서 사용했나요?" required>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="cardPaymentCost" class="form-label">금액<span class="required-true">*</span></label>
+            <input type="number" class="form-control" id="cardPaymentCost" placeholder="얼마를 사용했나요?" required>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="cardPaymentDate" class="form-label">지출일<span class="required-true">*</span></label>
+            <input type="date" class="form-control" id="cardPaymentDate" required>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="cardPaymentMemo" class="form-label">메모<span class="required-false"></span></label>
+            <textarea class="form-control form-control-lg" id="cardPaymentMemo" rows="5" placeholder="설명이 필요하다면 적어주세요!"></textarea>
+        </div>
+
+        <div class="d-flex justify-content-center cancel-register-button">
+            <button type="button" class="btn btn-secondary mt-3" data-bs-dismiss="modal">취소</button>
+            <button type="submit" class="btn btn-primary mt-3" id="registerBankDepositButton">등록</button>
+        </div>
+    </form>
+</div>
