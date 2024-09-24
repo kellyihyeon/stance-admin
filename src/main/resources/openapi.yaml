@@ -578,7 +578,7 @@ paths:
     get:
       tags:
         - event-applicant
-      summary: 이벤트별 이벤트 신청자 명단을 조회합니다.
+      summary: 이벤트 신청자 명단을 조회합니다.
       description: 쿼리 파라미터로 이벤트 ID를 전달합니다.
       operationId: getEventApplicantsByEventId
       parameters:
@@ -597,7 +597,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/EventFeeDepositResponse'
+                  $ref: '#/components/schemas/EventApplicantResponse'
         '500':
           description: Internal server error
 
@@ -658,6 +658,24 @@ components:
         - amount
         - depositStatus
         - dueDate
+
+    EventApplicantResponse:
+      type: object
+      properties:
+        memberId:
+          type: integer
+          format: int64
+          description: 회원 ID
+        memberName:
+          type: string
+          description: 회원 이름
+        eventDescription:
+          type: string
+          description: 메모
+      required:
+        - memberId
+        - memberName
+        - eventDescription
 
     MonthlySummary:
       type: object
