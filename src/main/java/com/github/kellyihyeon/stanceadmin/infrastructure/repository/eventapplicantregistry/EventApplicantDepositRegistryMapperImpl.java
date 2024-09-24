@@ -20,7 +20,8 @@ public class EventApplicantDepositRegistryMapperImpl implements EventApplicantDe
                     applicantRegistryData.getDueDate(),
                     applicantRegistryData.getMemberName(),
                     applicantRegistryData.getAmount(),
-                    applicantRegistryData.getDepositStatus()
+                    applicantRegistryData.getDepositStatus(),
+                    applicantRegistryData.getDepositDate()
             ));
         }
 
