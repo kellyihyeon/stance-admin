@@ -25,9 +25,12 @@
                 <div class="card budget-book-cards">
                     <div class="card-body">
                         <span class="material-symbols-outlined">hotel_class</span>
-                        <h5 class="card-title mt-3">이벤트</h5>
-                        <p class="card-text">카드 2 설명</p>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        <h5 class="card-title mt-3">이벤트 신청자</h5>
+                        <p class="card-text">
+                            회식비, 유니폼비, 엠티비 등을 신청한 사람들로부터 비용이 입금 되었어요!
+                            아래의 '쓰기' 버튼을 누르면 이벤트비 저장 양식이 뜰 거예요.
+                        </p>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#eventFeeRegistrationModal">
                             쓰기
                         </button>
                     </div>
@@ -85,6 +88,14 @@
     <div class="modal-dialog">
         <div class="modal-content">
             {{> membershipFeeRegistrationForm }}
+        </div>
+    </div>
+</div>
+
+<div id="eventFeeRegistrationModal" class="modal fade" tabindex="-1" aria-labelledby="eventFeeRegistrationLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            {{> eventFeeRegistrationForm }}
         </div>
     </div>
 </div>
