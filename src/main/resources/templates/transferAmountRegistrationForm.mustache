@@ -1,0 +1,66 @@
+<div class="modal-header">
+    <h5 class="modal-title" id="transferAmountRegistrationLabel">계좌이체 내역 기록하기</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+
+<div class="modal-body">
+    <form id="transferAmountForm">
+
+        <div class="form-group mb-3">
+            <label for="transferCategory" class="form-label">지출 카테고리<span class="required-true">*</span></label>
+            <select class="form-select" id="transferCategory" required>
+                <option value="BEVERAGE_PURCHASE" selected>음료 구매</option>
+                <option value="RENTAL_FEE">대관비</option>
+                <option value="LESSON_FEE">레슨비</option>
+                <option value="FRIENDLY_GAME_EXPENSE">교류전</option>
+                <option value="COMPETITION_PARTICIPATION_FEE">대회 참가비</option>
+                <option value="UNIFORM_EXPENSE">유니폼 구매</option>
+                <option value="TEAM_PARTY_EXPENSE">회식비</option>
+            </select>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="recipientName" class="form-label">받는 사람<span class="required-true">*</span></label>
+            <input type="text" class="form-control" id="recipientName" placeholder="어디로 이체했나요?" required>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="bank" class="form-label">은행<span class="required-true">*</span></label>
+            <select class="form-select" id="bank" required>
+                <option value="KB" selected>국민은행</option>
+                <option value="HN">하나은행</option>
+                <option value="WR">우리은행</option>
+                <option value="IBK">기업은행</option>
+                <option value="NH">농협은행</option>
+                <option value="SH">신한은행</option>
+                <option value="KAKAO">카카오뱅크</option>
+                <option value="TOSS">토스뱅크</option>
+            </select>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="accountNumber" class="form-label">계좌번호<span class="required-true">*</span></label>
+            <input type="text" class="form-control" id="accountNumber" placeholder="'-'를 포함해서 작성해도 돼요!" required>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="transferAmount" class="form-label">금액<span class="required-true">*</span></label>
+            <input type="number" class="form-control" id="transferAmount" placeholder="얼마를 사용했나요?" required>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="transferAmountDate" class="form-label">지출일<span class="required-true">*</span></label>
+            <input type="date" class="form-control" id="transferAmountDate" required>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="transferAmountMemo" class="form-label">메모<span class="required-false"></span></label>
+            <textarea class="form-control form-control-lg" id="transferAmountMemo" rows="5" placeholder="설명이 필요하다면 적어주세요!"></textarea>
+        </div>
+
+        <div class="d-flex justify-content-center cancel-register-button">
+            <button type="button" class="btn btn-secondary mt-3" data-bs-dismiss="modal">취소</button>
+            <button type="submit" class="btn btn-primary mt-3" id="registerTransferAmountButton">등록</button>
+        </div>
+    </form>
+</div>
