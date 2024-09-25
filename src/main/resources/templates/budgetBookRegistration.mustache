@@ -56,7 +56,7 @@
             </div>
         </div>
 
-        <h3 class="mb-4">👊🏼 출금 내역을 기록할 거예요!</h3>
+        <h3 class="mb-4">😭 출금 내역을 기록할 거예요!</h3>
         <div class="row text-center mb-4">
             <div class="col-md-4">
                 <div class="card budget-book-cards">
@@ -80,8 +80,12 @@
                     <div class="card-body">
                         <span class="material-symbols-outlined">currency_exchange</span>
                         <h5 class="card-title mt-3">계좌이체</h5>
-                        <p class="card-text">카드 5 설명</p>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        <p class="card-text">
+                            계좌이체 한 내역을 기록해주세요!<br>
+                            '쓰기' 버튼을 누르면 계좌이체 내역 등록 양식이 뜰거예요.<br>
+                            양식에 맞춰서 등록해주세요!
+                        </p>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#transferAmountRegistrationModal">
                             쓰기
                         </button>
                     </div>
@@ -122,6 +126,14 @@
     <div class="modal-dialog">
         <div class="modal-content">
             {{> cardPaymentRegistrationForm }}
+        </div>
+    </div>
+</div>
+
+<div id="transferAmountRegistrationModal" class="modal fade" tabindex="-1" aria-labelledby="transferAmountRegistrationLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            {{> transferAmountRegistrationForm }}
         </div>
     </div>
 </div>
