@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
             fetch(url)
                 .then(response => response.json())
                 .then(data => {
-                    document.querySelector('#balance').textContent = ` ₩ ${data.balance}원`;
+                    document.querySelector('#balance').textContent = ` ₩ ${data.balance.toLocaleString()}원`;
                 })
                 .catch(error => {
                     console.error('Error fetching data:', error);
@@ -95,7 +95,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             const row = `
                 <tr>
                     <td>${members.memberName}</td>
-                    <td><span class="amount">${members.amount}원</span></td>
+                    <td><span class="amount">${members.amount.toLocaleString()}원</span></td>
                     <td><span class="member-status ${memberStatus}">${members.memberStatus}</span></td>
                     <td><span class="deposit-status ${depositStatus}">${members.depositStatus}</span></td>
                     <td>${members.depositDate}</td>
@@ -169,7 +169,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         const row = `
                             <tr>
                                 <td>${report.memberName}</td>
-                                <td><span class="amount">${report.amount}원</span></td>
+                                <td><span class="amount">${report.amount.toLocaleString()}원</span></td>
                                 <td><span class="deposit-status ${depositStatus}">${report.depositStatus}</span></td>
                                 <td>${depositDate}</td>
                                 <td>${report.dueDate}</td>
