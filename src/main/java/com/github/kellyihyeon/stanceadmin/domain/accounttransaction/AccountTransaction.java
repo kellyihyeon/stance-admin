@@ -99,6 +99,14 @@ public class AccountTransaction {
         return new AccountTransaction(id, accountId, transactionType, transactionId, transactionSubType, amount, balance, createdAt, creatorId);
     }
 
+    public Double calculateBalance(Double latestBalance) {
+        if (TransactionType.WITHDRAW.equals(this.transactionType)) {
+            return subtractAmountFromBalance(latestBalance);
+        }
+
+        return addAmountToBalance(latestBalance);
+    }
+
     public Double addAmountToBalance(Double latestBalance) {
         this.balance = latestBalance + this.amount;
         return this.balance;
