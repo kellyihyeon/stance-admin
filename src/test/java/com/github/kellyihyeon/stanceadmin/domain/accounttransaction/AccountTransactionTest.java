@@ -3,6 +3,8 @@ package com.github.kellyihyeon.stanceadmin.domain.accounttransaction;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -30,7 +32,8 @@ class AccountTransactionTest {
                 .amount((double) 70000)
                 .build();
 
-        Double actualBalance = accountTransaction.subtractAmountFromBalance(latestBalance);
+        BigDecimal subtractedBalance = accountTransaction.subtractAmountFromBalance(BigDecimal.valueOf(latestBalance));
+        double actualBalance = subtractedBalance.doubleValue();
         Double expectedBalance = (double) 30000;
 
         assertEquals(expectedBalance, actualBalance);
@@ -45,7 +48,8 @@ class AccountTransactionTest {
                 .amount((double) 70000)
                 .build();
 
-        Double actualBalance = accountTransaction.addAmountToBalance(latestBalance);
+        BigDecimal addedBalance = accountTransaction.addAmountToBalance(BigDecimal.valueOf(latestBalance));
+        double actualBalance = addedBalance.doubleValue();
         Double expectedBalance = (double) 170000;
 
         assertEquals(expectedBalance, actualBalance);

@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -44,13 +45,13 @@ public class AccountTransactionService {
         log.debug("AccountTransaction saved successfully. The event will be triggered. [new balance is {}]", accountTransaction.getBalance());
     }
 
-    private Double getLatestBalance() {
+    private BigDecimal getLatestBalance() {
         AccountTransaction latestAccountTransaction = repository.findLatestAccountTransaction();
 
         if (Objects.isNull(latestAccountTransaction)) {
-            return (double) 0;
+            return BigDecimal.ZERO;
         }
 
-        return latestAccountTransaction.getBalance();
+        return BigDecimal.valueOf(latestAccountTransaction.getBalance());
     }
 }

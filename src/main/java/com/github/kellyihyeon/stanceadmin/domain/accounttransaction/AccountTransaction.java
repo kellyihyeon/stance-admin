@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -99,7 +100,7 @@ public class AccountTransaction {
         return new AccountTransaction(id, accountId, transactionType, transactionId, transactionSubType, amount, balance, createdAt, creatorId);
     }
 
-    public Double calculateBalance(Double latestBalance) {
+    public BigDecimal calculateBalance(BigDecimal latestBalance) {
         if (TransactionType.WITHDRAW.equals(this.transactionType)) {
             return subtractAmountFromBalance(latestBalance);
         }
@@ -107,13 +108,25 @@ public class AccountTransaction {
         return addAmountToBalance(latestBalance);
     }
 
-    public Double addAmountToBalance(Double latestBalance) {
-        this.balance = latestBalance + this.amount;
-        return this.balance;
+    public BigDecimal addAmountToBalance(BigDecimal latestBalance) {
+        BigDecimal addedBalance = latestBalance.add(BigDecimal.valueOf(this.amount));
+        this.balance = addedBalance.doubleValue();
+
+        return BigDecimal.valueOf(this.balance);
     }
 
-    public Double subtractAmountFromBalance(Double latestBalance) {
-        this.balance = latestBalance - this.amount;
-        return this.balance;
+    public BigDecimal subtractAmountFromBalance(BigDecimal latestBalance) {
+        if (!hasSufficientBalance(latestBalance)) {
+            throw new IllegalArgumentException("잔액이 부족합니다. [현재 잔액: " + latestBalance +"]");
+        }
+
+        BigDecimal subtractedBalance = latestBalance.subtract(BigDecimal.valueOf(this.amount));
+        this.balance = subtractedBalance.doubleValue();
+
+        return BigDecimal.valueOf(this.balance);
+    }
+
+    private boolean hasSufficientBalance(BigDecimal latestBalance) {
+        return latestBalance.compareTo(BigDecimal.valueOf(this.amount)) >= 0;
     }
 }
