@@ -65,46 +65,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
 
-        // 모임 통장 전체 내역
-        function getTransactionType(type) {
-            return type === "입금" ? "deposit" : "withdrawal";
-        }
-
-        getAllAccountTransactions()
-            .then(data => {
-                try {
-                    const tableBody = document.getElementById('transaction-table-body');
-                    const transactions = data.content.slice(0, 7);
-
-                    tableBody.innerHTML = '';
-                    transactions.forEach(transaction => {
-
-                        let transactionType = getTransactionType(transaction.transactionType)
-                        let amount = transaction.transactionType === '출금'
-                            ? `- ${transaction.amount.toLocaleString()}원`
-                            : `${transaction.amount.toLocaleString()}원`;
-
-                        const row = `
-                    <tr>
-                        <td>${transaction.transactionDate}</td>
-                        <td><span class="transaction-type ${transactionType}">${transaction.transactionType}</span></td>
-                        <td>${transaction.detailType}</td>
-                        <td>${transaction.transactionParty}</td>
-                        <td><span class="amount ${transactionType}">${amount}</span></td>
-                        <td>${transaction.balance.toLocaleString()}원</td>
-                    </tr>
-                `;
-                        tableBody.innerHTML += row;
-                    });
-                } catch (error) {
-                    console.error('API 데이터를 불러오는 중 오류가 발생했습니다:', error);
-                }
-            });
-
-        document.getElementById('view-all-button').addEventListener('click', function () {
-            window.location.href = '';
-        });
-
         // 회비 입금 명단
         function setupMembershipFeeReport() {
 
@@ -341,16 +301,6 @@ function getCurrentYearMonth() {
     const year = now.getFullYear();
     const month = now.getMonth() + 1;
     return { year, month };
-}
-
-function getAllAccountTransactions() {
-    const url = `/account-transactions`;
-
-    return fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            return data;
-        })
 }
 
 function convertDepositStatus(depositStatus) {
