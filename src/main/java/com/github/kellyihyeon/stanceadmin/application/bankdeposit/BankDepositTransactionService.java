@@ -31,7 +31,13 @@ public class BankDepositTransactionService {
         BankDepositTransaction bankDepositTransaction = mapper.toDomain(serviceDto, loggedInId, now);
         BankDepositTransaction persistedBankDepositTransaction = repository.saveBankDepositTransaction(bankDepositTransaction);
 
-        TransactionIdentity transactionIdentity = TransactionIdentity.create(persistedBankDepositTransaction.getId(), TransactionType.DEPOSIT, TransactionSubType.BANK);
+        TransactionIdentity transactionIdentity = TransactionIdentity.create(
+                persistedBankDepositTransaction.getId(),
+                TransactionType.DEPOSIT,
+                TransactionSubType.BANK,
+                persistedBankDepositTransaction.getDepositDate()
+        );
+
         accountTransactionService.saveAccountTransaction(transactionIdentity, persistedBankDepositTransaction.getAmount());
     }
 }
