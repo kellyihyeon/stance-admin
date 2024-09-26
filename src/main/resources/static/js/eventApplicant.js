@@ -2,6 +2,44 @@ document.addEventListener('DOMContentLoaded', function () {
     let path = window.location.pathname;
 
     if (path === '/event-applicant') {
+        getActiveEvents()
+            .then(data => {
+                const eventSelectBox = document.getElementById('eventSelect');
+                data.forEach(event => {
+                        const option = document.createElement('option');
+                        option.value = event.eventId;
+                        option.textContent = `${event.eventName} (${event.eventDescription})`;
+                        eventSelectBox.appendChild(option);
+                    }
+                );
+
+                if (data.length > 0) {
+                    eventSelectBox.value = data[0].eventId;
+                }
+            });
+
+        document.getElementById('eventSelect').addEventListener('change', function (event) {
+            let currentSelectedEventId = event.target.value;
+            getEventApplicantsByEventId(currentSelectedEventId)
+                .then(data => {
+                    const eventApplicantReport = document.getElementById('eventApplicantReport');
+                    eventApplicantReport.innerHTML = '';
+
+                    data.forEach(applicant => {
+                        const row = `
+                            <tr>
+                                <td>${applicant.memberName}</td>
+                                <td>${applicant.eventDescription}</td>
+                                <td>${removeSeconds(applicant.createdAt)}</td>
+                            </tr>
+                        `;
+
+                        eventApplicantReport.innerHTML += row;
+                    });
+                });
+        });
+
+
         document.getElementById('applicantRegisterModal').addEventListener('shown.bs.modal', function () {
             const status = 'ACTIVE';
             getEventsByStatus(status)

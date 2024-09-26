@@ -157,10 +157,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
         }
 
-        function getActiveEvents() {
-            const url = `/events/ACTIVE`
-            fetch(url)
-                .then(response => response.json())
+        function createActiveEventBoxes() {
+            getActiveEvents()
                 .then(data => {
                     const eventAreas = document.getElementById('eventAreas');
                     eventAreas.innerHTML = '';
@@ -216,7 +214,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     console.error('이벤트 목록을 가져오는 중 오류 발생:', error);
                 });
         }
-        getActiveEvents();
+        createActiveEventBoxes();
 
         // 이벤트 위임을 통해 동적으로 추가된 요소에도 클릭 이벤트 바인딩
         document.getElementById('eventAreas').addEventListener('click', function (event) {
@@ -300,3 +298,14 @@ function getCurrentMembers() {
         .then(data => data);
 }
 
+function getActiveEvents() {
+    const url = `/events/ACTIVE`
+    return fetch(url)
+        .then(response => response.json())
+        .then(data => data);
+}
+
+function removeSeconds(dateTime) {
+    const date = new Date(dateTime);
+    return date.toISOString().slice(0, 16).replace('T', ' ');
+}
