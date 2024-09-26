@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.ToString;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @ToString
@@ -25,5 +26,7 @@ public class AccountTransactionProjection {
     private Double amount;
 
     private Double balance;
+
+    private LocalDateTime createdAt;
 
 }

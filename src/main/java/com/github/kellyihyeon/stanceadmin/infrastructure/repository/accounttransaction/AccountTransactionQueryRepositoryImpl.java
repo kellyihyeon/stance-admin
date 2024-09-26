@@ -101,7 +101,8 @@ public class AccountTransactionQueryRepositoryImpl implements AccountTransaction
                                         .when(accountTransactionEntity.transactionSubType.eq(TransactionSubType.EVENT))
                                         .then(eventEntity.eventItem.stringValue())
                                         .otherwise(accountTransactionEntity.transactionSubType.stringValue())
-                                        .as("detailType")
+                                        .as("detailType"),
+                                accountTransactionEntity.createdAt
                         )
 
                 );

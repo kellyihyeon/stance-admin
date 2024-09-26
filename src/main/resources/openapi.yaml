@@ -846,6 +846,19 @@ components:
         balance:
           type: number
           format: double
+        createdAt:
+          type: string
+          format: date-time
+      required:
+        - id
+        - transactionId
+        - transactionType
+        - detailType
+        - transactionDate
+        - transactionParty
+        - amount
+        - balance
+        - createdAt
 
     EventSummaryResponse:
       type: object
