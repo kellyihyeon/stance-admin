@@ -25,4 +25,9 @@ public class WebController {
     public String manageEventApplicant() {
         return "eventApplicant";
     }
+
+    @GetMapping("/budget-book-transaction-tracker")
+    public String allBudgetBookTransactionTracker() {
+        return "budgetBookTransactionTracker";
+    }
 }

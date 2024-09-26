@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
             fetch(url)
                 .then(response => response.json())
                 .then(data => {
-                    document.querySelector('#balance').textContent = ` ₩ ${data.balance}원`;
+                    document.querySelector('#balance').textContent = ` ₩ ${data.balance.toLocaleString()}원`;
                 })
                 .catch(error => {
                     console.error('Error fetching data:', error);
@@ -42,69 +42,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         fetchDepositStatus();
 
-        // 입금 및 지출 현황
-        var ctx = document.getElementById('salesChart').getContext('2d');
-        new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ['January', 'February', 'March', 'April'],
-                datasets: [{
-                    label: 'Sales',
-                    data: [12, 19, 3, 5],
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    x: { beginAtZero: true },
-                    y: { beginAtZero: true }
-                }
-            }
-        });
-
-        // 모임 통장 전체 내역
-        function getTransactionType(type) {
-            return type === "입금" ? "deposit" : "withdrawal";
-        }
-
-        getAllAccountTransactions()
-            .then(data => {
-                try {
-                    const tableBody = document.getElementById('transaction-table-body');
-                    const transactions = data.content.slice(0, 7);
-
-                    tableBody.innerHTML = '';
-                    transactions.forEach(transaction => {
-
-                        let transactionType = getTransactionType(transaction.transactionType)
-                        let amount = transaction.transactionType === '출금'
-                            ? `- ${transaction.amount.toLocaleString()}원`
-                            : `${transaction.amount.toLocaleString()}원`;
-
-                        const row = `
-                    <tr>
-                        <td>${transaction.transactionDate}</td>
-                        <td><span class="transaction-type ${transactionType}">${transaction.transactionType}</span></td>
-                        <td>${transaction.detailType}</td>
-                        <td>${transaction.transactionParty}</td>
-                        <td><span class="amount ${transactionType}">${amount}</span></td>
-                        <td>${transaction.balance.toLocaleString()}원</td>
-                    </tr>
-                `;
-                        tableBody.innerHTML += row;
-                    });
-                } catch (error) {
-                    console.error('API 데이터를 불러오는 중 오류가 발생했습니다:', error);
-                }
-            });
-
-        document.getElementById('view-all-button').addEventListener('click', function () {
-            window.location.href = '';
-        });
-
         // 회비 입금 명단
         function setupMembershipFeeReport() {
 
@@ -135,7 +72,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             const row = `
                 <tr>
                     <td>${members.memberName}</td>
-                    <td><span class="amount">${members.amount}원</span></td>
+                    <td><span class="amount">${members.amount.toLocaleString()}원</span></td>
                     <td><span class="member-status ${memberStatus}">${members.memberStatus}</span></td>
                     <td><span class="deposit-status ${depositStatus}">${members.depositStatus}</span></td>
                     <td>${members.depositDate}</td>
@@ -209,7 +146,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         const row = `
                             <tr>
                                 <td>${report.memberName}</td>
-                                <td><span class="amount">${report.amount}원</span></td>
+                                <td><span class="amount">${report.amount.toLocaleString()}원</span></td>
                                 <td><span class="deposit-status ${depositStatus}">${report.depositStatus}</span></td>
                                 <td>${depositDate}</td>
                                 <td>${report.dueDate}</td>
@@ -341,16 +278,6 @@ function getCurrentYearMonth() {
     const year = now.getFullYear();
     const month = now.getMonth() + 1;
     return { year, month };
-}
-
-function getAllAccountTransactions() {
-    const url = `/account-transactions`;
-
-    return fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            return data;
-        })
 }
 
 function convertDepositStatus(depositStatus) {
