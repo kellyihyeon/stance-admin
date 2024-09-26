@@ -32,7 +32,9 @@ public class TransferTransactionService {
         TransactionIdentity transactionIdentity = TransactionIdentity.create(
                 transferTransaction.getId(),
                 TransactionType.WITHDRAW,
-                TransactionSubType.TRANSFER
+                TransactionSubType.TRANSFER,
+                transferTransaction.getExpenseDate()
+
         );
         accountTransactionService.saveAccountTransaction(transactionIdentity, transferTransaction.getAmount().doubleValue());
     }

@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.AfterDomainEventPublication;
 import org.springframework.data.domain.DomainEvents;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -29,6 +30,9 @@ public class AccountTransactionEntity {
 
     @Column(name = "account_id", nullable = false)
     private Long accountId;
+
+    @Column(name = "transaction_date", nullable = false)
+    private LocalDate transactionDate;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "transcation_type", nullable = false)
@@ -56,11 +60,12 @@ public class AccountTransactionEntity {
     @Transient
     private final List<Object> accountTransactionDomainEvents = new ArrayList<>();
 
-    public AccountTransactionEntity(Long accountId, TransactionType transactionType, Long transactionId, TransactionSubType transactionSubType, Double amount, Double balance, LocalDateTime createdAt, Long creatorId) {
+    public AccountTransactionEntity(Long accountId, TransactionType transactionType, Long transactionId, TransactionSubType transactionSubType, LocalDate transactionDate, Double amount, Double balance, LocalDateTime createdAt, Long creatorId) {
         this.accountId = accountId;
         this.transactionType = transactionType;
         this.transactionId = transactionId;
         this.transactionSubType = transactionSubType;
+        this.transactionDate = transactionDate;
         this.amount = amount;
         this.balance = balance;
         this.createdAt = createdAt;

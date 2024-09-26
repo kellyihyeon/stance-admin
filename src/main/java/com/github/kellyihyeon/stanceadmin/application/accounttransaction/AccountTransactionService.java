@@ -30,16 +30,12 @@ public class AccountTransactionService {
         Long loggedInId = 999L;
 
         Long defaultAccountId = accountService.getDefaultAccount().getId();
-        AccountTransaction accountTransaction = AccountTransaction.create(
+        AccountTransaction accountTransaction = AccountTransaction.createWithoutId(
                 defaultAccountId,
-                transactionIdentity.getType(),
-                transactionIdentity.getTransactionId(),
-                transactionIdentity.getSubtype(),
+                transactionIdentity,
                 amount,
                 now,
-                loggedInId
-        );
-
+                loggedInId);
         accountTransaction.calculateBalance(getLatestBalance());
         repository.saveAccountTransaction(accountTransaction);
         log.debug("AccountTransaction saved successfully. The event will be triggered. [new balance is {}]", accountTransaction.getBalance());

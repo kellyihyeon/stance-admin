@@ -1,5 +1,6 @@
 package com.github.kellyihyeon.stanceadmin.domain.accounttransaction;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class AccountTransactionBuilder {
@@ -13,6 +14,8 @@ public class AccountTransactionBuilder {
     private Long transactionId = 1L;
 
     private TransactionSubType transactionSubType = TransactionSubType.MEMBERSHIP_FEE;
+
+    private LocalDate transactionDate = LocalDate.now();
 
     private Double amount = (double) 1000;
 
@@ -60,11 +63,16 @@ public class AccountTransactionBuilder {
     }
 
     public AccountTransaction build() {
-        return AccountTransaction.create(
-                accountId,
-                transactionType,
+        TransactionIdentity transactionIdentity = TransactionIdentity.create(
                 transactionId,
+                transactionType,
                 transactionSubType,
+                transactionDate
+        );
+
+        return AccountTransaction.createWithoutId(
+                accountId,
+                transactionIdentity,
                 amount,
                 createdAt,
                 creatorId

@@ -1,6 +1,7 @@
 package com.github.kellyihyeon.stanceadmin.application.accounttransaction;
 
 import com.github.kellyihyeon.stanceadmin.domain.accounttransaction.AccountTransaction;
+import com.github.kellyihyeon.stanceadmin.domain.accounttransaction.TransactionIdentity;
 import com.github.kellyihyeon.stanceadmin.infrastructure.entity.accounttransaction.AccountTransactionEntity;
 
 import java.util.Objects;
@@ -13,6 +14,7 @@ public class AccountTransactionMapper {
                 domain.getTransactionType(),
                 domain.getTransactionId(),
                 domain.getTransactionSubType(),
+                domain.getTransactionDate(),
                 domain.getAmount(),
                 domain.getBalance(),
                 domain.getCreatedAt(),
@@ -24,13 +26,17 @@ public class AccountTransactionMapper {
         if (Objects.isNull(entity)) {
             return null;
         }
+        TransactionIdentity transactionIdentity = TransactionIdentity.create(
+                entity.getTransactionId(),
+                entity.getTransactionType(),
+                entity.getTransactionSubType(),
+                entity.getTransactionDate()
+        );
 
-        return AccountTransaction.create(
+        return AccountTransaction.createWithId(
                 entity.getId(),
                 entity.getAccountId(),
-                entity.getTransactionType(),
-                entity.getTransactionId(),
-                entity.getTransactionSubType(),
+                transactionIdentity,
                 entity.getAmount(),
                 entity.getBalance(),
                 entity.getCreatedAt(),

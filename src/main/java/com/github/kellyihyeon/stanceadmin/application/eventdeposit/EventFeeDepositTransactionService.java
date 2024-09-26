@@ -58,8 +58,14 @@ public class EventFeeDepositTransactionService {
 
             eventApplicantRegistryService.processDepositCompletion(serviceDto.getEventId(), serviceDto.getDepositorIds());
 
+            // TODO: repository 에 저장된 entity 의 deposit date 를 파라미터로 넘길 것
             accountTransactionService.saveAccountTransaction(
-                    TransactionIdentity.create(transactionId, TransactionType.DEPOSIT, TransactionSubType.EVENT),
+                    TransactionIdentity.create(
+                            transactionId,
+                            TransactionType.DEPOSIT,
+                            TransactionSubType.EVENT,
+                            eventDepositTransaction.getDepositDate()
+                            ),
                     serviceDto.getAmount()
             );
         }

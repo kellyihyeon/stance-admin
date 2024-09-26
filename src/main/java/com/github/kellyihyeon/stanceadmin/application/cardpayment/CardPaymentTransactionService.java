@@ -32,7 +32,8 @@ public class CardPaymentTransactionService {
         TransactionIdentity transactionIdentity = TransactionIdentity.create(
                 cardPaymentTransaction.getId(),
                 TransactionType.WITHDRAW,
-                TransactionSubType.CARD_PAYMENT
+                TransactionSubType.CARD_PAYMENT,
+                cardPaymentTransaction.getExpenseDate()
         );
         accountTransactionService.saveAccountTransaction(transactionIdentity, cardPaymentTransaction.getAmount().doubleValue());
     }

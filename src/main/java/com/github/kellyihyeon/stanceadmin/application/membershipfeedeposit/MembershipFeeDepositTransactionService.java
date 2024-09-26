@@ -82,8 +82,14 @@ public class MembershipFeeDepositTransactionService {
         for (MembershipFeeDepositTransaction domain : transactions) {
             Long transactionId = repository.createMembershipFeeDepositTransaction(domain);
 
+            // TODO: repository 에 저장된 entity 의 deposit date 를 파라미터로 넘길 것
             accountTransactionService.saveAccountTransaction(
-                    TransactionIdentity.create(transactionId, TransactionType.DEPOSIT, TransactionSubType.MEMBERSHIP_FEE),
+                    TransactionIdentity.create(
+                            transactionId,
+                            TransactionType.DEPOSIT,
+                            TransactionSubType.MEMBERSHIP_FEE,
+                            domain.getDepositDate()
+                            ),
                     serviceDto.amount()
             );
         }
