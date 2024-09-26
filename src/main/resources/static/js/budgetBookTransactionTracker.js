@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                     tableBody.innerHTML = '';
                     transactions.forEach(transaction => {
-
+                        const formattedDate = removeSeconds(`${transaction.createdAt}`)
                         let transactionType = getTransactionType(transaction.transactionType)
                         let amount = transaction.transactionType === '출금'
                             ? `- ${transaction.amount.toLocaleString()}원`
@@ -24,6 +24,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         <td>${transaction.transactionParty}</td>
                         <td><span class="amount ${transactionType}">${amount}</span></td>
                         <td>${transaction.balance.toLocaleString()}원</td>
+                        <td>${formattedDate}</td>
                     </tr>
                 `;
                         tableBody.innerHTML += row;
@@ -53,6 +54,7 @@ function loadBudgetBookTransactions(page) {
 
                 tableBody.innerHTML = '';
                 transactions.forEach(transaction => {
+                    const formattedDate = removeSeconds(`${transaction.createdAt}`)
 
                     let transactionType = getTransactionType(transaction.transactionType)
                     let amount = transaction.transactionType === '출금'
@@ -67,6 +69,7 @@ function loadBudgetBookTransactions(page) {
                         <td>${transaction.transactionParty}</td>
                         <td><span class="amount ${transactionType}">${amount}</span></td>
                         <td>${transaction.balance.toLocaleString()}원</td>
+                        <td>${formattedDate}</td>
                     </tr>
                 `;
                     tableBody.innerHTML += row;
@@ -136,4 +139,9 @@ function getAllBudgetBookTransactions(page) {
         .then(data => {
             return data;
         })
+}
+
+function removeSeconds(dateTime) {
+    const date = new Date(dateTime);
+    return date.toISOString().slice(0, 16).replace('T', ' ');
 }

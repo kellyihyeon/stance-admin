@@ -131,6 +131,10 @@ body {
     margin-bottom: 1rem;
 }
 
+.card table th, .card table td {
+    padding: 0.5rem;
+}
+
 .card-body {
     padding: 20px;
 }
