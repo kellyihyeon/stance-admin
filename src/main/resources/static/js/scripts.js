@@ -42,29 +42,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         fetchDepositStatus();
 
-        // 입금 및 지출 현황
-        var ctx = document.getElementById('salesChart').getContext('2d');
-        new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ['January', 'February', 'March', 'April'],
-                datasets: [{
-                    label: 'Sales',
-                    data: [12, 19, 3, 5],
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    x: { beginAtZero: true },
-                    y: { beginAtZero: true }
-                }
-            }
-        });
-
         // 회비 입금 명단
         function setupMembershipFeeReport() {
 

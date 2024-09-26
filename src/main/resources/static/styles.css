@@ -135,6 +135,10 @@ body {
     padding: 20px;
 }
 
+.card-xs {
+    height: 150px;
+}
+
 /* 카드 제목과 텍스트 스타일 */
 .card-title {
     font-size: 1.5rem;
@@ -168,18 +172,19 @@ body {
 }
 
 .progress-bar-background {
-    background-color: #e4e6e8; /* 기본 바 배경색 */
+    background-color: #e4e6e8;
     height: 10px;
     width: 80%;
     position: relative;
-    border-radius: 0.6rem; /* 바의 모서리 둥글게 */
-    margin-right: 10px; /* 레이블과 바 사이의 간격 */
+    border-radius: 0.6rem;
+    margin-right: 10px;
 }
 
 .progress-bar {
-    background-color: #03c3ec; /* 실제 진행 바 색상 */
+    border-radius: 0.6rem;
+    background-color: #89e25c;
     height: 100%;
-    width: 0%; /* 초기 너비 */
+    width: 0%;
     transition: width 0.5s ease;
 }
 
@@ -252,24 +257,22 @@ body {
     text-align: center;
     display: inline-block;
     vertical-align: middle;
+    color: #fff;
+    background-color: #02b875;
 }
 
-.btn-primary {
-    color: #fff;;
-    background-color: #696cff;
-    border-color: #696cff;
-    box-shadow: 0 .125rem .25rem 0 rgba(105,108,255,.4);
+.btn-secondary {
+    color: #8592a3;
+    background-color: #ebeef0;
 }
 
 #view-all-transactions-button {
-    color: #696cff;
-    background: #e7e7ff;
     margin-top: 30px;
     margin-bottom: 10px;;
 }
 
 .button-group .btn.active {
-    background-color: #696cff;
+    background-color: #02b875;
     color: #fff;
 }
 
@@ -278,9 +281,10 @@ body {
     color: #384551;
 }
 
-.button-group .btn:hover {
-    background-color: #e1e2ff;
-    color: #696cff;
+.btn:hover {
+    background-color: #e8fadf;
+    color: #fff;
+    border-color:#ced1d5;
 }
 
 #registerEventButton {
