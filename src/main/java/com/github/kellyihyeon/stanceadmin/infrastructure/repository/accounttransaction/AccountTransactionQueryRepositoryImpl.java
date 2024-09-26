@@ -31,53 +31,20 @@ public class AccountTransactionQueryRepositoryImpl implements AccountTransaction
 
     @Override
     public List<AccountTransactionProjection> findAccountTransactionWithJoins(PageRequest pageable) {
+        JPAQuery<AccountTransactionProjection> selectQuery = buildSelectQuery();
+        JPAQuery<AccountTransactionProjection> query = buildFromJoinQuery(selectQuery);
+        JPAQuery<AccountTransactionProjection> queryWithPaging = buildPagingQuery(pageable, query);
+        return queryWithPaging.fetch();
+    }
 
-        JPAQuery<AccountTransactionProjection> query =
-                queryFactory
-                        .select(
-                                Projections.fields(
-                                        AccountTransactionProjection.class,
-                                        accountTransactionEntity.id,
-                                        accountTransactionEntity.transactionId,
-                                        accountTransactionEntity.transactionType,
-                                        accountTransactionEntity.amount,
-                                        accountTransactionEntity.balance,
-                                        new CaseBuilder()
-                                                .when(accountTransactionEntity.transactionSubType.eq(TransactionSubType.MEMBERSHIP_FEE))
-                                                .then(memberEntity.name)
-                                                .when(accountTransactionEntity.transactionSubType.eq(TransactionSubType.BANK))
-                                                .then(bankDepositTransactionEntity.depositSource)
-                                                .when(accountTransactionEntity.transactionSubType.eq(TransactionSubType.EVENT))
-                                                .then(memberEntity.name)
-                                                .when(accountTransactionEntity.transactionSubType.eq(TransactionSubType.CARD_PAYMENT))
-                                                .then(cardPaymentTransactionEntity.cardUsageLocation)
-                                                .when(accountTransactionEntity.transactionSubType.eq(TransactionSubType.TRANSFER))
-                                                .then(transferTransactionEntity.recipientName)
-                                                .otherwise(Expressions.constant("없음"))
-                                                .as("transactionParty"),
-                                        new CaseBuilder()
-                                                .when(accountTransactionEntity.transactionSubType.eq(TransactionSubType.MEMBERSHIP_FEE))
-                                                .then(memberShipFeeDepositTransactionEntity.depositDate)
-                                                .when(accountTransactionEntity.transactionSubType.eq(TransactionSubType.BANK))
-                                                .then(bankDepositTransactionEntity.depositDate)
-                                                .when(accountTransactionEntity.transactionSubType.eq(TransactionSubType.EVENT))
-                                                .then(eventDepositTransactionEntity.depositDate)
-                                                .when(accountTransactionEntity.transactionSubType.eq(TransactionSubType.CARD_PAYMENT))
-                                                .then(cardPaymentTransactionEntity.expenseDate)
-                                                .when(accountTransactionEntity.transactionSubType.eq(TransactionSubType.TRANSFER))
-                                                .then(transferTransactionEntity.expenseDate)
-                                                .otherwise(LocalDate.of(1900,1,1))
-                                                .as("transactionDate"),
-                                        new CaseBuilder()
-                                                .when(accountTransactionEntity.transactionSubType.eq(TransactionSubType.EVENT))
-                                                .then(eventEntity.eventItem.stringValue())
-                                                .otherwise(accountTransactionEntity.transactionSubType.stringValue())
-                                                .as("detailType")
-                                )
+    private JPAQuery<AccountTransactionProjection> buildPagingQuery(PageRequest pageable, JPAQuery<AccountTransactionProjection> query) {
+        return query
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize());
+    }
 
-                        );
-
-        query
+    private JPAQuery<AccountTransactionProjection> buildFromJoinQuery(JPAQuery<AccountTransactionProjection> selectQuery) {
+        return selectQuery
                 .from(accountTransactionEntity)
                 .leftJoin(memberShipFeeDepositTransactionEntity)
                 .on(accountTransactionEntity.transactionSubType.eq(TransactionSubType.MEMBERSHIP_FEE)
@@ -104,11 +71,58 @@ public class AccountTransactionQueryRepositoryImpl implements AccountTransaction
                 .leftJoin(eventEntity)
                 .on(accountTransactionEntity.transactionSubType.eq(TransactionSubType.EVENT)
                         .and(eventEntity.id.eq(eventDepositTransactionEntity.eventId)));
+    }
 
-        query
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize());
+    private JPAQuery<AccountTransactionProjection> buildSelectQuery() {
+        return queryFactory
+                .select(
+                        Projections.fields(
+                                AccountTransactionProjection.class,
+                                accountTransactionEntity.id,
+                                accountTransactionEntity.transactionId,
+                                accountTransactionEntity.transactionType,
+                                accountTransactionEntity.amount,
+                                accountTransactionEntity.balance,
+                                new CaseBuilder()
+                                        .when(accountTransactionEntity.transactionSubType.eq(TransactionSubType.MEMBERSHIP_FEE))
+                                        .then(memberEntity.name)
+                                        .when(accountTransactionEntity.transactionSubType.eq(TransactionSubType.BANK))
+                                        .then(bankDepositTransactionEntity.depositSource)
+                                        .when(accountTransactionEntity.transactionSubType.eq(TransactionSubType.EVENT))
+                                        .then(memberEntity.name)
+                                        .when(accountTransactionEntity.transactionSubType.eq(TransactionSubType.CARD_PAYMENT))
+                                        .then(cardPaymentTransactionEntity.cardUsageLocation)
+                                        .when(accountTransactionEntity.transactionSubType.eq(TransactionSubType.TRANSFER))
+                                        .then(transferTransactionEntity.recipientName)
+                                        .otherwise(Expressions.constant("없음"))
+                                        .as("transactionParty"),
+                                new CaseBuilder()
+                                        .when(accountTransactionEntity.transactionSubType.eq(TransactionSubType.MEMBERSHIP_FEE))
+                                        .then(memberShipFeeDepositTransactionEntity.depositDate)
+                                        .when(accountTransactionEntity.transactionSubType.eq(TransactionSubType.BANK))
+                                        .then(bankDepositTransactionEntity.depositDate)
+                                        .when(accountTransactionEntity.transactionSubType.eq(TransactionSubType.EVENT))
+                                        .then(eventDepositTransactionEntity.depositDate)
+                                        .when(accountTransactionEntity.transactionSubType.eq(TransactionSubType.CARD_PAYMENT))
+                                        .then(cardPaymentTransactionEntity.expenseDate)
+                                        .when(accountTransactionEntity.transactionSubType.eq(TransactionSubType.TRANSFER))
+                                        .then(transferTransactionEntity.expenseDate)
+                                        .otherwise(LocalDate.of(1900,1,1))
+                                        .as("transactionDate"),
+                                new CaseBuilder()
+                                        .when(accountTransactionEntity.transactionSubType.eq(TransactionSubType.EVENT))
+                                        .then(eventEntity.eventItem.stringValue())
+                                        .otherwise(accountTransactionEntity.transactionSubType.stringValue())
+                                        .as("detailType")
+                        )
 
-        return query.fetch();
+                );
+    }
+
+    @Override
+    public long countTotalElements() {
+        JPAQuery<AccountTransactionProjection> selectQuery = buildSelectQuery();
+        JPAQuery<AccountTransactionProjection> query = buildFromJoinQuery(selectQuery);
+        return query.fetch().size();
     }
 }

@@ -23,6 +23,7 @@ public class AccountTransactionQueryService {
     private final AccountTransactionQueryRepository queryRepository;
 
     public PagedAccountTransactionResponse getAllAccountTransactions(PageRequest pageable) {
+        long totalElements = queryRepository.countTotalElements();
         List<AccountTransactionProjection> projections = queryRepository.findAccountTransactionWithJoins(pageable);
 
         List<AccountTransactionResponse> allAccountTransactions = projections.stream()
@@ -42,7 +43,7 @@ public class AccountTransactionQueryService {
                 .collect(Collectors.toList());
 
 
-        PageImpl<AccountTransactionResponse> pagedTransactions = new PageImpl<>(allAccountTransactions, pageable, allAccountTransactions.size());
+        PageImpl<AccountTransactionResponse> pagedTransactions = new PageImpl<>(allAccountTransactions, pageable, totalElements);
         PagingMetadata pagingMetadata = new PagingMetadata(
                 pagedTransactions.getNumber(),
                 pagedTransactions.getSize(),

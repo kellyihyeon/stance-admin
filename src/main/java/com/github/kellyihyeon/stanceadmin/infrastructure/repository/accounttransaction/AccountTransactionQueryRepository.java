@@ -8,4 +8,6 @@ import java.util.List;
 public interface AccountTransactionQueryRepository {
 
     List<AccountTransactionProjection> findAccountTransactionWithJoins(PageRequest pageable);
+
+    long countTotalElements();
 }
