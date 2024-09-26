@@ -12,6 +12,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -37,6 +38,7 @@ public class AccountTransactionQueryService {
                     response.transactionParty(projection.getTransactionParty());
                     response.amount(projection.getAmount());
                     response.balance(projection.getBalance());
+                    response.createdAt(Timestamp.valueOf(projection.getCreatedAt()));
 
                     return response;
                 })
