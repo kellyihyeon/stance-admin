@@ -394,3 +394,39 @@ body {
 .required-true {
     color: red;
 }
+
+.pagination {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: -1px;
+}
+
+.pagination .page-item {
+    margin: 0 3px;
+}
+
+.pagination .page-item .page-link {
+    color: #384551;
+    background-color: #f2f3f3;
+    border: none;
+    border-radius: .375rem;
+    align-items: center;
+}
+
+.pagination .page-item.active .page-link {
+    color: white;
+    background-color: #62cd5d;
+    border-color:#ced1d5;
+}
+
+.pagination .page-item.disabled .page-link {
+    color: #d3d3d3;
+    pointer-events: none;
+    background-color: #f1f1f1;
+    border-color: #d3d3d3;
+}
+
+.pagination .page-item .page-link:hover {
+    background-color: #e8fadf;
+    color: #fff;
+}
