@@ -1,6 +1,7 @@
 package com.github.kellyihyeon.stanceadmin.presentation.event;
 
 import com.github.kellyihyeon.stanceadmin.apis.EventApi;
+import com.github.kellyihyeon.stanceadmin.application.event.EventQueryService;
 import com.github.kellyihyeon.stanceadmin.application.event.EventService;
 import com.github.kellyihyeon.stanceadmin.application.event.dto.EventCreation;
 import com.github.kellyihyeon.stanceadmin.domain.event.EventItem;

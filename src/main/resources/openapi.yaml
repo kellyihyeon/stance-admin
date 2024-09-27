@@ -932,10 +932,7 @@ components:
         dueDate:
           type: string
         status:
-          type: string
-          enum:
-            - ACTIVE
-            - INACTIVE
+          $ref: '#/components/schemas/EventStatusEnum'
         createdAt:
           type: string
           format: date-time

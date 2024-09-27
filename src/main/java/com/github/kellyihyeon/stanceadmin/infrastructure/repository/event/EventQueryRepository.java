@@ -9,4 +9,5 @@ public interface EventQueryRepository {
 
     List<EventProjection> getEvents(PageRequest pageable);
 
+    long countTotalElements();
 }
