@@ -11,6 +11,6 @@ public interface JpaEventRepository extends JpaRepository<EventEntity, Long> {
 
     boolean existsByIdAndStatus(Long eventId, EventStatus eventStatus);
 
-    List<EventEntity> findByStatus(EventStatus eventStatus);
+    List<EventEntity> findByStatusOrderByDueDate(EventStatus eventStatus);
 
 }
