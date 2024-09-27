@@ -3,6 +3,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (path === '/event-tracker') {
         loadEvents(1);
+
+        document.getElementById('eventRegisterInEventModal').addEventListener('shown.bs.modal', function () {
+            addEventListenerWithActiveStatus();
+        });
+
+        document.getElementById('eventForm').addEventListener('submit', function (event) {
+            const eventRegisterInEventModal = new bootstrap.Modal(document.getElementById('eventRegisterInEventModal'));
+            event.preventDefault();
+            const redirectUrl = '/event-tracker'
+            callEventRegistrationApi(eventRegisterInEventModal, redirectUrl);
+        });
+
     }
 });
 
@@ -46,7 +58,7 @@ function loadEvents(page) {
                 loadPageData(data.paging.totalPages, loadEvents);
 
             } catch (error){
-                console.error('API[/events] 데이터를 불러오는 중 오류가 발생했습니다:', error);
+                console.error('API [/events] 데이터를 불러오는 중 오류가 발생했습니다:', error);
             }
 
         });
