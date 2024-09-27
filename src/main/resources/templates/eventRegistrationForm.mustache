@@ -5,8 +5,12 @@
 <div class="modal-body">
     <form id="eventForm">
         <div class="form-group mb-3">
-            <label for="name" class="form-label">이벤트명<span class="required-true">*</span></label>
-            <input type="text" class="form-control" id="name" placeholder="이벤트 이름은 무엇인가요?" required>
+            <label for="eventItem" class="form-label">이벤트명<span class="required-true">*</span></label>
+            <select class="form-select" id="eventItem" required>
+                <option value="TEAM_PARTY" selected>회식</option>
+                <option value="UNIFORM">유니폼</option>
+                <option value="MEMBERSHIP_TRAINING">엠티</option>
+            </select>
         </div>
         <div class="form-group mb-3">
             <label for="amount" class="form-label">금액<span class="required-true">*</span></label>

@@ -438,3 +438,21 @@ body {
     background-color: #e8fadf;
     color: #fff;
 }
+
+.form-select {
+    height: 40px;
+}
+
+.event-add-button {
+    height: 40px;
+}
+
+.event-applicant-area {
+    margin-top: 20px !important;
+    color: #646E78;
+}
+
+.event-applicant-name {
+    box-shadow: inset 0 -8px 0 #89e25c;
+    font-weight: bold;
+}

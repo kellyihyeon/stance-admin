@@ -140,8 +140,3 @@ function getAllBudgetBookTransactions(page) {
             return data;
         })
 }
-
-function removeSeconds(dateTime) {
-    const date = new Date(dateTime);
-    return date.toISOString().slice(0, 16).replace('T', ' ');
-}

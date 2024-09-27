@@ -157,10 +157,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
         }
 
-        function getActiveEvents() {
-            const url = `/events/ACTIVE`
-            fetch(url)
-                .then(response => response.json())
+        function createActiveEventBoxes() {
+            getActiveEvents()
                 .then(data => {
                     const eventAreas = document.getElementById('eventAreas');
                     eventAreas.innerHTML = '';
@@ -216,7 +214,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     console.error('이벤트 목록을 가져오는 중 오류 발생:', error);
                 });
         }
-        getActiveEvents();
+        createActiveEventBoxes();
 
         // 이벤트 위임을 통해 동적으로 추가된 요소에도 클릭 이벤트 바인딩
         document.getElementById('eventAreas').addEventListener('click', function (event) {
@@ -225,50 +223,15 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
 
-        const statusCheckbox = document.getElementById('status');
-        const statusLabel = document.getElementById('statusLabel');
-
-        statusCheckbox.addEventListener('change', function () {
-            if (statusCheckbox.checked) {
-                statusLabel.textContent = 'on';
-            } else {
-                statusLabel.textContent = 'off';
-            }
+        document.getElementById('eventRegisterModal').addEventListener('shown.bs.modal', function () {
+            addEventListenerWithActiveStatus();
         });
 
-        // 이벤트를 제출할 때 필수값 검사하기
         document.getElementById('eventForm').addEventListener('submit', function (event) {
             event.preventDefault();
-            const status = !!statusCheckbox.checked;
-
-            const eventRegistrationData = {
-                eventItem: document.getElementById('name').value,
-                amount: document.getElementById('amount').value,
-                dueDate: document.getElementById('dueDate').value,
-                status: status === true ? 'ACTIVE' : 'INACTIVE',
-                description: document.getElementById('description').value
-            };
-
-            fetch('/events', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(eventRegistrationData),
-            })
-                .then(response => {
-                    if (response.status === 201) {
-                        alert('이벤트가 등록되었습니다');
-                        eventRegisterModal.hide();
-                        window.location.href = '/event-applicant';
-                    }
-                })
-                .catch(error => {
-                    console.error('이벤트 등록 중 오류 발생:', error);
-                });
+            const redirectUrl = '/event-fee-deposit-tracker'
+            callEventRegistrationApi(eventRegisterModal, redirectUrl);
         });
-
-
 
     }
 });
@@ -300,3 +263,60 @@ function getCurrentMembers() {
         .then(data => data);
 }
 
+function getActiveEvents() {
+    const url = `/events/ACTIVE`
+    return fetch(url)
+        .then(response => response.json())
+        .then(data => data);
+}
+
+function removeSeconds(dateTime) {
+    const date = new Date(dateTime);
+    return date.toISOString().slice(0, 16).replace('T', ' ');
+}
+
+function addEventListenerWithActiveStatus() {
+    const statusCheckbox = document.getElementById('status');
+    const statusLabel = document.getElementById('statusLabel');
+
+    statusCheckbox.addEventListener('change', function () {
+        if (statusCheckbox.checked) {
+            statusLabel.textContent = 'on';
+        } else {
+            statusLabel.textContent = 'off';
+        }
+    });
+
+    return statusCheckbox;
+}
+
+function callEventRegistrationApi(eventRegisterModal, redirectUrl) {
+    const statusCheckbox = document.getElementById('status')
+    const status = !!statusCheckbox.checked;
+
+    const eventRegistrationData = {
+        eventItem: document.getElementById('eventItem').value,
+        amount: document.getElementById('amount').value,
+        dueDate: document.getElementById('dueDate').value,
+        status: status === true ? 'ACTIVE' : 'INACTIVE',
+        description: document.getElementById('description').value
+    };
+
+    fetch('/events', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(eventRegistrationData),
+    })
+        .then(response => {
+            if (response.status === 201) {
+                alert('이벤트가 등록되었습니다');
+                eventRegisterModal.hide();
+                window.location.href = redirectUrl;
+            }
+        })
+        .catch(error => {
+            console.error('이벤트 등록 중 오류 발생:', error);
+        });
+}

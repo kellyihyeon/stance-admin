@@ -6,8 +6,8 @@
 <div class="modal-body">
     <form id="eventApplicantForm">
         <div class="form-group mb-3">
-            <label for="eventId" class="form-label">이벤트<span class="required-true">*</span></label>
-            <select class="form-select" id="eventId" required>
+            <label for="modalEventSelect" class="form-label">이벤트<span class="required-true">*</span></label>
+            <select class="form-select" id="modalEventSelect" required>
                 <!-- option -->
             </select>
         </div>
@@ -20,13 +20,13 @@
         </div>
 
         <div class="form-group mb-3">
-            <label for="description" class="form-label">특이사항<span class="required-false"></span></label>
-            <textarea class="form-control form-control-lg" id="description" rows="5" placeholder="설명이 필요하다면 적어주세요!"></textarea>
+            <label for="eventApplicantMemo" class="form-label">특이사항<span class="required-false"></span></label>
+            <textarea class="form-control form-control-lg" id="eventApplicantMemo" rows="5" placeholder="설명이 필요하다면 적어주세요!"></textarea>
         </div>
 
         <div class="d-flex justify-content-center cancel-register-button">
             <button type="button" class="btn btn-secondary mt-3" data-bs-dismiss="modal">취소</button>
-            <button type="submit" class="btn btn-primary mt-3" id="registerMembershipFeeButton">등록</button>
+            <button type="submit" class="btn btn-primary mt-3" id="registerEventApplicantButton">등록</button>
         </div>
     </form>
 </div>

@@ -19,14 +19,14 @@ document.addEventListener('DOMContentLoaded', function () {
                     // 디폴트 이벤트 및 해당 이벤트의 신청자 설정
                     if (data.length > 0) {
                         eventSelectBox.value = data[0].eventId;
-                        getEventApplicantsByEventId(data[0].eventId);
+                        createEventApplicantCheckBox(data[0].eventId);
                     }
                 })
                 .catch(error => console.error('/events/ACTIVE 호출 중 에러 발생:', error));
 
             document.getElementById('eventId').addEventListener('change', function (event) {
                 const currentSelectedEventId = event.target.value;
-                getEventApplicantsByEventId(currentSelectedEventId);
+                createEventApplicantCheckBox(currentSelectedEventId);
             });
 
         });
@@ -76,12 +76,9 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
-// 이벤트 신청자 불러오기
-function getEventApplicantsByEventId(eventId) {
-    const url = `/event-applicants?eventId=${eventId}`;
-
-    fetch(url)
-        .then(response => response.json())
+// 이벤트 신청자 체크박스 만들기
+function createEventApplicantCheckBox(eventId) {
+    getEventApplicantsByEventId(eventId)
         .then(data => {
             const applicantContainer = document.getElementById('applicantContainer');
             applicantContainer.innerHTML = '';
@@ -99,4 +96,12 @@ function getEventApplicantsByEventId(eventId) {
 
         })
         .catch(error => console.error('[GET] /event-applicants 호출 중 에러 발생:', error));
+}
+
+function getEventApplicantsByEventId(eventId) {
+    const url = `/event-applicants?eventId=${eventId}`;
+
+    return fetch(url)
+        .then(response => response.json())
+        .then(data => data);
 }
