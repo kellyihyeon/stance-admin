@@ -5,9 +5,13 @@ import com.github.kellyihyeon.stanceadmin.application.event.EventService;
 import com.github.kellyihyeon.stanceadmin.application.event.dto.EventCreation;
 import com.github.kellyihyeon.stanceadmin.domain.event.EventItem;
 import com.github.kellyihyeon.stanceadmin.domain.event.EventStatus;
-import com.github.kellyihyeon.stanceadmin.models.*;
+import com.github.kellyihyeon.stanceadmin.models.EventInput;
+import com.github.kellyihyeon.stanceadmin.models.EventStatusEnum;
+import com.github.kellyihyeon.stanceadmin.models.EventSummaryResponse;
+import com.github.kellyihyeon.stanceadmin.models.PagedEventResponse;
 import com.github.kellyihyeon.stanceadmin.presentation.TimeConverter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,6 +23,7 @@ import java.util.List;
 public class EventController implements EventApi {
 
     private final EventService service;
+    private final EventQueryService queryService;
 
 
     @Override
@@ -36,8 +41,10 @@ public class EventController implements EventApi {
     }
 
     @Override
-    public ResponseEntity<List<PagedEventResponse>> getAllEvents() {
-        return null;
+    public ResponseEntity<PagedEventResponse> getAllEvents(Integer page, Integer size) {
+        PageRequest pageable = PageRequest.of(page - 1, size);
+        PagedEventResponse response = queryService.getAllEvents(pageable);
+        return ResponseEntity.ok(response);
     }
 
     @Override

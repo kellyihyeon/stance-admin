@@ -499,15 +499,24 @@ paths:
         - event
       summary: 전체 이벤트 목록을 조회합니다.
       operationId: getAllEvents
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            default: 1
+        - in: query
+          name: size
+          schema:
+            type: integer
+            default: 10
       responses:
         '200':
           description: 전체 이벤트 목록에 보여질 데이터 입니다.
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/PagedEventResponse'
+                $ref: '#/components/schemas/PagedEventResponse'
         '500':
           description: Internal server error
     post:
@@ -920,10 +929,8 @@ components:
           type: string
         amount:
           type: number
-          format: double
-        depositDate:
+        dueDate:
           type: string
-          format: date
         status:
           type: string
           enum:

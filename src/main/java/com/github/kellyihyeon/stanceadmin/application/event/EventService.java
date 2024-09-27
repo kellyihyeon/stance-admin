@@ -34,7 +34,6 @@ public class EventService {
     public List<EventSummaryResponse> getEventsByStatus(EventStatus eventStatus) {
         List<Event> events = repository.getEventsByStatus(eventStatus);
 
-        // convert domain to response dto !
         List<EventSummaryResponse> result = new ArrayList<>();
         events.forEach(event -> {
             result.add(
