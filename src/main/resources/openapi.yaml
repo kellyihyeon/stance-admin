@@ -507,7 +507,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Events'
+                  $ref: '#/components/schemas/PagedEventResponse'
         '500':
           description: Internal server error
     post:
@@ -895,7 +895,20 @@ components:
         - eventId
         - applicantIds
 
-    Events:
+    PagedEventResponse:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/EventResponse'
+        paging:
+          $ref: '#/components/schemas/PagingMetadata'
+      required:
+        - content
+        - paging
+
+    EventResponse:
       type: object
       properties:
         eventId:
@@ -910,12 +923,17 @@ components:
           format: double
         depositDate:
           type: string
-          format: date-time
+          format: date
         status:
           type: string
           enum:
             - ACTIVE
             - INACTIVE
+        createdAt:
+          type: string
+          format: date-time
+        creatorName:
+          type: string
 
     EventInput:
       type: object

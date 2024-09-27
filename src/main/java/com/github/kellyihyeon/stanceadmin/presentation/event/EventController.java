@@ -5,10 +5,7 @@ import com.github.kellyihyeon.stanceadmin.application.event.EventService;
 import com.github.kellyihyeon.stanceadmin.application.event.dto.EventCreation;
 import com.github.kellyihyeon.stanceadmin.domain.event.EventItem;
 import com.github.kellyihyeon.stanceadmin.domain.event.EventStatus;
-import com.github.kellyihyeon.stanceadmin.models.EventInput;
-import com.github.kellyihyeon.stanceadmin.models.EventStatusEnum;
-import com.github.kellyihyeon.stanceadmin.models.EventSummaryResponse;
-import com.github.kellyihyeon.stanceadmin.models.Events;
+import com.github.kellyihyeon.stanceadmin.models.*;
 import com.github.kellyihyeon.stanceadmin.presentation.TimeConverter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class EventController implements EventApi {
 
-    private final EventService eventService;
+    private final EventService service;
 
 
     @Override
@@ -34,19 +31,19 @@ public class EventController implements EventApi {
                 EventStatus.valueOf(eventInput.getStatus().getValue())
         );
 
-        eventService.createEvent(eventCreation);
+        service.createEvent(eventCreation);
         return ResponseEntity.created(URI.create("")).build();
     }
 
     @Override
-    public ResponseEntity<List<Events>> getAllEvents() {
+    public ResponseEntity<List<PagedEventResponse>> getAllEvents() {
         return null;
     }
 
     @Override
     public ResponseEntity<List<EventSummaryResponse>> getEventsByStatus(EventStatusEnum status) {
         EventStatus eventStatus = EventStatus.valueOf(status.getValue());
-        List<EventSummaryResponse> result = eventService.getEventsByStatus(eventStatus);
+        List<EventSummaryResponse> result = service.getEventsByStatus(eventStatus);
 
         return ResponseEntity.ok(result);
     }
