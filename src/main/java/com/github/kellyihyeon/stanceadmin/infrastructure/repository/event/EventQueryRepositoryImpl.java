@@ -1,5 +1,9 @@
 package com.github.kellyihyeon.stanceadmin.infrastructure.repository.event;
 
+import com.github.kellyihyeon.stanceadmin.application.event.EventMapper;
+import com.github.kellyihyeon.stanceadmin.domain.event.Event;
+import com.github.kellyihyeon.stanceadmin.domain.event.EventStatus;
+import com.github.kellyihyeon.stanceadmin.infrastructure.entity.event.EventEntity;
 import com.github.kellyihyeon.stanceadmin.infrastructure.querydsl.EventProjection;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQuery;
@@ -17,7 +21,16 @@ import static com.github.kellyihyeon.stanceadmin.infrastructure.entity.member.QM
 @RequiredArgsConstructor
 public class EventQueryRepositoryImpl implements EventQueryRepository {
 
+    private final JpaEventRepository jpaRepository;
+    private final EventMapper mapper;
+
     private final JPAQueryFactory queryFactory;
+
+    @Override
+    public List<Event> getEventsByStatus(EventStatus eventStatus) {
+        List<EventEntity> entities = jpaRepository.findByStatusOrderByDueDate(eventStatus);
+        return mapper.toDomains(entities);
+    }
 
     @Override
     public List<EventProjection> getEvents(PageRequest pageable) {

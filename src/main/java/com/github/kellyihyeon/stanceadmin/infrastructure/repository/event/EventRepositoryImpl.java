@@ -8,8 +8,6 @@ import com.github.kellyihyeon.stanceadmin.infrastructure.entity.event.EventEntit
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Repository
 @RequiredArgsConstructor
 public class EventRepositoryImpl implements EventRepository {
@@ -26,12 +24,6 @@ public class EventRepositoryImpl implements EventRepository {
     @Override
     public boolean existsByIdAndStatus(Long eventId, EventStatus status) {
         return jpaRepository.existsByIdAndStatus(eventId, status);
-    }
-
-    @Override
-    public List<Event> getEventsByStatus(EventStatus eventStatus) {
-        List<EventEntity> entities = jpaRepository.findByStatus(eventStatus);
-        return mapper.toDomains(entities);
     }
 
 }

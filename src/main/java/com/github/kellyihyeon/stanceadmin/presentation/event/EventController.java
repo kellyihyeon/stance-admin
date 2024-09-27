@@ -51,7 +51,7 @@ public class EventController implements EventApi {
     @Override
     public ResponseEntity<List<EventSummaryResponse>> getEventsByStatus(EventStatusEnum status) {
         EventStatus eventStatus = EventStatus.valueOf(status.getValue());
-        List<EventSummaryResponse> result = service.getEventsByStatus(eventStatus);
+        List<EventSummaryResponse> result = queryService.getEventsByStatus(eventStatus);
 
         return ResponseEntity.ok(result);
     }

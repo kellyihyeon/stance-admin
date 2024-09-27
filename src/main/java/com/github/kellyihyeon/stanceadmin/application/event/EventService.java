@@ -4,13 +4,10 @@ import com.github.kellyihyeon.stanceadmin.application.event.dto.EventCreation;
 import com.github.kellyihyeon.stanceadmin.domain.event.Event;
 import com.github.kellyihyeon.stanceadmin.domain.event.EventRepository;
 import com.github.kellyihyeon.stanceadmin.domain.event.EventStatus;
-import com.github.kellyihyeon.stanceadmin.models.EventSummaryResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -31,21 +28,4 @@ public class EventService {
         return repository.existsByIdAndStatus(eventId, EventStatus.ACTIVE);
     }
 
-    public List<EventSummaryResponse> getEventsByStatus(EventStatus eventStatus) {
-        List<Event> events = repository.getEventsByStatus(eventStatus);
-
-        List<EventSummaryResponse> result = new ArrayList<>();
-        events.forEach(event -> {
-            result.add(
-                    new EventSummaryResponse(
-                            event.getId(),
-                            event.getEventItem().getDisplayName(),
-                            event.getDescription()
-                    )
-            );
-                }
-        );
-
-        return result;
-    }
 }

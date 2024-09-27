@@ -1,11 +1,10 @@
 package com.github.kellyihyeon.stanceadmin.application.event;
 
+import com.github.kellyihyeon.stanceadmin.domain.event.Event;
+import com.github.kellyihyeon.stanceadmin.domain.event.EventStatus;
 import com.github.kellyihyeon.stanceadmin.infrastructure.querydsl.EventProjection;
 import com.github.kellyihyeon.stanceadmin.infrastructure.repository.event.EventQueryRepository;
-import com.github.kellyihyeon.stanceadmin.models.EventResponse;
-import com.github.kellyihyeon.stanceadmin.models.EventStatusEnum;
-import com.github.kellyihyeon.stanceadmin.models.PagedEventResponse;
-import com.github.kellyihyeon.stanceadmin.models.PagingMetadata;
+import com.github.kellyihyeon.stanceadmin.models.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -13,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -52,5 +52,23 @@ public class EventQueryService {
         );
 
         return new PagedEventResponse(allEvents, pagingMetadata);
+    }
+
+    public List<EventSummaryResponse> getEventsByStatus(EventStatus eventStatus) {
+        List<Event> events = queryRepository.getEventsByStatus(eventStatus);
+
+        List<EventSummaryResponse> result = new ArrayList<>();
+        events.forEach(event -> {
+                    result.add(
+                            new EventSummaryResponse(
+                                    event.getId(),
+                                    event.getEventItem().getDisplayName(),
+                                    event.getDescription()
+                            )
+                    );
+                }
+        );
+
+        return result;
     }
 }
