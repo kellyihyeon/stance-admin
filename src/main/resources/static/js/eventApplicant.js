@@ -95,6 +95,9 @@ document.addEventListener('DOMContentLoaded', function () {
                     console.error('이벤트 신청자 추가 중 오류 발생:', error);
                 });
         });
+
+        // 이벤트 등록 제출 폼
+
     }
 
 });
@@ -108,7 +111,7 @@ function createEventApplicantReport(eventId) {
             data.forEach(applicant => {
                 const row = `
                             <tr>
-                                <td>${applicant.memberName}</td>
+                                <td><span class="event-applicant-name">${applicant.memberName}</span></td>
                                 <td>${applicant.eventDescription}</td>
                                 <td>${removeSeconds(applicant.createdAt)}</td>
                             </tr>

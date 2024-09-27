@@ -223,47 +223,14 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
 
-        const statusCheckbox = document.getElementById('status');
-        const statusLabel = document.getElementById('statusLabel');
-
-        statusCheckbox.addEventListener('change', function () {
-            if (statusCheckbox.checked) {
-                statusLabel.textContent = 'on';
-            } else {
-                statusLabel.textContent = 'off';
-            }
+        document.getElementById('eventRegisterModal').addEventListener('shown.bs.modal', function () {
+            addEventListenerWithActiveStatus();
         });
 
-        // 이벤트를 제출할 때 필수값 검사하기
         document.getElementById('eventForm').addEventListener('submit', function (event) {
             event.preventDefault();
-            const status = !!statusCheckbox.checked;
-
-            const eventRegistrationData = {
-                eventItem: document.getElementById('name').value,
-                amount: document.getElementById('amount').value,
-                dueDate: document.getElementById('dueDate').value,
-                status: status === true ? 'ACTIVE' : 'INACTIVE',
-                description: document.getElementById('description').value
-            };
-
-            fetch('/events', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(eventRegistrationData),
-            })
-                .then(response => {
-                    if (response.status === 201) {
-                        alert('이벤트가 등록되었습니다');
-                        eventRegisterModal.hide();
-                        window.location.href = '/event-applicant';
-                    }
-                })
-                .catch(error => {
-                    console.error('이벤트 등록 중 오류 발생:', error);
-                });
+            const redirectUrl = '/event-fee-deposit-tracker'
+            callEventRegistrationApi(eventRegisterModal, redirectUrl);
         });
 
     }
@@ -306,4 +273,50 @@ function getActiveEvents() {
 function removeSeconds(dateTime) {
     const date = new Date(dateTime);
     return date.toISOString().slice(0, 16).replace('T', ' ');
+}
+
+function addEventListenerWithActiveStatus() {
+    const statusCheckbox = document.getElementById('status');
+    const statusLabel = document.getElementById('statusLabel');
+
+    statusCheckbox.addEventListener('change', function () {
+        if (statusCheckbox.checked) {
+            statusLabel.textContent = 'on';
+        } else {
+            statusLabel.textContent = 'off';
+        }
+    });
+
+    return statusCheckbox;
+}
+
+function callEventRegistrationApi(eventRegisterModal, redirectUrl) {
+    const statusCheckbox = document.getElementById('status')
+    const status = !!statusCheckbox.checked;
+
+    const eventRegistrationData = {
+        eventItem: document.getElementById('eventItem').value,
+        amount: document.getElementById('amount').value,
+        dueDate: document.getElementById('dueDate').value,
+        status: status === true ? 'ACTIVE' : 'INACTIVE',
+        description: document.getElementById('description').value
+    };
+
+    fetch('/events', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(eventRegistrationData),
+    })
+        .then(response => {
+            if (response.status === 201) {
+                alert('이벤트가 등록되었습니다');
+                eventRegisterModal.hide();
+                window.location.href = redirectUrl;
+            }
+        })
+        .catch(error => {
+            console.error('이벤트 등록 중 오류 발생:', error);
+        });
 }
