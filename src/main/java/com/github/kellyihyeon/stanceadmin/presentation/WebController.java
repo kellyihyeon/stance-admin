@@ -30,4 +30,9 @@ public class WebController {
     public String allBudgetBookTransactionTracker() {
         return "budgetBookTransactionTracker";
     }
+
+    @GetMapping("/event-tracker")
+    public String allEventTracker() {
+        return "eventTracker";
+    }
 }

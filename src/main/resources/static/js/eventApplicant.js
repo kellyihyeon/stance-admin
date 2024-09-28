@@ -96,8 +96,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
         });
 
-        // 이벤트 등록 제출 폼
-
     }
 
 });

@@ -75,7 +75,8 @@ function loadBudgetBookTransactions(page) {
                     tableBody.innerHTML += row;
                 });
 
-                renderPagination(data.paging.pageNumber, data.paging.totalPages);
+                generatePageButtons(data.paging.pageNumber, data.paging.totalPages);
+                loadPageData(data.paging.totalPages, loadBudgetBookTransactions);
 
             } catch (error) {
                 console.error('API 데이터를 불러오는 중 오류가 발생했습니다:', error);
@@ -84,48 +85,6 @@ function loadBudgetBookTransactions(page) {
         });
 }
 
-function renderPagination(pageNumber, totalPages) {
-    const page = pageNumber + 1;
-    const paginationContainer = document.getElementById('paginationContainer');
-    paginationContainer.innerHTML = '';
-
-    // Previous 버튼 만들기
-    const prevItem = document.createElement('li');
-    prevItem.classList.add('page-item');
-    prevItem.classList.toggle('disabled', page === 1);
-    prevItem.innerHTML = `<a class="page-link" href="#" data-page="${page - 1}"><</a>`;
-    paginationContainer.appendChild(prevItem);
-
-    // 페이지 번호들
-    for (let i = 1; i <= totalPages; i++) {
-        const pageItem = document.createElement('li');
-        pageItem.classList.add('page-item');
-        pageItem.classList.toggle('active', i === page);
-
-        pageItem.innerHTML = `<a class="page-link" href="#" data-page="${i}">${i}</a>`;
-        paginationContainer.appendChild(pageItem);
-    }
-
-    // Next 버튼 만들기
-    const nextItem = document.createElement('li');
-    nextItem.classList.add('page-item');
-    nextItem.classList.toggle('disabled', page === totalPages);
-    nextItem.innerHTML = `<a class="page-link" href="#" data-page="${page + 1}">></a>`;
-    paginationContainer.appendChild(nextItem);
-
-    // 페이지 번호 버튼을 클릭한 경우
-    document.querySelectorAll('.pagination a').forEach(link => {
-        link.addEventListener('click', function (event) {
-            event.preventDefault();
-
-            const selectedPage = parseInt(this.getAttribute('data-page'));
-            if (selectedPage >= 1 && selectedPage <= totalPages) {
-                loadBudgetBookTransactions(selectedPage);
-            }
-        });
-    });
-
-}
 
 function getTransactionType(type) {
     return type === "입금" ? "deposit" : "withdrawal";
