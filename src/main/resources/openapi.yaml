@@ -41,23 +41,23 @@ tags:
 
 # 계좌
 paths:
-  /auth/role/admin:
+  /auth/role/system-admin:
     post:
       tags:
         - auth
-      summary: 관리자인지 확인합니다.
-      operationId: checkAdminPermission
+      summary: 시스템 관리자인지 확인합니다.
+      operationId: checkSystemAdminPermission
       requestBody:
-        description: 관리자 여부를 확인하기 위해 필요한 key 입니다.
+        description: 시스템 관리자 여부를 확인하기 위해 필요한 key 입니다.
         content:
           application/json:
             schema:
               type: object
               properties:
-                adminKey:
+                permissionKey:
                   type: string
               required:
-                - adminKey
+                - permissionKey
       responses:
         '200':
           description: Successful response
