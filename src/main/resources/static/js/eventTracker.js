@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let path = window.location.pathname;
 
     if (path === '/event-tracker') {
+        const eventRegisterInEventModal = new bootstrap.Modal(document.getElementById('eventRegisterInEventModal'));
         loadEvents(1);
 
         document.getElementById('eventRegisterInEventModal').addEventListener('shown.bs.modal', function () {
@@ -9,12 +10,14 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         document.getElementById('eventForm').addEventListener('submit', function (event) {
-            const eventRegisterInEventModal = new bootstrap.Modal(document.getElementById('eventRegisterInEventModal'));
             event.preventDefault();
-            const redirectUrl = '/event-tracker'
-            callEventRegistrationApi(eventRegisterInEventModal, redirectUrl);
+
+            const permissionKeyCheckerModal = new bootstrap.Modal(document.getElementById('permissionKeyCheckerModal'));
+            permissionKeyCheckerModal.show();
         });
 
+        const redirectUrl = '/event-tracker'
+        processValidatePermissionKey(eventRegisterInEventModal, redirectUrl);
     }
 });
 
