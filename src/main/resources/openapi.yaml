@@ -6,6 +6,9 @@ info:
 servers:
   - url: https://admin.stance.com
 tags:
+  - name: auth
+    description: 인증
+
   - name: account
     description: 스탠스 계좌
 
@@ -38,6 +41,29 @@ tags:
 
 # 계좌
 paths:
+  /auth/role/admin:
+    post:
+      tags:
+        - auth
+      summary: 관리자인지 확인합니다.
+      operationId: checkAdminPermission
+      requestBody:
+        description: 관리자 여부를 확인하기 위해 필요한 key 입니다.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                adminKey:
+                  type: string
+              required:
+                - adminKey
+      responses:
+        '200':
+          description: Successful response
+        '401':
+          description: Unauthorized access
+
   /members/current:
     get:
       tags:
