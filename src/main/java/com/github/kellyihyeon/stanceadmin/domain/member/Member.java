@@ -58,4 +58,8 @@ public class Member {
     public static Member createWithId(Long id, String invitationCode, String email, String password, String name, MemberRole memberRole, UserPermissionLevel permissionLevel, MemberStatus memberStatus, RegistrationStatus registrationStatus, LocalDate joiningDate, LocalDateTime signUpDate) {
         return new Member(id, invitationCode, email, password, name, memberRole, permissionLevel, memberStatus, registrationStatus, joiningDate, signUpDate);
     }
+
+    public boolean isSystemAdmin(String adminKey) {
+        return this.password.equals(adminKey);
+    }
 }
