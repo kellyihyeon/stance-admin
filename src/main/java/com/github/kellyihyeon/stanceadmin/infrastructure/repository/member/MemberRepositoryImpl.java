@@ -27,4 +27,11 @@ public class MemberRepositoryImpl implements MemberRepository {
 
         return result;
     }
+
+    @Override
+    public Member findSystemAdminKey(UserPermissionLevel permissionLevel) {
+        MemberEntity systemAdmin = jpaRepository.findByPermissionLevel(permissionLevel);
+        return mapper.toDomain(systemAdmin);
+    }
+
 }

@@ -5,4 +5,7 @@ import java.util.List;
 public interface MemberRepository {
 
     List<Member> findParticipatingMembers(MemberRole memberRole, List<MemberStatus> memberStatuses, RegistrationStatus registrationStatus);
+
+    Member findSystemAdminKey(UserPermissionLevel permissionLevel);
+
 }
