@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         const redirectUrl = '/event-tracker'
-        processValidatePermissionKey(eventRegisterInEventModal, redirectUrl);
+        runProcessAfterPermissionKeyValidation(() => callEventRegistrationApi(eventRegisterInEventModal, redirectUrl));
     }
 });
 

@@ -235,7 +235,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         const redirectUrl = '/event-fee-deposit-tracker'
-        processValidatePermissionKey(eventRegisterModal, redirectUrl);
+        runProcessAfterPermissionKeyValidation(() => callEventRegistrationApi(eventRegisterModal, redirectUrl));
 
     }
 });
@@ -379,26 +379,6 @@ function validatePermissionKey(permissionKey) {
         body: JSON.stringify(permissionKey),
     })
         .then(response => response);
-}
-
-function processValidatePermissionKey(targetModal, redirectUrl) {
-    document.getElementById('permissionKeyCheckerForm').addEventListener('submit', function (event) {
-        event.preventDefault();
-
-        const inputPermissionKey = document.getElementById('password').value;
-
-        validatePermissionKey(inputPermissionKey)
-            .then(response => {
-                if (response.status === 200) {
-                    callEventRegistrationApi(targetModal, redirectUrl);
-                } else {
-                    alert('관리자 코드가 일치하지 않아요!');
-                }
-            })
-            .catch(error => {
-                console.error('관리자 코드 확인 중 오류 발생:', error);
-            });
-    });
 }
 
 function runProcessAfterPermissionKeyValidation(onSuccess) {
