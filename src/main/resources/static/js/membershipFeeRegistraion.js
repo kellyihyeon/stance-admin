@@ -49,13 +49,23 @@ document.addEventListener('DOMContentLoaded', function () {
                 selectedDepositors.push(checkedBox.value)
             });
 
-            const permissionKeyCheckerInMembershipFeeModal = new bootstrap.Modal(document.getElementById('permissionKeyCheckerInMembershipFeeModal'));
-            permissionKeyCheckerInMembershipFeeModal.show();
+            const membershipFeePermissionModal = new bootstrap.Modal(document.getElementById('membershipFeePermissionModal'));
+            membershipFeePermissionModal.show();
         });
 
-        const membershipFeeRegistrationModal = new bootstrap.Modal(document.getElementById('membershipFeeRegistrationModal'));
+        const membershipFeePermissionModal = new bootstrap.Modal(document.getElementById('membershipFeePermissionModal'));
         const redirectUrl = '/budget-book-registration';
-        runProcessAfterPermissionKeyValidation(() => saveMembershipFeeDeposit(membershipFeeRegistrationModal, redirectUrl));
+
+        document.getElementById('membershipFeePermissionForm').addEventListener('submit', function (event) {
+            console.log('Check membership fee permission.')
+            event.preventDefault();
+
+            const inputPermissionKey = document.getElementById('membershipFeePermissionPassword').value;
+            runProcessAfterPermissionKeyValidation(
+                inputPermissionKey,
+                () => saveMembershipFeeDeposit(membershipFeePermissionModal, redirectUrl)
+            );
+        });
 
         function saveMembershipFeeDeposit(membershipFeeRegistrationModal, redirectUrl) {
             const bodyData = {

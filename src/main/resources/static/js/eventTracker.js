@@ -2,7 +2,6 @@ document.addEventListener('DOMContentLoaded', function () {
     let path = window.location.pathname;
 
     if (path === '/event-tracker') {
-        const eventRegisterInEventModal = new bootstrap.Modal(document.getElementById('eventRegisterInEventModal'));
         loadEvents(1);
 
         document.getElementById('eventRegisterInEventModal').addEventListener('shown.bs.modal', function () {
@@ -16,8 +15,19 @@ document.addEventListener('DOMContentLoaded', function () {
             permissionKeyCheckerModal.show();
         });
 
+        const eventRegisterInEventModal = new bootstrap.Modal(document.getElementById('eventRegisterInEventModal'));
         const redirectUrl = '/event-tracker'
-        runProcessAfterPermissionKeyValidation(() => callEventRegistrationApi(eventRegisterInEventModal, redirectUrl));
+
+        document.getElementById('permissionKeyCheckerForm').addEventListener('submit', function (event) {
+            console.log('Check event registration permission in event tracker.')
+            event.preventDefault();
+
+            const inputPermissionKey = document.getElementById('password').value;
+            runProcessAfterPermissionKeyValidation(
+                inputPermissionKey,
+                () => callEventRegistrationApi(eventRegisterInEventModal, redirectUrl)
+            );
+        });
     }
 });
 

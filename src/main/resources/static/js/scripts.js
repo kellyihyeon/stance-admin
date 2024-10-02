@@ -234,8 +234,19 @@ document.addEventListener('DOMContentLoaded', function () {
             permissionKeyCheckerModal.show();
         });
 
+        const modal = new bootstrap.Modal(document.getElementById('eventRegisterModal'));
         const redirectUrl = '/event-fee-deposit-tracker'
-        runProcessAfterPermissionKeyValidation(() => callEventRegistrationApi(eventRegisterModal, redirectUrl));
+
+        document.getElementById('permissionKeyCheckerForm').addEventListener('submit', function (event) {
+            console.log('Check event registration permission in event fee deposit tracker.')
+            event.preventDefault();
+
+            const inputPermissionKey = document.getElementById('password').value;
+            runProcessAfterPermissionKeyValidation(
+                inputPermissionKey,
+                () => callEventRegistrationApi(modal, redirectUrl)
+            );
+        });
 
     }
 });
@@ -381,21 +392,16 @@ function validatePermissionKey(permissionKey) {
         .then(response => response);
 }
 
-function runProcessAfterPermissionKeyValidation(onSuccess) {
-    document.getElementById('permissionKeyCheckerForm').addEventListener('submit', function (event) {
-        event.preventDefault();
-
-        const inputPermissionKey = document.getElementById('password').value;
-        validatePermissionKey(inputPermissionKey)
-            .then(response => {
-                if (response.status === 200) {
-                    onSuccess();
-                } else {
-                    alert('관리자 코드가 일치하지 않아요!');
-                }
-            })
-            .catch(error => {
-                console.error('관리자 코드 확인 중 오류 발생:', error);
-            });
-    });
+function runProcessAfterPermissionKeyValidation(permissionKey, onSuccess) {
+    validatePermissionKey(permissionKey)
+        .then(response => {
+            if (response.status === 200) {
+                onSuccess();
+            } else {
+                alert('관리자 코드가 일치하지 않아요!');
+            }
+        })
+        .catch(error => {
+            console.error('관리자 코드 확인 중 오류 발생:', error);
+        });
 }
