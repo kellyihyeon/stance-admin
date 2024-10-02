@@ -16,14 +16,30 @@ document.addEventListener('DOMContentLoaded', function () {
                     );
                 })
                 .catch(error => console.error('/members/current 호출 중 에러 발생: ', error))
-
-            console.log(document.getElementById('cardHolderId').value)
         });
 
         document.getElementById('cardPaymentForm').addEventListener('submit', function (event) {
-            const cardPaymentRegistrationModal = new bootstrap.Modal(document.getElementById('cardPaymentRegistrationModal'));
             event.preventDefault();
 
+            const cardPaymentPermissionModal = new bootstrap.Modal(document.getElementById('cardPaymentPermissionModal'));
+            cardPaymentPermissionModal.show();
+        });
+
+        const cardPaymentRegistrationModal = new bootstrap.Modal(document.getElementById('cardPaymentRegistrationModal'));
+        const redirectUrl = '/budget-book-registration';
+
+        document.getElementById('cardPaymentPermissionForm').addEventListener('submit', function (event) {
+            console.log('Check card payment permission.')
+            event.preventDefault();
+
+            const inputPermissionKey = document.getElementById('cardPaymentPermissionPassword').value;
+            runProcessAfterPermissionKeyValidation(
+                inputPermissionKey,
+                () => saveCardPaymentWithdrawal(cardPaymentRegistrationModal, redirectUrl)
+            );
+        });
+
+        function saveCardPaymentWithdrawal(cardPaymentRegistrationModal, redirectUrl) {
             const bodyData = {
                 cardHolderId: document.getElementById('cardHolderId').value,
                 expenseCategory: document.getElementById('expenseCategory').value,
@@ -45,7 +61,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     if (response.status === 201) {
                         alert('카드 지출이 등록되었어요!');
                         cardPaymentRegistrationModal.hide();
-                        window.location.href = '/budget-book-registration';
+                        window.location.href = redirectUrl;
                     } else {
                         response.json().then(errorData => {
                             throw new Error(`Error ${response.status}: ${errorData.message || 'Unknown error'}`)
@@ -55,7 +71,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 .catch(error => {
                     console.error('카드 지출 등록 중 오류 발생:', error);
                 });
-        });
+
+        }
 
     }
 });

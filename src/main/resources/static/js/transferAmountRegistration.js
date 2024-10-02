@@ -3,9 +3,27 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (path === '/budget-book-registration') {
         document.getElementById('transferAmountForm').addEventListener('submit', function (event) {
-            const transferAmountRegistrationModal = new bootstrap.Modal(document.getElementById('transferAmountRegistrationModal'));
             event.preventDefault();
 
+            const transferPermissionModal = new bootstrap.Modal(document.getElementById('transferPermissionModal'));
+            transferPermissionModal.show();
+        });
+
+        const transferAmountRegistrationModal = new bootstrap.Modal(document.getElementById('transferAmountRegistrationModal'));
+        const redirectUrl = '/budget-book-registration';
+
+        document.getElementById('transferPermissionForm').addEventListener('submit', function (event) {
+            console.log('Check transfer permission.')
+            event.preventDefault();
+
+            const inputPermissionKey = document.getElementById('transferPermissionPassword').value;
+            runProcessAfterPermissionKeyValidation(
+                inputPermissionKey,
+                () => saveTransfer(transferAmountRegistrationModal, redirectUrl)
+            );
+        });
+
+        function saveTransfer(transferAmountRegistrationModal, redirectUrl) {
             const bodyData = {
                 expenseCategory: document.getElementById('transferCategory').value,
                 recipientName: document.getElementById('recipientName').value,
@@ -28,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     if (response.status === 201) {
                         alert('계좌이체 내역이 등록되었어요!');
                         transferAmountRegistrationModal.hide();
-                        window.location.href = '/budget-book-registration';
+                        window.location.href = redirectUrl;
                     } else {
                         response.json().then(errorData => {
                             throw new Error(`Error ${response.status}: ${errorData.message || 'Unknown error'}`)
@@ -39,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     console.error('계좌이체 내역 등록 중 오류 발생:', error);
                 });
 
-        });
+        }
     }
 
 })

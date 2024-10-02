@@ -9,12 +9,25 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         document.getElementById('eventForm').addEventListener('submit', function (event) {
-            const eventRegisterInEventModal = new bootstrap.Modal(document.getElementById('eventRegisterInEventModal'));
             event.preventDefault();
-            const redirectUrl = '/event-tracker'
-            callEventRegistrationApi(eventRegisterInEventModal, redirectUrl);
+
+            const permissionKeyCheckerModal = new bootstrap.Modal(document.getElementById('permissionKeyCheckerModal'));
+            permissionKeyCheckerModal.show();
         });
 
+        const eventRegisterInEventModal = new bootstrap.Modal(document.getElementById('eventRegisterInEventModal'));
+        const redirectUrl = '/event-tracker'
+
+        document.getElementById('permissionKeyCheckerForm').addEventListener('submit', function (event) {
+            console.log('Check event registration permission in event tracker.')
+            event.preventDefault();
+
+            const inputPermissionKey = document.getElementById('password').value;
+            runProcessAfterPermissionKeyValidation(
+                inputPermissionKey,
+                () => callEventRegistrationApi(eventRegisterInEventModal, redirectUrl)
+            );
+        });
     }
 });
 

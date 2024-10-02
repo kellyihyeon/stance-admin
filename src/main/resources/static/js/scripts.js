@@ -229,8 +229,23 @@ document.addEventListener('DOMContentLoaded', function () {
 
         document.getElementById('eventForm').addEventListener('submit', function (event) {
             event.preventDefault();
-            const redirectUrl = '/event-fee-deposit-tracker'
-            callEventRegistrationApi(eventRegisterModal, redirectUrl);
+
+            const permissionKeyCheckerModal = new bootstrap.Modal(document.getElementById('permissionKeyCheckerModal'));
+            permissionKeyCheckerModal.show();
+        });
+
+        const modal = new bootstrap.Modal(document.getElementById('eventRegisterModal'));
+        const redirectUrl = '/event-fee-deposit-tracker'
+
+        document.getElementById('permissionKeyCheckerForm').addEventListener('submit', function (event) {
+            console.log('Check event registration permission in event fee deposit tracker.')
+            event.preventDefault();
+
+            const inputPermissionKey = document.getElementById('password').value;
+            runProcessAfterPermissionKeyValidation(
+                inputPermissionKey,
+                () => callEventRegistrationApi(modal, redirectUrl)
+            );
         });
 
     }
@@ -363,4 +378,30 @@ function loadPageData(totalPages, loadDataFunc) {
             }
         });
     });
+}
+
+function validatePermissionKey(permissionKey) {
+    const url = '/auth/role/system-admin';
+    return fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(permissionKey),
+    })
+        .then(response => response);
+}
+
+function runProcessAfterPermissionKeyValidation(permissionKey, onSuccess) {
+    validatePermissionKey(permissionKey)
+        .then(response => {
+            if (response.status === 200) {
+                onSuccess();
+            } else {
+                alert('관리자 코드가 일치하지 않아요!');
+            }
+        })
+        .catch(error => {
+            console.error('관리자 코드 확인 중 오류 발생:', error);
+        });
 }

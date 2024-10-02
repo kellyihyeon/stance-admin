@@ -31,17 +31,41 @@ document.addEventListener('DOMContentLoaded', function () {
 
         });
 
+        let selectedApplicants = [];
         document.getElementById('eventFeeForm').addEventListener('submit', function (event) {
-            const eventFeeRegistrationModal = new bootstrap.Modal(document.getElementById('eventFeeRegistrationModal'));
             event.preventDefault();
 
-            const selectedApplicants = [];
+            selectedApplicants = [];
             const checkedBoxes = document.querySelectorAll('#applicantContainer input[type="checkbox"]:checked');
+
+            if (checkedBoxes.length === 0) {
+                alert('입금자를 선택해주세요!');
+                return;
+            }
 
             checkedBoxes.forEach(checkedBox => {
                 selectedApplicants.push(checkedBox.value)
             });
 
+            const eventFeePermissionModal = new bootstrap.Modal(document.getElementById('eventFeePermissionModal'));
+            eventFeePermissionModal.show();
+        });
+
+        const eventFeeRegistrationModal = new bootstrap.Modal(document.getElementById('eventFeeRegistrationModal'));
+        const redirectUrl = '/budget-book-registration';
+
+        document.getElementById('eventFeePermissionForm').addEventListener('submit', function (event) {
+            console.log('Check membership fee permission.')
+            event.preventDefault();
+
+            const inputPermissionKey = document.getElementById('eventFeePermissionPassword').value;
+            runProcessAfterPermissionKeyValidation(
+                inputPermissionKey,
+                () => saveEventFeeDeposit(eventFeeRegistrationModal, redirectUrl)
+            );
+        });
+
+        function saveEventFeeDeposit(eventFeeRegistrationModal, redirectUrl) {
             const bodyData = {
                 eventId: document.getElementById('eventId').value,
                 depositorIds: selectedApplicants,
@@ -62,7 +86,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     if (response.status === 201) {
                         alert('이벤트비가 등록되었어요!');
                         eventFeeRegistrationModal.hide();
-                        window.location.href = '/budget-book-registration';
+                        window.location.href = redirectUrl;
                     } else {
                         response.json().then(errorData => {
                             throw new Error(`Error ${response.status}: ${errorData.message || 'Unknown error'}`)
@@ -72,7 +96,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 .catch(error => {
                     console.error('이벤트비 등록 중 오류 발생:', error);
                 });
-        });
+
+        }
     }
 });
 

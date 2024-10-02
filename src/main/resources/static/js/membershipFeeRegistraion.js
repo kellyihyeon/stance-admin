@@ -31,17 +31,43 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('dueDate').value = `${year}-${paddedMonth}-${fixedDueDate}`;
         });
 
+        let selectedDepositors = [];
+
         document.getElementById('membershipFeeForm').addEventListener('submit', function (event) {
-            const membershipFeeRegistrationModal = new bootstrap.Modal(document.getElementById('membershipFeeRegistrationModal'));
             event.preventDefault();
 
-            const selectedDepositors = [];
+            // 초기화 되는 문제를 막기 위해 미리 저장
+            selectedDepositors = [];
             const checkedBoxes = document.querySelectorAll('#depositorContainer input[type="checkbox"]:checked');
+
+            if (checkedBoxes.length === 0) {
+                alert('입금자를 선택해주세요!');
+                return;
+            }
 
             checkedBoxes.forEach(checkedBox => {
                 selectedDepositors.push(checkedBox.value)
             });
 
+            const membershipFeePermissionModal = new bootstrap.Modal(document.getElementById('membershipFeePermissionModal'));
+            membershipFeePermissionModal.show();
+        });
+
+        const membershipFeePermissionModal = new bootstrap.Modal(document.getElementById('membershipFeePermissionModal'));
+        const redirectUrl = '/budget-book-registration';
+
+        document.getElementById('membershipFeePermissionForm').addEventListener('submit', function (event) {
+            console.log('Check membership fee permission.')
+            event.preventDefault();
+
+            const inputPermissionKey = document.getElementById('membershipFeePermissionPassword').value;
+            runProcessAfterPermissionKeyValidation(
+                inputPermissionKey,
+                () => saveMembershipFeeDeposit(membershipFeePermissionModal, redirectUrl)
+            );
+        });
+
+        function saveMembershipFeeDeposit(membershipFeeRegistrationModal, redirectUrl) {
             const bodyData = {
                 depositorIds: selectedDepositors,
                 depositDate: document.getElementById('depositDate').value,
@@ -60,24 +86,20 @@ document.addEventListener('DOMContentLoaded', function () {
                 body: JSON.stringify(bodyData),
             })
                 .then(response => {
+                    console.log('response data: ', response)
                     if (response.status === 201) {
                         alert('회비내역이 등록되었습니다');
                         membershipFeeRegistrationModal.hide();
-                        window.location.href = '/budget-book-registration';
+                        window.location.href = redirectUrl;
+                    } else {
+                        console.log('else response: ')
                     }
                 })
                 .catch(error => {
                     console.error('회비내역 등록 중 오류 발생:', error);
                 });
-        });
+        }
 
     }
 
 });
-
-function getCurrentYearMonth() {
-    const now = new Date();
-    const year = now.getFullYear();
-    const month = now.getMonth() + 1;
-    return { year, month };
-}

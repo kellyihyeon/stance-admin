@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             const checkbox = document.createElement('div');
                             checkbox.classList.add('form-check');
                             checkbox.innerHTML = `
-                                <input class="form-check-input" type="checkbox" value="${member.memberId}" id="member${member.id}">
+                                <input class="form-check-input" type="checkbox" value="${member.memberId}" id="member${member.memberId}">
                                 <label class="form-check-label" for="member${member.id}">${member.memberName}</label>
                              `;
                         applicantContainer.appendChild(checkbox);
@@ -59,17 +59,41 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
         });
 
+        let selectedApplicants = [];
         document.getElementById('eventApplicantForm').addEventListener('submit', function (event) {
-            const applicantRegisterModal = new bootstrap.Modal(document.getElementById('applicantRegisterModal'));
             event.preventDefault();
 
-            const selectedApplicants = [];
+            selectedApplicants = [];
             const checkedBoxes = document.querySelectorAll('#applicantContainer input[type="checkbox"]:checked');
+
+            if (checkedBoxes.length === 0) {
+                alert('입금자를 선택해주세요!');
+                return;
+            }
 
             checkedBoxes.forEach(checkedBox => {
                 selectedApplicants.push(checkedBox.value)
             });
 
+            const eventApplicantPermissionModal = new bootstrap.Modal(document.getElementById('eventApplicantPermissionModal'));
+            eventApplicantPermissionModal.show();
+        });
+
+        const applicantRegisterModal = new bootstrap.Modal(document.getElementById('applicantRegisterModal'));
+        const redirectUrl = '/event-applicant';
+
+        document.getElementById('eventApplicantPermissionForm').addEventListener('submit', function (event) {
+            console.log('Check event applicant permission.')
+            event.preventDefault();
+
+            const inputPermissionKey = document.getElementById('eventApplicantPermissionPassword').value;
+            runProcessAfterPermissionKeyValidation(
+                inputPermissionKey,
+                () => saveEventApplicant(applicantRegisterModal, redirectUrl)
+            );
+        });
+
+        function saveEventApplicant(applicantRegisterModal, redirectUrl) {
             const bodyData = {
                 eventId: document.getElementById('modalEventSelect').value,
                 applicantIds: selectedApplicants,
@@ -88,13 +112,13 @@ document.addEventListener('DOMContentLoaded', function () {
                     if (response.status === 201) {
                         alert('이벤트 신청자가 추가 되었습니다');
                         applicantRegisterModal.hide();
-                        window.location.href = '/event-applicant';
+                        window.location.href = redirectUrl;
                     }
                 })
                 .catch(error => {
                     console.error('이벤트 신청자 추가 중 오류 발생:', error);
                 });
-        });
+        }
 
     }
 

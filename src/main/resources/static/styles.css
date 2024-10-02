@@ -465,3 +465,8 @@ body {
     color: #ff3e1d;
     font-weight: bold;
 }
+
+#permissionKeyCheckerModal .modal-content {
+    border: 4px solid #02b875;
+}
+
