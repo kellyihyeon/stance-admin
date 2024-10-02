@@ -3,9 +3,27 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (path === '/budget-book-registration') {
         document.getElementById('bankDepositForm').addEventListener('submit', function (event) {
-            const bankDepositRegistrationModal = new bootstrap.Modal(document.getElementById('bankDepositRegistrationModal'));
             event.preventDefault();
 
+            const bankDepositPermissionModal = new bootstrap.Modal(document.getElementById('bankDepositPermissionModal'));
+            bankDepositPermissionModal.show();
+        });
+
+        const bankDepositRegistrationModal = new bootstrap.Modal(document.getElementById('bankDepositRegistrationModal'));
+        const redirectUrl = '/budget-book-registration';
+
+        document.getElementById('bankDepositPermissionForm').addEventListener('submit', function (event) {
+            console.log('Check bank deposit permission.')
+            event.preventDefault();
+
+            const inputPermissionKey = document.getElementById('bankDepositPermissionPassword').value;
+            runProcessAfterPermissionKeyValidation(
+                inputPermissionKey,
+                () => saveBankDeposit(bankDepositRegistrationModal, redirectUrl)
+            );
+        });
+
+        function saveBankDeposit(bankDepositRegistrationModal, redirectUrl) {
             const bodyData = {
                 type: document.getElementById('bankDepositType').value,
                 depositSource: document.getElementById('depositSource').value,
@@ -25,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     if (response.status === 201) {
                         alert('은행 입금비가 등록되었어요!');
                         bankDepositRegistrationModal.hide();
-                        window.location.href = '/budget-book-registration';
+                        window.location.href = redirectUrl;
                     } else {
                         response.json().then(errorData => {
                             throw new Error(`Error ${response.status}: ${errorData.message || 'Unknown error'}`)
@@ -35,7 +53,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 .catch(error => {
                     console.error('은행 입금비 등록 중 오류 발생:', error);
                 });
-        });
+        }
+
     }
 
 });
