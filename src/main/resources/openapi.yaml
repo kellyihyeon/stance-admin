@@ -225,7 +225,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/TransactionIdRequest'
+              $ref: '#/components/schemas/TransactionStartRequest'
       responses:
         '204':
           description: Balance recalculated successfully.
@@ -693,15 +693,15 @@ components:
         - content
         - paging
 
-    TransactionIdRequest:
+    TransactionStartRequest:
       type: object
       properties:
-        fromTransactionId:
-          type: integer
-          format: int64
-          description: 재계산을 시작할 ID
+        fromTransactionDate:
+          type: string
+          format: date
+          description: 재계산을 시작할 거래일
       required:
-        - fromTransactionId
+        - fromTransactionDate
 
     EventFeeDepositResponse:
       type: object

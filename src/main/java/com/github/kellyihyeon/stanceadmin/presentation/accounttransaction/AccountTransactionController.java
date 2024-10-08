@@ -2,6 +2,7 @@ package com.github.kellyihyeon.stanceadmin.presentation.accounttransaction;
 
 import com.github.kellyihyeon.stanceadmin.apis.AccountTransactionApi;
 import com.github.kellyihyeon.stanceadmin.application.accounttransaction.AccountTransactionQueryService;
+import com.github.kellyihyeon.stanceadmin.application.accounttransaction.AccountTransactionService;
 import com.github.kellyihyeon.stanceadmin.models.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -15,6 +16,7 @@ import java.util.List;
 public class AccountTransactionController implements AccountTransactionApi {
 
     private final AccountTransactionQueryService queryService;
+    private final AccountTransactionService service;
 
     @Override
     public ResponseEntity<PagedAccountTransactionResponse> getAllAccountTransactions(Integer page, Integer size) {
@@ -40,7 +42,7 @@ public class AccountTransactionController implements AccountTransactionApi {
     }
 
     @Override
-    public ResponseEntity<Void> recalculateBalanceFrom(TransactionIdRequest transactionIdRequest) {
+    public ResponseEntity<Void> recalculateBalanceFrom(TransactionStartRequest transactionStartRequest) {
         return null;
     }
 
