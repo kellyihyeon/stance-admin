@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 @Slf4j
@@ -53,6 +54,6 @@ public class AccountTransactionService {
     }
 
     public void recalculateBalanceFrom(LocalDate fromTransactionDate) {
-        repository.updateBalanceFrom(fromTransactionDate);
+        List<AccountTransaction> transactions = repository.findAccountTransactionFrom(fromTransactionDate);
     }
 }

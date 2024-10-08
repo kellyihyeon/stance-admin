@@ -1,6 +1,7 @@
 package com.github.kellyihyeon.stanceadmin.domain.accounttransaction;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public interface AccountTransactionRepository {
 
@@ -8,6 +9,6 @@ public interface AccountTransactionRepository {
 
     AccountTransaction findLatestAccountTransaction();
 
-    void updateBalanceFrom(LocalDate fromTransactionDate);
+    List<AccountTransaction> findAccountTransactionFrom(LocalDate fromTransactionDate);
 
 }

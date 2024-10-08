@@ -1,6 +1,6 @@
 package com.github.kellyihyeon.stanceadmin.infrastructure.repository.accounttransaction;
 
-import com.github.kellyihyeon.stanceadmin.application.accounttransaction.AccountTransactionMapper;
+import com.github.kellyihyeon.stanceadmin.application.accounttransaction.AccountTransactionMapperImpl;
 import com.github.kellyihyeon.stanceadmin.domain.accounttransaction.AccountTransaction;
 import com.github.kellyihyeon.stanceadmin.domain.accounttransaction.AccountTransactionRepository;
 import com.github.kellyihyeon.stanceadmin.infrastructure.entity.accounttransaction.AccountTransactionEntity;
@@ -15,21 +15,23 @@ import java.util.List;
 public class AccountTransactionRepositoryImpl implements AccountTransactionRepository {
 
     private final JpaAccountTransactionEntityRepository jpaRepository;
+    private final AccountTransactionMapperImpl mapper;
 
     @Override
     public void saveAccountTransaction(AccountTransaction accountTransaction) {
-        AccountTransactionEntity entity = AccountTransactionMapper.toEntity(accountTransaction);
+        AccountTransactionEntity entity = mapper.toEntity(accountTransaction);
         jpaRepository.save(entity);
     }
 
     @Override
     public AccountTransaction findLatestAccountTransaction() {
         AccountTransactionEntity entity = jpaRepository.findFirstByOrderByCreatedAtDesc();
-        return AccountTransactionMapper.toDomain(entity);
+        return mapper.toDomain(entity);
     }
 
     @Override
-    public void updateBalanceFrom(LocalDate fromTransactionDate) {
+    public List<AccountTransaction> findAccountTransactionFrom(LocalDate fromTransactionDate) {
         List<AccountTransactionEntity> transactions = jpaRepository.findByTransactionDateGreaterThanEqualOrderByTransactionDateAsc(fromTransactionDate);
+        return mapper.toDomains(transactions);
     }
 }
