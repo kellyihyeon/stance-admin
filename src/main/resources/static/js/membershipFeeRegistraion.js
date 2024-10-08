@@ -32,6 +32,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         let selectedDepositors = [];
+        let dueDate = '';
 
         document.getElementById('membershipFeeForm').addEventListener('submit', function (event) {
             event.preventDefault();
@@ -48,6 +49,8 @@ document.addEventListener('DOMContentLoaded', function () {
             checkedBoxes.forEach(checkedBox => {
                 selectedDepositors.push(checkedBox.value)
             });
+
+            dueDate = document.getElementById('dueDate').value;
 
             const membershipFeePermissionModal = new bootstrap.Modal(document.getElementById('membershipFeePermissionModal'));
             membershipFeePermissionModal.show();
@@ -72,7 +75,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 depositorIds: selectedDepositors,
                 depositDate: document.getElementById('depositDate').value,
                 amount: document.getElementById('amount').value,
-                dueDate: document.getElementById('dueDate').value,
+                dueDate,
                 memberType: document.getElementById('membershipType').value,
                 description: document.getElementById('description').value
             }
