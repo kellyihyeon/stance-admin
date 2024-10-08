@@ -74,4 +74,25 @@ public class AccountTransactionMapperImpl implements AccountTransactionMapper {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public List<AccountTransactionEntity> toEntities(List<AccountTransaction> domains) {
+        return domains.stream()
+                .map(domain ->
+                        AccountTransactionEntity.createWithId(
+                                domain.getId(),
+                                domain.getAccountId(),
+                                TransactionIdentity.create(
+                                        domain.getTransactionId(),
+                                        domain.getTransactionType(),
+                                        domain.getTransactionSubType(),
+                                        domain.getTransactionDate()
+                                ),
+                                domain.getAmount(),
+                                domain.getBalance(),
+                                domain.getCreatedAt(),
+                                domain.getCreatorId()
+                        )
+                ).collect(Collectors.toList());
+    }
+
 }

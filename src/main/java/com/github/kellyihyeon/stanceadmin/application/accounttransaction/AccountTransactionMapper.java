@@ -11,6 +11,8 @@ public interface AccountTransactionMapper {
 
     AccountTransaction toDomain(AccountTransactionEntity entity);
 
-    List<AccountTransaction> toDomains(List<AccountTransactionEntity> transactions);
+    List<AccountTransaction> toDomains(List<AccountTransactionEntity> entities);
+
+    List<AccountTransactionEntity> toEntities(List<AccountTransaction> domains);
 
 }

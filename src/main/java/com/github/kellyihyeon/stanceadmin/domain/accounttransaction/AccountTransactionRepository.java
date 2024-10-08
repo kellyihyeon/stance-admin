@@ -11,4 +11,6 @@ public interface AccountTransactionRepository {
 
     List<AccountTransaction> findAccountTransactionFrom(LocalDate fromTransactionDate);
 
+    void saveAll(List<AccountTransaction> transactions);
+
 }

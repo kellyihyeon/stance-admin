@@ -34,4 +34,9 @@ public class AccountTransactionRepositoryImpl implements AccountTransactionRepos
         List<AccountTransactionEntity> transactions = jpaRepository.findByTransactionDateGreaterThanEqualOrderByTransactionDateAsc(fromTransactionDate);
         return mapper.toDomains(transactions);
     }
+
+    @Override
+    public void saveAll(List<AccountTransaction> transactions) {
+        jpaRepository.saveAll(mapper.toEntities(transactions));
+    }
 }

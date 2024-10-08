@@ -55,5 +55,16 @@ public class AccountTransactionService {
 
     public void recalculateBalanceFrom(LocalDate fromTransactionDate) {
         List<AccountTransaction> transactions = repository.findAccountTransactionFrom(fromTransactionDate);
+
+        final int START = 0;
+        Double currentBalance = transactions.get(START).getBalance();
+
+        for (int i = 1; i < transactions.size(); i++) {
+            AccountTransaction target = transactions.get(i);
+            currentBalance = target.calculateBalance(BigDecimal.valueOf(currentBalance)).doubleValue();
+        }
+
+        repository.saveAll(transactions);
+
     }
 }
