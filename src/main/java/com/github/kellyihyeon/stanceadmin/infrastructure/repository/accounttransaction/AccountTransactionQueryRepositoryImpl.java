@@ -70,7 +70,10 @@ public class AccountTransactionQueryRepositoryImpl implements AccountTransaction
                 .leftJoin(eventEntity)
                 .on(accountTransactionEntity.transactionSubType.eq(TransactionSubType.EVENT)
                         .and(eventEntity.id.eq(eventDepositTransactionEntity.eventId)))
-                .orderBy(accountTransactionEntity.transactionDate.desc());
+                .orderBy(
+                        accountTransactionEntity.transactionDate.desc(),
+                        accountTransactionEntity.createdAt.desc()
+                );
     }
 
     private JPAQuery<AccountTransactionProjection> buildSelectQuery() {
