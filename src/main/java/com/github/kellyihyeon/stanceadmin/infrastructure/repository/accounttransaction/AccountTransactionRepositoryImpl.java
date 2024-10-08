@@ -7,6 +7,9 @@ import com.github.kellyihyeon.stanceadmin.infrastructure.entity.accounttransacti
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
+import java.util.List;
+
 @Repository
 @RequiredArgsConstructor
 public class AccountTransactionRepositoryImpl implements AccountTransactionRepository {
@@ -23,5 +26,10 @@ public class AccountTransactionRepositoryImpl implements AccountTransactionRepos
     public AccountTransaction findLatestAccountTransaction() {
         AccountTransactionEntity entity = jpaRepository.findFirstByOrderByCreatedAtDesc();
         return AccountTransactionMapper.toDomain(entity);
+    }
+
+    @Override
+    public void updateBalanceFrom(LocalDate fromTransactionDate) {
+        List<AccountTransactionEntity> transactions = jpaRepository.findByTransactionDateGreaterThanEqualOrderByTransactionDateAsc(fromTransactionDate);
     }
 }

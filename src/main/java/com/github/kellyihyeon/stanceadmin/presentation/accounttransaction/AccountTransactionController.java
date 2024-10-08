@@ -4,11 +4,13 @@ import com.github.kellyihyeon.stanceadmin.apis.AccountTransactionApi;
 import com.github.kellyihyeon.stanceadmin.application.accounttransaction.AccountTransactionQueryService;
 import com.github.kellyihyeon.stanceadmin.application.accounttransaction.AccountTransactionService;
 import com.github.kellyihyeon.stanceadmin.models.*;
+import com.github.kellyihyeon.stanceadmin.presentation.TimeConverter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -43,7 +45,8 @@ public class AccountTransactionController implements AccountTransactionApi {
 
     @Override
     public ResponseEntity<Void> recalculateBalanceFrom(TransactionStartRequest transactionStartRequest) {
-        return null;
+        service.recalculateBalanceFrom(TimeConverter.convertToLocalDate(transactionStartRequest.getFromTransactionDate()));
+        return ResponseEntity.created(URI.create("")).build();
     }
 
 }
