@@ -10,5 +10,5 @@ public interface JpaAccountTransactionEntityRepository extends JpaRepository<Acc
 
     AccountTransactionEntity findFirstByOrderByCreatedAtDesc();
 
-    List<AccountTransactionEntity> findByTransactionDateGreaterThanEqualOrderByTransactionDateAsc(LocalDate fromTransactionDate);
+    List<AccountTransactionEntity> findByTransactionDateGreaterThanEqualOrderByTransactionDateAscCreatedAtAsc(LocalDate fromTransactionDate);
 }
