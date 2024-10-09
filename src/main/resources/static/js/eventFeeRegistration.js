@@ -2,6 +2,8 @@ document.addEventListener('DOMContentLoaded', function () {
     let path = window.location.pathname;
 
     if (path === '/budget-book-registration') {
+        let currentSelectedEventId = '';
+
         document.getElementById('eventFeeRegistrationModal').addEventListener('shown.bs.modal', function () {
             const status = 'ACTIVE'
             const eventSelectBox = document.getElementById('eventId')
@@ -25,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 .catch(error => console.error('/events/ACTIVE 호출 중 에러 발생:', error));
 
             document.getElementById('eventId').addEventListener('change', function (event) {
-                const currentSelectedEventId = event.target.value;
+                currentSelectedEventId = event.target.value;
                 createEventApplicantCheckBox(currentSelectedEventId);
             });
 
@@ -67,7 +69,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         function saveEventFeeDeposit(eventFeeRegistrationModal, redirectUrl) {
             const bodyData = {
-                eventId: document.getElementById('eventId').value,
+                eventId: currentSelectedEventId,
                 depositorIds: selectedApplicants,
                 depositDate: document.getElementById('eventFeeDepositDate').value,
                 amount: document.getElementById('eventFee').value,
