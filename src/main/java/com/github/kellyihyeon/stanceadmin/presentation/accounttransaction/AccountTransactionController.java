@@ -2,15 +2,15 @@ package com.github.kellyihyeon.stanceadmin.presentation.accounttransaction;
 
 import com.github.kellyihyeon.stanceadmin.apis.AccountTransactionApi;
 import com.github.kellyihyeon.stanceadmin.application.accounttransaction.AccountTransactionQueryService;
-import com.github.kellyihyeon.stanceadmin.models.MonthlySummary;
-import com.github.kellyihyeon.stanceadmin.models.PagedAccountTransactionResponse;
-import com.github.kellyihyeon.stanceadmin.models.TopDeposits;
-import com.github.kellyihyeon.stanceadmin.models.TopExpenses;
+import com.github.kellyihyeon.stanceadmin.application.accounttransaction.AccountTransactionService;
+import com.github.kellyihyeon.stanceadmin.models.*;
+import com.github.kellyihyeon.stanceadmin.presentation.TimeConverter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -18,6 +18,7 @@ import java.util.List;
 public class AccountTransactionController implements AccountTransactionApi {
 
     private final AccountTransactionQueryService queryService;
+    private final AccountTransactionService service;
 
     @Override
     public ResponseEntity<PagedAccountTransactionResponse> getAllAccountTransactions(Integer page, Integer size) {
@@ -41,4 +42,11 @@ public class AccountTransactionController implements AccountTransactionApi {
     public ResponseEntity<List<TopExpenses>> getTop3Expenses(Integer year, Integer month) {
         return null;
     }
+
+    @Override
+    public ResponseEntity<Void> recalculateBalanceFrom(TransactionStartRequest transactionStartRequest) {
+        service.recalculateBalanceFrom(TimeConverter.convertToLocalDate(transactionStartRequest.getFromTransactionDate()));
+        return ResponseEntity.created(URI.create("")).build();
+    }
+
 }

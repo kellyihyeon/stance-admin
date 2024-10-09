@@ -1,46 +1,18 @@
 package com.github.kellyihyeon.stanceadmin.application.accounttransaction;
 
 import com.github.kellyihyeon.stanceadmin.domain.accounttransaction.AccountTransaction;
-import com.github.kellyihyeon.stanceadmin.domain.accounttransaction.TransactionIdentity;
 import com.github.kellyihyeon.stanceadmin.infrastructure.entity.accounttransaction.AccountTransactionEntity;
 
-import java.util.Objects;
+import java.util.List;
 
-public class AccountTransactionMapper {
+public interface AccountTransactionMapper {
 
-    public static AccountTransactionEntity toEntity(AccountTransaction domain) {
-        return new AccountTransactionEntity(
-                domain.getAccountId(),
-                domain.getTransactionType(),
-                domain.getTransactionId(),
-                domain.getTransactionSubType(),
-                domain.getTransactionDate(),
-                domain.getAmount(),
-                domain.getBalance(),
-                domain.getCreatedAt(),
-                domain.getCreatorId()
-        );
-    }
+    AccountTransactionEntity toEntity(AccountTransaction domain);
 
-    public static AccountTransaction toDomain(AccountTransactionEntity entity) {
-        if (Objects.isNull(entity)) {
-            return null;
-        }
-        TransactionIdentity transactionIdentity = TransactionIdentity.create(
-                entity.getTransactionId(),
-                entity.getTransactionType(),
-                entity.getTransactionSubType(),
-                entity.getTransactionDate()
-        );
+    AccountTransaction toDomain(AccountTransactionEntity entity);
 
-        return AccountTransaction.createWithId(
-                entity.getId(),
-                entity.getAccountId(),
-                transactionIdentity,
-                entity.getAmount(),
-                entity.getBalance(),
-                entity.getCreatedAt(),
-                entity.getCreatorId()
-        );
-    }
+    List<AccountTransaction> toDomains(List<AccountTransactionEntity> entities);
+
+    List<AccountTransactionEntity> toEntities(List<AccountTransaction> domains);
+
 }

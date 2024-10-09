@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 @Slf4j
@@ -49,5 +51,20 @@ public class AccountTransactionService {
         }
 
         return BigDecimal.valueOf(latestAccountTransaction.getBalance());
+    }
+
+    public void recalculateBalanceFrom(LocalDate fromTransactionDate) {
+        List<AccountTransaction> transactions = repository.findAccountTransactionFrom(fromTransactionDate);
+
+        final int START = 0;
+        Double currentBalance = transactions.get(START).getBalance();
+
+        for (int i = 1; i < transactions.size(); i++) {
+            AccountTransaction target = transactions.get(i);
+            currentBalance = target.calculateBalance(BigDecimal.valueOf(currentBalance)).doubleValue();
+        }
+
+        repository.saveAll(transactions);
+
     }
 }
