@@ -5,10 +5,7 @@ import com.github.kellyihyeon.stanceadmin.application.member.MemberMapper;
 import com.github.kellyihyeon.stanceadmin.application.membershipfeedeposit.MembershipFeeDepositRegistryMapper;
 import com.github.kellyihyeon.stanceadmin.application.membershipfeedeposit.dto.DepositRegistryData;
 import com.github.kellyihyeon.stanceadmin.application.membershipfeedeposit.dto.QDepositRegistryData;
-import com.github.kellyihyeon.stanceadmin.domain.member.Member;
-import com.github.kellyihyeon.stanceadmin.domain.member.MemberRole;
-import com.github.kellyihyeon.stanceadmin.domain.member.MemberType;
-import com.github.kellyihyeon.stanceadmin.domain.member.RegistrationStatus;
+import com.github.kellyihyeon.stanceadmin.domain.member.*;
 import com.github.kellyihyeon.stanceadmin.domain.membershipfeedeposit.MembershipFeeDepositRegistry;
 import com.github.kellyihyeon.stanceadmin.domain.membershipfeedeposit.MembershipFeeDepositRepository;
 import com.github.kellyihyeon.stanceadmin.domain.membershipfeedeposit.MembershipFeeDepositTransaction;
@@ -82,6 +79,7 @@ public class MembershipFeeDepositRepositoryImpl implements MembershipFeeDepositR
                         .and(memberShipFeeDepositTransactionEntity.dueDate.between(startDate, endDate))
                 )
                 .where(memberEntity.memberRole.eq(MemberRole.MEMBER)
+                        .and(memberEntity.memberStatus.in(MemberStatus.ACTIVE, MemberStatus.DORMANT))
                         .and(memberEntity.registrationStatus.eq(RegistrationStatus.REGISTERED))
                 )
                 .fetch();
