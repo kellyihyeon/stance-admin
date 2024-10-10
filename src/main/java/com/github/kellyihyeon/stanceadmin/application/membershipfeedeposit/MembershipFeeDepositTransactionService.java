@@ -37,9 +37,9 @@ public class MembershipFeeDepositTransactionService {
     public List<MembershipFeePayerResponse> getMembershipFeePayersByDepositStatus(DepositStatus status, DepositDateCondition depositDateCondition) {
         validateDepositDate(depositDateCondition);
 
-        YearMonth yearMonth = YearMonth.of(depositDateCondition.year(), depositDateCondition.month());
-        LocalDate startDate = yearMonth.atDay(1);
-        LocalDate endDate = yearMonth.atEndOfMonth();
+        YearMonth dueDate = YearMonth.of(depositDateCondition.year(), depositDateCondition.month() - 1);
+        LocalDate startDate = dueDate.atDay(1);
+        LocalDate endDate = dueDate.atEndOfMonth();
 
         List<MembershipFeeDepositRegistry> registries = repository.getDepositRegistries(startDate, endDate);
         List<MembershipFeeDepositRegistry> confirmedDepositRecords = checkDepositInformation(registries);
