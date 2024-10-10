@@ -28,7 +28,7 @@ public class EventQueryRepositoryImpl implements EventQueryRepository {
 
     @Override
     public List<Event> getEventsByStatus(EventStatus eventStatus) {
-        List<EventEntity> entities = jpaRepository.findByStatusOrderByDueDate(eventStatus);
+        List<EventEntity> entities = jpaRepository.findByStatusOrderByDueDateDesc(eventStatus);
         return mapper.toDomains(entities);
     }
 
