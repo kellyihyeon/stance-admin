@@ -27,6 +27,8 @@ public class AccountTransactionProjection {
 
     private Double balance;
 
+    private String memo;
+
     private LocalDateTime createdAt;
 
 }
