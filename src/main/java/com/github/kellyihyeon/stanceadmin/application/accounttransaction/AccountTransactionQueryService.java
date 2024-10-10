@@ -38,6 +38,7 @@ public class AccountTransactionQueryService {
                     response.transactionParty(projection.getTransactionParty());
                     response.amount(projection.getAmount());
                     response.balance(projection.getBalance());
+                    response.memo(projection.getMemo());
                     response.createdAt(Timestamp.valueOf(projection.getCreatedAt()));
 
                     return response;

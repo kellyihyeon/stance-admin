@@ -105,6 +105,17 @@ public class AccountTransactionQueryRepositoryImpl implements AccountTransaction
                                         .then(eventEntity.eventItem.stringValue())
                                         .otherwise(accountTransactionEntity.transactionSubType.stringValue())
                                         .as("detailType"),
+                                new CaseBuilder()
+                                        .when(accountTransactionEntity.transactionSubType.eq(TransactionSubType.MEMBERSHIP_FEE))
+                                        .then(memberShipFeeDepositTransactionEntity.description)
+                                        .when(accountTransactionEntity.transactionSubType.eq(TransactionSubType.EVENT))
+                                        .then(eventDepositTransactionEntity.description)
+                                        .when(accountTransactionEntity.transactionSubType.eq(TransactionSubType.CARD_PAYMENT))
+                                        .then(cardPaymentTransactionEntity.description)
+                                        .when(accountTransactionEntity.transactionSubType.eq(TransactionSubType.TRANSFER))
+                                        .then(transferTransactionEntity.description)
+                                        .otherwise(Expressions.constant(""))
+                                        .as("memo"),
                                 accountTransactionEntity.createdAt
                         )
 

@@ -915,6 +915,8 @@ components:
         balance:
           type: number
           format: double
+        memo:
+          type: string
         createdAt:
           type: string
           format: date-time
@@ -928,6 +930,7 @@ components:
         - amount
         - balance
         - createdAt
+        - memo
 
     EventSummaryResponse:
       type: object
