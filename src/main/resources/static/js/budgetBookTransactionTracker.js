@@ -69,6 +69,7 @@ function loadBudgetBookTransactions(page) {
                         <td>${transaction.transactionParty}</td>
                         <td><span class="amount ${transactionType}">${amount}</span></td>
                         <td>${transaction.balance.toLocaleString()}원</td>
+                        <td>${transaction.memo}</td>
                         <td>${formattedDate}</td>
                     </tr>
                 `;
