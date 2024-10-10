@@ -341,6 +341,11 @@ function generatePageButtons(pageNumber, totalPages) {
     const paginationContainer = document.getElementById('paginationContainer');
     paginationContainer.innerHTML = '';
 
+    // 페이지 그룹 만들기
+    const maxPageButtons = 10;
+    const groupStartPage = Math.floor((page - 1) / maxPageButtons) * maxPageButtons + 1;
+    const groupEndPage = Math.min(groupStartPage + maxPageButtons - 1, totalPages);
+
     // Previous 버튼 만들기
     const prevItem = document.createElement('li');
     prevItem.classList.add('page-item');
@@ -348,8 +353,8 @@ function generatePageButtons(pageNumber, totalPages) {
     prevItem.innerHTML = `<a class="page-link" href="#" data-page="${page - 1}"><</a>`;
     paginationContainer.appendChild(prevItem);
 
-    // 페이지 번호들
-    for (let i = 1; i <= totalPages; i++) {
+    // 페이지 번호들 만들기
+    for (let i = groupStartPage; i <= groupEndPage; i++) {
         const pageItem = document.createElement('li');
         pageItem.classList.add('page-item');
         pageItem.classList.toggle('active', i === page);
