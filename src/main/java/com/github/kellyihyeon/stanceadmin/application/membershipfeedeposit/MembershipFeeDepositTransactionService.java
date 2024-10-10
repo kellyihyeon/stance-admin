@@ -3,11 +3,13 @@ package com.github.kellyihyeon.stanceadmin.application.membershipfeedeposit;
 import com.github.kellyihyeon.stanceadmin.application.accounttransaction.AccountTransactionService;
 import com.github.kellyihyeon.stanceadmin.application.accounttransaction.dto.MemberShipFeeDepositCreation;
 import com.github.kellyihyeon.stanceadmin.application.member.MemberService;
+import com.github.kellyihyeon.stanceadmin.application.member.dto.MemberSummaryResponse;
 import com.github.kellyihyeon.stanceadmin.application.membershipfeedeposit.dto.DepositDateCondition;
 import com.github.kellyihyeon.stanceadmin.domain.accounttransaction.TransactionIdentity;
 import com.github.kellyihyeon.stanceadmin.domain.accounttransaction.TransactionSubType;
 import com.github.kellyihyeon.stanceadmin.domain.accounttransaction.TransactionType;
 import com.github.kellyihyeon.stanceadmin.domain.eventapplicantregistry.DepositStatus;
+import com.github.kellyihyeon.stanceadmin.domain.member.Member;
 import com.github.kellyihyeon.stanceadmin.domain.membershipfeedeposit.MembershipFeeDepositRegistry;
 import com.github.kellyihyeon.stanceadmin.domain.membershipfeedeposit.MembershipFeeDepositRepository;
 import com.github.kellyihyeon.stanceadmin.domain.membershipfeedeposit.MembershipFeeDepositTransaction;
@@ -98,13 +100,15 @@ public class MembershipFeeDepositTransactionService {
     public DepositRateResponse getDepositRate(DepositDateCondition depositDateCondition) {
         validateDepositDate(depositDateCondition);
 
-        YearMonth yearMonth = YearMonth.of(depositDateCondition.year(), depositDateCondition.month());
-        LocalDate startDate = yearMonth.atDay(1);
-        LocalDate endDate = yearMonth.atEndOfMonth();
+        YearMonth dueDate = YearMonth.of(depositDateCondition.year(), depositDateCondition.month() - 1);
+        LocalDate startDate = dueDate.atDay(1);
+        LocalDate endDate = dueDate.atEndOfMonth();
 
-        int totalPaidMembers = repository.findPaidMembers(startDate, endDate).size();
-        int totalParticipatingMembers = memberService.getParticipatingMembers().size();
+        List<Member> paidMembers = repository.findPaidMembers(startDate, endDate);
+        List<MemberSummaryResponse> participatingMembers = memberService.getParticipatingMembers();
 
+        int totalPaidMembers = paidMembers.size();
+        int totalParticipatingMembers = participatingMembers.size();
         int depositRatePercentage = calculateDepositRate(totalPaidMembers, totalParticipatingMembers);
 
         return new DepositRateResponse(

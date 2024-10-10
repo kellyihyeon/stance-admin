@@ -7,6 +7,7 @@ import com.github.kellyihyeon.stanceadmin.application.membershipfeedeposit.dto.D
 import com.github.kellyihyeon.stanceadmin.application.membershipfeedeposit.dto.QDepositRegistryData;
 import com.github.kellyihyeon.stanceadmin.domain.member.Member;
 import com.github.kellyihyeon.stanceadmin.domain.member.MemberRole;
+import com.github.kellyihyeon.stanceadmin.domain.member.MemberType;
 import com.github.kellyihyeon.stanceadmin.domain.member.RegistrationStatus;
 import com.github.kellyihyeon.stanceadmin.domain.membershipfeedeposit.MembershipFeeDepositRegistry;
 import com.github.kellyihyeon.stanceadmin.domain.membershipfeedeposit.MembershipFeeDepositRepository;
@@ -52,6 +53,7 @@ public class MembershipFeeDepositRepositoryImpl implements MembershipFeeDepositR
                 .on(memberEntity.id.eq(memberShipFeeDepositTransactionEntity.depositorId)
                 )
                 .where(memberEntity.memberRole.eq(MemberRole.MEMBER)
+                        .and(memberShipFeeDepositTransactionEntity.memberType.in(MemberType.ACTIVE, MemberType.DORMANT))
                         .and(memberShipFeeDepositTransactionEntity.dueDate.between(startDate, endDate))
                         .and(memberEntity.registrationStatus.eq(RegistrationStatus.REGISTERED))
                 )
