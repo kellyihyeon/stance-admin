@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(data => {
                 try {
                     const tableBody = document.getElementById('transaction-table-body');
-                    const transactions = data.content.slice(0, 7);
+                    const transactions = data.content.slice(0, 15);
 
                     tableBody.innerHTML = '';
                     transactions.forEach(transaction => {
@@ -69,6 +69,7 @@ function loadBudgetBookTransactions(page) {
                         <td>${transaction.transactionParty}</td>
                         <td><span class="amount ${transactionType}">${amount}</span></td>
                         <td>${transaction.balance.toLocaleString()}원</td>
+                        <td>${transaction.memo}</td>
                         <td>${formattedDate}</td>
                     </tr>
                 `;

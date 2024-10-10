@@ -202,9 +202,15 @@ body {
     margin-bottom: 0;
 }
 
+
+.table-container {
+    overflow-x: scroll;
+    white-space: nowrap;
+}
+
 .table {
-    margin-top: 10px; /* 테이블 위 여백 */
-    margin-bottom: 20px; /* 테이블 아래 여백 */
+    margin-top: 10px;
+    margin-bottom: 20px;
     border-spacing: 0 10px;
 }
 
@@ -217,7 +223,7 @@ body {
 
 .table tbody tr td{
     color: #646e78;
-    font-size: .85rem;
+    font-size: 1rem;
 }
 
 .table td, .table th {
