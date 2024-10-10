@@ -82,6 +82,7 @@ public class MembershipFeeDepositRepositoryImpl implements MembershipFeeDepositR
                         .and(memberEntity.memberStatus.in(MemberStatus.ACTIVE, MemberStatus.DORMANT))
                         .and(memberEntity.registrationStatus.eq(RegistrationStatus.REGISTERED))
                 )
+                .orderBy(memberShipFeeDepositTransactionEntity.depositDate.desc())
                 .fetch();
 
         return registryMapper.toDomains(registryDataDto);
