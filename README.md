@@ -55,8 +55,9 @@ Java, Spring Boot, Spring Data JPA, MySQL
 ## 🏀 기술적 이슈와 해결 과정
 
 ### 소프트웨어 아키텍처
+- [더 이상 방황은 그만! 프로젝트 요구사항 정의하기](https://kellyihyeon.github.io/2024/07/07/%EC%9A%94%EA%B5%AC%EC%82%AC%ED%95%AD-%EC%A0%95%EC%9D%98%EC%84%9C/?t=1728882752917)
 - [RESTful API - 리소스 이름은 어떻게 지어야할까?](https://kellyihyeon.github.io/2024/09/04/%EB%A6%AC%EC%86%8C%EC%8A%A4-%EC%9D%B4%EB%A6%84%EC%9D%80-%EC%96%B4%EB%96%BB%EA%B2%8C-%EC%A7%80%EC%96%B4%EC%95%BC%ED%95%A0%EA%B9%8C/?t=1727250665710)
-- [OpenAPI Generator로 페이징 처리는 어떻게 해?](https://kellyihyeon.github.io/2024/09/11/OpenAPI-Generator%EB%A1%9C-%ED%8E%98%EC%9D%B4%EC%A7%95-%EC%B2%98%EB%A6%AC%EB%8A%94-%EC%96%B4%EB%96%BB%EA%B2%8C-%ED%95%B4/?t=1728317733852)
+- [OpenAPI Generator 로 페이징 처리는 어떻게 해?](https://kellyihyeon.github.io/2024/09/11/OpenAPI-Generator%EB%A1%9C-%ED%8E%98%EC%9D%B4%EC%A7%95-%EC%B2%98%EB%A6%AC%EB%8A%94-%EC%96%B4%EB%96%BB%EA%B2%8C-%ED%95%B4/?t=1728317733852)
 
 ### 인프라
 - [Nginx 로 스프링 부트 8080번으로 포트포워딩 하기](https://kellyihyeon.github.io/2024/10/07/Nginx%EB%A1%9C-%EC%8A%A4%ED%94%84%EB%A7%81-%EB%B6%80%ED%8A%B8-8080%EB%B2%88%EC%9C%BC%EB%A1%9C-%ED%8F%AC%ED%8A%B8-%ED%8F%AC%EC%9B%8C%EB%94%A9-%ED%95%98%EA%B8%B0/?t=1728317848640)
