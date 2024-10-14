@@ -476,3 +476,42 @@ body {
     border: 4px solid #02b875;
 }
 
+.balance-update-icon {
+    color: #686af8;
+    background-color: #e7e7ff;
+    padding: 8px;
+    border-radius: 15%;
+    margin-right: 10px;
+    font-size: 24px;
+}
+
+#balanceUpdateDescription {
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    margin-top: 10px;
+
+}
+
+.update-balance-button {
+    width: 100%;
+}
+
+.tooltip-icon {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    text-align: center;
+    line-height: 15px;
+    background-color: #fff2d6;
+    color: #ffab00;
+    border-radius: 50%;
+    font-weight: bold;
+    font-size: 10px;
+    cursor: pointer;
+}
+
+.tooltip-icon:hover {
+    background-color: #d32f2f;
+}
+

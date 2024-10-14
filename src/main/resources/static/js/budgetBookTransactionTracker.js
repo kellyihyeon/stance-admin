@@ -40,6 +40,11 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     if (path === '/budget-book-transaction-tracker') {
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        tooltipTriggerList.forEach(function (tooltipTriggerEl) {
+            new bootstrap.Tooltip(tooltipTriggerEl)
+        })
+
         loadBudgetBookTransactions(1);
     }
 
