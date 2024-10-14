@@ -10,7 +10,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -46,7 +45,7 @@ public class AccountTransactionController implements AccountTransactionApi {
     @Override
     public ResponseEntity<Void> recalculateBalanceFrom(TransactionStartRequest transactionStartRequest) {
         service.recalculateBalanceFrom(TimeConverter.convertToLocalDate(transactionStartRequest.getFromTransactionDate()));
-        return ResponseEntity.created(URI.create("")).build();
+        return ResponseEntity.noContent().build();
     }
 
 }

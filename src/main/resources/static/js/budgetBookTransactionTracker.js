@@ -40,6 +40,31 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     if (path === '/budget-book-transaction-tracker') {
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        tooltipTriggerList.forEach(function (tooltipTriggerEl) {
+            new bootstrap.Tooltip(tooltipTriggerEl)
+        })
+
+        document.getElementById('standardDateForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            const balanceUpdatePermissionModal = new bootstrap.Modal(document.getElementById('balanceUpdatePermissionModal'));
+            balanceUpdatePermissionModal.show();
+        });
+
+        const balanceUpdatePermissionModal = new bootstrap.Modal(document.getElementById('balanceUpdatePermissionModal'));
+        const redirectUrl = '/budget-book-transaction-tracker';
+
+        document.getElementById('balanceUpdatePermissionForm').addEventListener('submit', function (event) {
+            console.log('Check balance update permission.')
+            event.preventDefault();
+
+            const inputPermissionKey = document.getElementById('balanceUpdatePermissionPassword').value;
+            runProcessAfterPermissionKeyValidation(
+                inputPermissionKey,
+                () => updateBalance(balanceUpdatePermissionModal, redirectUrl)
+            );
+        });
+
         loadBudgetBookTransactions(1);
     }
 
@@ -99,4 +124,34 @@ function getAllBudgetBookTransactions(page) {
         .then(data => {
             return data;
         })
+}
+
+function updateBalance(balanceUpdatePermissionModal, redirectUrl) {
+    const url = '/account-transactions/balance';
+    const bodyData = {
+        fromTransactionDate: document.getElementById('standardDate').value
+    }
+
+    fetch(url, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(bodyData)
+    })
+        .then(response => {
+            if (response.status === 204) {
+                alert('잔액이 업데이트 되었습니다.');
+                balanceUpdatePermissionModal.hide();
+                window.location.href = redirectUrl;
+            } else {
+                console.log('status = ', response.status)
+                response.json().then(errorData => {
+                    throw new Error(`Error ${response.status}: ${errorData.message || 'Unknown error'}`);
+                })
+            }
+        })
+        .catch(error => {
+            console.error('잔액 업데이트 중 오류 발생:', error);
+        });
 }
