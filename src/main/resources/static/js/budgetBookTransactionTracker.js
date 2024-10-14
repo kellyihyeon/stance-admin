@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function () {
             new bootstrap.Tooltip(tooltipTriggerEl)
         })
 
-        document.getElementById('updateBalanceButton').addEventListener('click', function (event) {
+        document.getElementById('standardDateForm').addEventListener('submit', function (event) {
             event.preventDefault();
             const balanceUpdatePermissionModal = new bootstrap.Modal(document.getElementById('balanceUpdatePermissionModal'));
             balanceUpdatePermissionModal.show();
