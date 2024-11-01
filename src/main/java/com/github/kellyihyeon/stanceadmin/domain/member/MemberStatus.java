@@ -7,6 +7,7 @@ public enum MemberStatus {
 
     ACTIVE("정기 회원"),
     DORMANT("휴면 회원"),
+    HONORARY("명예 회원"),
     GUEST("게스트"),
     COACH("코치")
     ;
